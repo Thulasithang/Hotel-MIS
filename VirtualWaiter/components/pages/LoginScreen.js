@@ -8,7 +8,6 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  s
 } from "react-native";
 export default function LoginScreen({navigation}) {
   const [tableNo, setTableNo] = useState("");

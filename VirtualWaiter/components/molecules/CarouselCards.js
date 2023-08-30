@@ -4,28 +4,25 @@ import Carousel from 'react-native-snap-carousel'
 import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from '../atoms/CarouselCardItem'
 import data from '../../data/data';
 
-// newData = data.filter(item => {
-//     return item.price === 1.99;
-//   })
-// console.log(newData[0].name);
-
-
-const CarouselCards = () => {
+const CarouselCards = ({newData}) => {
   const isCarousel = React.useRef(null)
 
   return (
     <View>
       <Carousel
-        layout="tinder"
-        layoutCardOffset={9}
+        layout= "default"
+        layoutCardOffset={18}
         ref={isCarousel}
-        data={data}
+        data={newData}
         renderItem={CarouselCardItem}
         sliderWidth={SLIDER_WIDTH}
-        itemWidth={ITEM_WIDTH}
-        inactiveSlideShift={0}
+        itemWidth={300}
         useScrollView={true}
-      />
+        loop={false}
+        inactiveSlideOpacity={1} // Reduce the opacity for inactive cards
+  inactiveSlideScale={1} // Scale down the inactive cards
+  paddingTop={40}
+        />
     </View>
   )
 }
