@@ -45,7 +45,7 @@ export default function LoginScreen({navigation}) {
           value={submitted.PW}
         /> 
       </View>  */}
-      <TouchableOpacity style={styles.loginBtn} onPress ={() => navigation.navigate("Menu")}>
+      <TouchableOpacity style={styles.loginBtn} onPress ={() => navigation.navigate("MenuParent")}>
         <Text style={styles.loginText}>LOGIN</Text> 
       </TouchableOpacity> 
     </View> 

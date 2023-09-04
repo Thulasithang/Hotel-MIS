@@ -5,7 +5,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { AppRegistry } from "react-native";
 import { name as appName } from "../app.json";
 import LoginScreen from "../components/pages/LoginScreen";
-import MenuScreen from "../components/pages/MenuScreen";
+// import MenuScreen from "../components/pages/MenuScreen";
+import ParentComponent from "../components/pages/ParentComponent";
 
 
 const Stack = createStackNavigator();
@@ -17,7 +18,7 @@ const MainContainer = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName= "Login">
         <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
-        <Stack.Screen name="Menu" component={MenuScreen} />
+        <Stack.Screen name="MenuParent" component={ParentComponent} />
       </Stack.Navigator>
     </NavigationContainer>
     // <View>
