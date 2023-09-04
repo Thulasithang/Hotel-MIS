@@ -1,2 +1,2 @@
 # Hotel-MIS
-This is a Management System for a Hotel and a Restaurant.  
+This is a Management Information System for a Hotel and a Restaurant.  
