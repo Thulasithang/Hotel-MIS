@@ -1,4 +1,4 @@
-package com.WHotels.HotelMIS.table;
+package com.WHotels.HotelMIS.model;
 import jakarta.persistence.*;
 
 @Entity

@@ -1,8 +1,10 @@
-package com.WHotels.HotelMIS.table;
+package com.WHotels.HotelMIS.service;
 import org.springframework.data.domain.Sort;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.WHotels.HotelMIS.repository.TableRepository;
+import com.WHotels.HotelMIS.model.Table;
 
 import java.util.List;
 import java.util.Optional;
