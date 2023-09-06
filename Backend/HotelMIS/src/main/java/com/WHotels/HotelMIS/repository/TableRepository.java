@@ -1,8 +1,10 @@
-package com.WHotels.HotelMIS.table;
+package com.WHotels.HotelMIS.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import com.WHotels.HotelMIS.model.Table;
 
 import java.util.List;
 
