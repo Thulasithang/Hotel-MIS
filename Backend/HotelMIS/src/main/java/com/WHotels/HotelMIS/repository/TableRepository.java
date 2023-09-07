@@ -12,7 +12,7 @@ import java.util.List;
 public interface TableRepository extends JpaRepository<Table, Long> {
 
     @Query(value = "SELECT * FROM restaurant_table ORDER BY table_id ASC", nativeQuery = true)
-    List<Table> findByOrderByNameAsc();
+    List<Table> findByOrderByIdAsc();
 
 }
 
