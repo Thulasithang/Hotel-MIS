@@ -1,0 +1,21 @@
+.header {
+    height: 70%;
+    width: 100%;
+  }
+  
+  .header-container {
+    background: url(../Images/WHOTEL.png) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: auto;
+  }
+
+  .wording{
+    height: 100%;
+    width: 100%;
+    background-color: #03095770;
+    padding: 20px 0px 50px 0px;
+    
+  }

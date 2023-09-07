@@ -1,0 +1,14 @@
+.container-card {
+  border-radius: 10px;
+  display: flex; /* Add flex display */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+.reserve-body {
+  background-color: #030957ee;
+}
+
+.card-text {
+  text-align: center; /* Center text within the card */
+}

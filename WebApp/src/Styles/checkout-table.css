@@ -1,0 +1,121 @@
+@media (max-width: 425px) {
+    .DestopView {
+      display: none;
+    }
+  }
+  
+
+
+  .room-details {
+    padding: 2.1875em 5%;
+  }
+
+
+  .show-more-btn{
+    background-color: transparent;
+    color: #030957;
+    border: none;
+    text-decoration: underline;
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+
+    &:hover{
+      background-color: transparent;
+      color: #030957;
+      border: none;
+      text-decoration: underline;
+      margin: 0px 0px 0px 0px;
+      padding: 0px;
+    }
+
+    &:active{
+      background-color: transparent !important;
+      color: #030957 !important;
+      border: none;
+      text-decoration: underline;
+      margin: 0px 0px 0px 0px;
+      padding: 0px;
+    }
+
+  }
+
+  .room-type{
+    margin: 10px 0px 10px 0px;
+    border-top: 1.5px solid #030957;
+    padding: 10px;
+  }
+
+
+
+  .room-type-block{
+    background-color: #03095715;
+    margin: 10px 0px 10px 0px;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .discount-btn{
+    background-color: #030957;
+    color: #030957;
+    border-radius: 0px 0px 10px 0px;
+    border: none;
+    margin: -20px 0px -0px -10px;
+    width: 80px;
+    height: 30px;
+
+    &:hover{
+      background-color: #030957;
+      color: #030957;
+      border-radius: 0px 0px 10px 0px;
+      border: none;
+      margin: -20px 0px -0px -10px;
+      width: 80px;
+      height: 30px;
+    }
+
+    &:active{
+      background-color: #030957 !important;
+    color: #030957;
+    border-radius: 0px 0px 10px 0px;
+    border: none;
+    margin: -20px 0px -0px -10px;
+    width: 80px;
+    height: 30px;
+    }
+
+
+
+  }
+
+
+  .book-btn{
+    background-color: #030957;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    padding: 2px;
+    float: left;
+    width: 80px;
+    height: 30px;
+  }
+
+
+  .room-type-cost{
+    float: right;
+    margin-top: 0px;
+    margin-right: 10px;
+  }
+
+  .room-type-btn{
+    float: right;
+    margin-top: 45px;
+    margin-right: 10px;
+  }
+
+
+
+  .check-col{
+    margin: 10px 0px 10px 0px;
+    border-top: 1px solid #030957;
+    padding: 10px;
+  }
