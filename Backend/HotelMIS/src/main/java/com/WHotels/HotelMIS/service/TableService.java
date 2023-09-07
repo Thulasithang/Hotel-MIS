@@ -20,15 +20,7 @@ public class TableService
     }
 
     public List<Table> getTables(){
-//        Table t1=new Table(false,false);
-//        t1.setId(1);
-//        Table t2=new Table(false,false);
-//        t1.setId(2);
-        //List.of(t1, t2)
-        //Sort sort = Sort.by(Sort.Order.asc("table_id"));
-        //return tableRepository.findAll();
         return tableRepository.findByOrderByIdAsc();
-    //return tableRepository.findAll(Sort.by(Sort.Direction.ASC, "table_id"));
     }
 
     public void updateTableStatus(Long tableId, Boolean waiterRequested, Boolean occupied) {
