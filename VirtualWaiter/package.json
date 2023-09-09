@@ -9,6 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
