@@ -7,8 +7,24 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
+import { connect } from "react-redux";
 import CarouselCards from "../molecules/CarouselCards";
 import data from "../../data/data";
+
+const mapStateToProps = (state) => ({
+  itemsInCart: state.cart.itemsInCart,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addToCart: (item) => {
+    if (item.count > 0) {
+      dispatch({ type: "ADD_TO_CART", payload: item });
+    } else {
+      alert("Please add at least one item to cart");
+    }
+  },
+});
+
 
 burgerData = data.filter((item) => {
   return item.category === "Burgers";
@@ -18,7 +34,7 @@ drinkData = data.filter((item) => {
   return item.category === "Drinks";
 });
 
-const MenuScreen = () => {
+const MenuScreen = ({ itemsInCart, addToCart }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>

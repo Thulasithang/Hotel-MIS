@@ -1,5 +1,6 @@
 const data = [
     {
+      id: 1,
       name: 'Classic Cheeseburger',
       price: 9.99,
       description: 'Juicy beef patty with melted cheddar, lettuce, and tomato.',
@@ -8,6 +9,7 @@ const data = [
       category: 'Burgers'
     },
     {
+      id: 2,
       name: 'Bacon Avocado Burger',
       price: 11.49,
       description: 'Beef patty topped with crispy bacon, creamy avocado, and mayo.',
@@ -16,7 +18,8 @@ const data = [
       category: 'Burgers'
     },
     {
-      name: 'Classic Cheeseburger',
+      id: 3,
+      name: 'not so classic Cheeseburger',
       price: 9.99,
       description: 'Juicy beef patty with melted cheddar, lettuce, and tomato.',
       rating: 4.5,
@@ -24,7 +27,8 @@ const data = [
       category: 'Burgers'
     },
     {
-      name: 'Bacon Avocado Burger',
+      id: 4,
+      name: 'big huge Bacon Avocado Burger',
       price: 11.49,
       description: 'Beef patty topped with crispy bacon, creamy avocado, and mayo.',
       rating: 4.2,
@@ -32,7 +36,8 @@ const data = [
       category: 'Burgers'
     },
     {
-      name: 'Classic Cheeseburger',
+      id: 5,
+      name: ' new and newerClassic Cheeseburger',
       price: 9.99,
       description: 'Juicy beef patty with melted cheddar, lettuce, and tomato.',
       rating: 4.5,
@@ -40,7 +45,8 @@ const data = [
       category: 'Burgers'
     },
     {
-      name: 'Bacon Avocado Burger',
+      id: 6,
+      name: ' tasty as hell Bacon Avocado Burger',
       price: 11.49,
       description: 'Beef patty topped with crispy bacon, creamy avocado, and mayo.',
       rating: 4.2,
@@ -49,7 +55,8 @@ const data = [
     },
     // ... Other items
     {
-      name: 'Soda (Coke, Pepsi, Sprite)',
+      id: 7,
+      name: 'coke Soda',
       price: 2.49,
       description: 'Choose from a variety of refreshing sodas.',
       rating: 3.8,
@@ -57,6 +64,7 @@ const data = [
       category: 'Drinks'
     },
     {
+      id: 8,
       name: 'Iced Tea',
       price: 1.99,
       description: 'Chilled black tea served over ice with a hint of lemon.',
@@ -65,7 +73,8 @@ const data = [
       category: 'Drinks'
     },
     {
-      name: 'Soda (Coke, Pepsi, Sprite)',
+      id: 9,
+      name: 'Soda Pepsi',
       price: 2.49,
       description: 'Choose from a variety of refreshing sodas.',
       rating: 3.8,
@@ -73,7 +82,8 @@ const data = [
       category: 'Drinks'
     },
     {
-      name: 'Iced Tea',
+      id: 10,
+      name: 'Iced Tea sooo goooddd',
       price: 1.99,
       description: 'Chilled black tea served over ice with a hint of lemon.',
       rating: 4.1,
@@ -81,7 +91,8 @@ const data = [
       category: 'Drinks'
     },
     {
-      name: 'Soda (Coke, Pepsi, Sprite)',
+      id: 11,
+      name: 'Soda Sprite',
       price: 2.49,
       description: 'Choose from a variety of refreshing sodas.',
       rating: 3.8,
@@ -89,7 +100,8 @@ const data = [
       category: 'Drinks'
     },
     {
-      name: 'Iced Tea',
+      id: 12,
+      name: 'not so ice, Iced Tea',
       price: 1.99,
       description: 'Chilled black tea served over ice with a hint of lemon.',
       rating: 4.1,
@@ -97,7 +109,8 @@ const data = [
       category: 'Drinks'
     },
     {
-      name: 'Soda (Coke, Pepsi, Sprite)',
+      id: 13,
+      name: 'Soda fanta',
       price: 2.49,
       description: 'Choose from a variety of refreshing sodas.',
       rating: 3.8,
@@ -105,7 +118,8 @@ const data = [
       category: 'Drinks'
     },
     {
-      name: 'Iced Tea',
+      id: 14,
+      name: 'hot hot Iced Tea',
       price: 1.99,
       description: 'Chilled black tea served over ice with a hint of lemon.',
       rating: 4.1,

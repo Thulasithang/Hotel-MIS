@@ -6,6 +6,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from './components/pages/LoginScreen'; // Import your login screen component
 import MainContainer from './navigation/MainContainer';
 import CartScreen from './components/pages/CartScreen';
+import store from "./store/store"; // Import the Redux store
+import { Provider } from 'react-redux';
 
 
 const Tab = createBottomTabNavigator();
@@ -15,6 +17,7 @@ function App() {
 
   // Conditionally render the login screen or the main app content based on isLoggedIn
   return (
+    <Provider store={store}>
     <NavigationContainer>
       {isLoggedIn ? (
         <Tab.Navigator>
@@ -25,6 +28,7 @@ function App() {
         <LoginScreen onLogin={() => setIsLoggedIn(true)} />
       )}
     </NavigationContainer>
+    </Provider>
   );
 }
 
