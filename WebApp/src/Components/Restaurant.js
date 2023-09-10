@@ -11,10 +11,10 @@ const Restaurant = () => {
   return (
     <div
       className="hero-image restaurant"
-      // style={{
-      //   backgroundImage: `url(${img1})`,
-      //   backgroundColor: "#030957",
-      // }}
+      style={{
+        backgroundImage: `url(${img1})`,
+        backgroundColor: "#030957",
+      }}
     >
       <div
         className="d-flex justify-content-center align-items-center"
