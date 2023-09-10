@@ -6,44 +6,42 @@ import ImageCarousel from "./Carousal";
 import img1 from "../Images/349059422.jpeg";
 import img2 from "../Images/349059406.jpeg";
 
-import img3 from "../Images/348610555.jpeg";
-import img4 from "../Images/348610551.jpeg";
+// import img3 from "../Images/348610555.jpeg";
+// import img4 from "../Images/348610551.jpeg";
 
-import img5 from "../Images/349060691.jpeg";
-import img6 from "../Images/348610582.jpeg";
+// import img5 from "../Images/349060691.jpeg";
+// import img6 from "../Images/348610582.jpeg";
 
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { themeTyp } from "../Styles/Theme";
 
-const PhotoCard = () => {
+const PhotoCard = ({ type, adult, child, size, description }) => {
   const supImages = [img1, img2];
-  const kingImages = [img3, img4];
-  const famImages = [img5, img6];
+  // const kingImages = [img3, img4];
+  // const famImages = [img5, img6];
 
   return (
     <>
       <div className="container">
         <div className="photocontainer">
           <div className="photo-card">
-            <div className="photo-background">
+            <div className="photo-background" enctype="multipart/form-data">
               <ImageCarousel images={supImages} />
             </div>
             <div className="photo-details">
               <ThemeProvider theme={themeTyp}>
-                <Typography variant="PhotoTopic">SUPERIOR ROOM</Typography>
+                <Typography variant="PhotoTopic">{type}</Typography>
                 <Typography variant="body1">
                   <p>
                     with mountain views <br />
                     <br></br>
-                    Max occupancy:2 adults and 1 child
+                    Max occupancy: {adult} adults and {child} child
                     <br />
-                    Room size: 20 sqm
+                    Room size: {size} sqm
                     <br />
                     <br></br>
-                    Stunning views, a private balcony, comfy beds, tea/coffee
-                    facilities and all standard amenities included in these cosy
-                    rooms.
+                    {description}
                   </p>
                 </Typography>
               </ThemeProvider>
@@ -54,7 +52,7 @@ const PhotoCard = () => {
         </div>
       </div>
 
-      <div className="container">
+      {/* <div className="container">
         <div className="photocontainer">
           <div className="photo-card">
             <div className="photo-background">
@@ -117,7 +115,7 @@ const PhotoCard = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

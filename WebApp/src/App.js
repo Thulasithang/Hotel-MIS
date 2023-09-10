@@ -2,6 +2,7 @@ import Home from "./Screens/Home";
 import RestaurantReserv from "./Screens/RestaurantReserv";
 import BookRoom from "./Screens/BookRoom";
 import ConfirmBooking from "./Screens/ConfirmBooking";
+import Test from "./Screens/Test";
 
 import NavigationBar from "./Components/NavigationBar";
 import Footer from "./Components/Footer";
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
   {
     path: "/confirm-booking",
     element: <ConfirmBooking />,
+  },
+
+  {
+    path: "/test",
+    element: <Test />,
   },
 ]);
 

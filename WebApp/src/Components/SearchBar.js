@@ -1,5 +1,6 @@
 import * as React from "react";
 import dayjs from "dayjs";
+import { Link, useNavigate } from "react-router-dom";
 
 import Popover from "@mui/material/Popover";
 import { Grid } from "@mui/material";
@@ -25,18 +26,42 @@ import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 
 // ==========================================================
 
-export default function BasicPopover() {
-  const [adults, setAdults] = React.useState("");
-  const [children, setChildren] = React.useState("");
-  const [date, setDate] = React.useState([dayjs(), dayjs().add(1, "day")]);
-  const [promo, setPromo] = React.useState("");
+export default function BasicPopover(props) {
+  const [roomList, setRoomList] = React.useState([]);
+  const [Form, setForm] = React.useState({
+    date: [dayjs(), dayjs().add(1, "day")],
+    adults: "",
+    children: "",
+    promo: "",
+  });
 
-  const handleChangeAdult = (event) => {
-    setAdults(event.target.value);
-  };
+  React.useEffect(() => {
+    if (props.selectedValues === undefined) {
+      return;
+    }
 
-  const handleChangeChildren = (event) => {
-    setChildren(event.target.value);
+    setForm(props.selectedValues);
+  }, [props.selectedValues]);
+
+  const navigate = useNavigate();
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log("Date -", Form.date);
+    console.log("Adults -", Form.adults);
+    console.log("Children -", Form.children);
+    console.log("Promo -", Form.promo);
+
+    fetch(
+      `http://localhost:8000/booking/search?checkIn=${Form.date[0]}&checkOut=${Form.date[1]}&adults=${Form.adults}&children=${Form.children}&promo=${Form.promo}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setRoomList(data.roomdata);
+
+        navigate("/book-room", {
+          state: { Roomdata: data.roomdata, form: Form },
+        });
+      });
   };
   //=======================================================
   const [anchorElG, setAnchorElG] = React.useState(null);
@@ -91,9 +116,9 @@ export default function BasicPopover() {
                 label="Check-in/Check-out"
                 InputLabelProps={{ className: "labelfont" }}
                 value={
-                  date[0].format("DD/MM/YYYY") +
+                  Form.date[0].format("DD/MM/YY") +
                   " - " +
-                  date[1].format("DD/MM/YYYY")
+                  Form.date[1].format("DD/MM/YY")
                 }
                 InputProps={{
                   readOnly: true,
@@ -121,8 +146,15 @@ export default function BasicPopover() {
                       <DateRangePicker
                         localeText={{ start: "", end: "" }}
                         minDate={dayjs()}
-                        value={date}
-                        onChange={(newValue) => setDate(newValue)}
+                        onAccept={(newValue) => {
+                          setForm({
+                            ...Form,
+                            date: [dayjs(newValue[0]), dayjs(newValue[1])],
+                          });
+                        }}
+                        value={Form.date}
+                        // value={date}
+                        // onChange={(newValue) => setDate(newValue)}
                       />
                     </DemoItem>
                   </DemoContainer>
@@ -158,7 +190,7 @@ export default function BasicPopover() {
                 label="Guests"
                 InputLabelProps={{ className: "labelfont" }}
                 defaultValue="Guests"
-                value={adults + " Adults, " + children + " Children"}
+                value={Form.adults + " Adults, " + Form.children + " Children"}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -189,9 +221,11 @@ export default function BasicPopover() {
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
-                          value={adults}
                           label="Adults"
-                          onChange={handleChangeAdult}
+                          onChange={(e) => {
+                            setForm({ ...Form, adults: e.target.value });
+                          }}
+                          value={Form ? Form.adults : ""}
                           SelectDisplayProps={{ className: "labelfont" }}
                         >
                           <MenuItem value={1} className="menuitem">
@@ -222,9 +256,11 @@ export default function BasicPopover() {
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
-                          value={children}
                           label="Children"
-                          onChange={handleChangeChildren}
+                          onChange={(e) => {
+                            setForm({ ...Form, children: e.target.value });
+                          }}
+                          value={Form ? Form.children : ""}
                           sx={{ color: "#030957" }}
                           SelectDisplayProps={{ className: "labelfont" }}
                         >
@@ -273,10 +309,11 @@ export default function BasicPopover() {
                 id="filled-basic"
                 label="Promo Code"
                 InputLabelProps={{ className: "labelfont" }}
-                value={promo}
-                onChange={(e) => setPromo(e.target.value)}
+                onChange={(e) => {
+                  setForm({ ...Form, promo: e.target.value });
+                }}
+                value={Form ? Form.promo : ""}
                 // print "Promo -{promo}" in console
-                console={console.log(`Promo is ${promo}`)}
                 variant="filled"
               />
             </Box>
@@ -285,7 +322,11 @@ export default function BasicPopover() {
 
         <div style={{ flex: 2 }}>
           {/* ===========Button=========== */}
-          <button className="search-button" type="submit">
+          <button
+            className="search-button"
+            type="submit"
+            onClick={handleSearch}
+          >
             <ThemeProvider theme={themeTyp}>
               <Typography
                 variant="button1"

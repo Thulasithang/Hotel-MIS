@@ -1,5 +1,7 @@
-package com.WHotels.HotelMIS.table;
+package com.WHotels.HotelMIS.controller;
 
+import com.WHotels.HotelMIS.model.Table;
+import com.WHotels.HotelMIS.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

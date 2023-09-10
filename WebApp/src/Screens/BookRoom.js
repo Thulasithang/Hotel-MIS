@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import SearchBar from "../Components/SearchBar";
 import SearchResult from "../Components/SearchResult";
 import { ThemeProvider } from "@mui/material/styles";
@@ -10,6 +11,7 @@ import "../Styles/Pricing-Table.css";
 import img1 from "../Images/offers.jpg";
 
 export default function BookRoom() {
+  const location = useLocation();
   return (
     <>
       <div
@@ -33,7 +35,9 @@ export default function BookRoom() {
           }}
         >
           <ThemeProvider theme={themeTyp}>
-            <SearchBar />
+            <SearchBar
+              selectedValues={location.state ? location.state.form : {}}
+            />
           </ThemeProvider>
         </div>
       </div>

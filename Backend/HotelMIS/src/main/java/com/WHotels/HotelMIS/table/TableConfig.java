@@ -1,5 +1,7 @@
 package com.WHotels.HotelMIS.table;
 
+import com.WHotels.HotelMIS.model.Table;
+import com.WHotels.HotelMIS.repository.TableRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,5 +18,4 @@ public class TableConfig {
             //Table t2=new Table(false,false);
             tableRepository.saveAll(List.of(t1,t2));
         };
-    }
-}
+    }}
