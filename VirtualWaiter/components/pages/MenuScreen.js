@@ -11,6 +11,8 @@ import { connect } from "react-redux";
 import CarouselCards from "../molecules/CarouselCards";
 import data from "../../data/data";
 
+
+//New cart system is added
 const mapStateToProps = (state) => ({
   itemsInCart: state.cart.itemsInCart,
 });
