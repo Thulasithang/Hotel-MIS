@@ -13,12 +13,10 @@ function MainContainer() {
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        {/* Render your MenuScreen component here */}
         <MenuScreen />
       </View>
       {cartVisible && (
         <View style={styles.cartOverlay}>
-          {/* Render your CartScreen component here, 30% over the MenuScreen */}
           <CartScreen onClose={() => setCartVisible(false)} />
         </View>
       )}
