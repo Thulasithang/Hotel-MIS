@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from './components/pages/LoginScreen'; // Import your login screen component
 import MainContainer from './navigation/MainContainer';
 import CartScreen from './components/pages/CartScreen';
+import ReservedScreen from './components/pages/ReservedScreen';
 import store from "./store/store"; // Import the Redux store
 import { Provider } from 'react-redux';
 
@@ -21,6 +22,8 @@ function App() {
     <NavigationContainer>
       {isLoggedIn ? (
         <Tab.Navigator>
+          <Tab.Screen name="reserved" component={ReservedScreen} />
+
           <Tab.Screen name="main" component={MainContainer} />
           <Tab.Screen name="cart" component={CartScreen} />
         </Tab.Navigator>
