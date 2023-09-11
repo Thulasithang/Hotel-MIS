@@ -40,6 +40,7 @@ const MenuScreen = ({ itemsInCart, addToCart }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
+
         <View style={styles.container}>
           <View>
             <Image

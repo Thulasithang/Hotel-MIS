@@ -23,6 +23,7 @@ function App() {
       {isLoggedIn ? (
         <Tab.Navigator>
           <Tab.Screen name="reserved" component={ReservedScreen} />
+
           <Tab.Screen name="main" component={MainContainer} />
           <Tab.Screen name="cart" component={CartScreen} />
         </Tab.Navigator>
