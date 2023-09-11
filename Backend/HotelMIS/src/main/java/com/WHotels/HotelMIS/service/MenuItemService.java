@@ -1,29 +1,28 @@
 package com.WHotels.HotelMIS.service;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import com.WHotels.HotelMIS.model.Menuitem;
+import com.WHotels.HotelMIS.model.Table;
+import com.WHotels.HotelMIS.repository.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.WHotels.HotelMIS.model.MenuItem;
-import com.WHotels.HotelMIS.repository.MenuItemRepository;
+import java.util.List;
 
 @Service
 public class MenuItemService {
+    private final MenuItemRepository menuItemRepository;
 
     @Autowired
-    MenuItemRepository menuItemRepository;
-    
-    public ResponseEntity<List<MenuItem>> getMenu() {
-        try{
-            return new ResponseEntity<>(menuItemRepository.findAll(), HttpStatus.OK);
-        }catch(Exception e){
-            e.printStackTrace();;
-        }
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+    public MenuItemService(MenuItemRepository menuItemRepository) {
+        this.menuItemRepository = menuItemRepository;
     }
 
+    public List<Menuitem> getMenuItems(){
+        return menuItemRepository.findByOrderByIdAsc();
+    }
+
+    public List<Menuitem> getInStockMenuItems(){
+        return menuItemRepository.findInStockMenuItems();
+    }
 }

@@ -1,0 +1,22 @@
+.tab-fill{
+    background-color: #A3a3a3;
+    border: none;
+    border-radius: 10px;
+
+}
+
+
+.tab-content{
+    border: none;
+}
+
+.book-btn{
+    background-color: #030957;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    padding: 2px;
+    float: right;
+    width: 50%;
+    height: 40px;
+  }

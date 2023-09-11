@@ -1,34 +1,34 @@
-import React, { useState } from "react";
-import { AppLoading } from "expo";
-import { View } from "react-native";
-// import * as Font from "expo-font";
-import MainContainer from "./navigation/MainContainer.js"; // Make sure the path is correct
-import "react-native-gesture-handler";
+import React, { useState } from 'react';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-// Load the Ionicons font
-// const fetchFonts = () => {
-//   return Font.loadAsync({
-//     Ionicons: require("@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Ionicons.ttf"),
-//   });
-// };
+import LoginScreen from './components/pages/LoginScreen'; // Import your login screen component
+import MainContainer from './navigation/MainContainer';
+import CartScreen from './components/pages/CartScreen';
+import store from "./store/store"; // Import the Redux store
+import { Provider } from 'react-redux';
 
-const App = () => {
-//   const [dataLoaded, setDataLoaded] = useState(false);
 
-  // if (!dataLoaded) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={fetchFonts}
-  //       onFinish={() => setDataLoaded(true)}
-  //       onError={(err) => console.error(err)}
-  //     />
-  //   );
-  // }
+const Tab = createBottomTabNavigator();
 
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Conditionally render the login screen or the main app content based on isLoggedIn
   return (
-    <View style={{ flex: 1 }}>
-      <MainContainer />
-    </View>
+    <Provider store={store}>
+    <NavigationContainer>
+      {isLoggedIn ? (
+        <Tab.Navigator>
+          <Tab.Screen name="main" component={MainContainer} />
+          <Tab.Screen name="cart" component={CartScreen} />
+        </Tab.Navigator>
+      ) : (
+        <LoginScreen onLogin={() => setIsLoggedIn(true)} />
+      )}
+    </NavigationContainer>
+    </Provider>
   );
 }
 

@@ -1,71 +1,78 @@
-import React from 'react'
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native"
-import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { connect } from "react-redux";
 
-export const SLIDER_WIDTH = Dimensions.get('window').width 
-export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.3)
+export const SLIDER_WIDTH = Dimensions.get("window").width;
+export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.199);
 
-const CarouselCardItem = ({ item, index }) => {
+const CarouselCardItem = ({ item, index, dispatch }) => {
+  const handleAddToCart = (item) => {
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: { price: item.price, item: item, id: item.id, name: item.name, count: 1 },
+    });
+  };
+
   return (
     <View style={styles.container} key={index}>
       <Image
         source={{ uri: item.imageUrl }}
         style={styles.image}
+        resizeMode="cover"
       />
       <Text style={styles.header}>{item.name}</Text>
       <Text style={styles.body}>{item.description}</Text>
-      <View style={{flexDirection: 'row'}}>
-      <Ionicons name="star" size={20} color="gold" />
-      <Text style={{marginLeft:10}}>{item.rating}</Text>
-      <Text style={{position: "absolute", end: 40}}>Rs {item.price}</Text>
-      <Ionicons 
-      name="add-circle-outline" 
-      size={20} color="black" 
-      style={{position: "absolute", end: 10}}
-      onPress={() => alert( item.name +" " +'Added to cart')}
-      />
+      <View style={{ flexDirection: "row", marginTop: 20, paddingLeft: 10 }}>
+        <Ionicons name="star" size={20} color="gold" />
+        <Text style={{ marginLeft: 10 }}>{item.rating}</Text>
+        <Text style={{ position: "absolute", end: 60 }}>Rs {item.price}</Text>
+        <TouchableOpacity
+          onPress={() => handleAddToCart(item)} // Pass a function reference
+          style={{ position: "absolute", end: 10, alignSelf: "center" }}
+        >
+          <Ionicons name="add-circle-outline" size={40} color="black" />
+        </TouchableOpacity>
       </View>
-
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'pink',
     borderRadius: 8,
-    width: 250,
-    height: 300,
+    width: ITEM_WIDTH,
+    height: 380,
     marginLeft: 10,
     marginRight: 10,
-    paddingVertical: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7,
+    marginBottom: 30,
+    backgroundColor: "white",
+    elevation: 10,
   },
   image: {
-    width: 250,
-    height: 150,
+    borderRadius: 8,
+    width: "100%",
+    height: "50%",
   },
   header: {
+    paddingLeft: 10,
     color: "#222",
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
-    paddingLeft: 20,
-    paddingTop: 20
+    paddingTop: 20,
   },
   body: {
+    padding: 10,
     color: "#222",
     fontSize: 12,
-    paddingLeft: 20,
-    paddingLeft: 20,
-    paddingRight: 20
-  }
-})
+  },
+});
 
-export default CarouselCardItem
+export default connect()(CarouselCardItem);

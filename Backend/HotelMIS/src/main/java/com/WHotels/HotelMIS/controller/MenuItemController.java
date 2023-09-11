@@ -1,29 +1,37 @@
 package com.WHotels.HotelMIS.controller;
 
-import java.util.List;
 
+
+import com.WHotels.HotelMIS.model.Menuitem;
+import com.WHotels.HotelMIS.model.Table;
+import com.WHotels.HotelMIS.service.MenuItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.WHotels.HotelMIS.model.MenuItem;
-import com.WHotels.HotelMIS.service.MenuItemService;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/menu")
-@CrossOrigin(origins = "http://localhost:8081")
+@RequestMapping(path="api/v1/menuitem")
 public class MenuItemController {
 
+    private final MenuItemService menuItemService;
+
     @Autowired
-    private MenuItemService menuItemService;
-
-    @GetMapping("/getMenu")
-    public ResponseEntity<List<MenuItem>> getMenu() {
-        return menuItemService.getMenu();
+    MenuItemController(MenuItemService menuItemService) {
+        this.menuItemService = menuItemService;
     }
-    
 
+    @GetMapping
+    public List<Menuitem> getMenuItems(){
+        return menuItemService.getMenuItems();
+    }
+    @GetMapping(path="/instock")
+    public List<Menuitem> getInStockMenuItems(){
+        return menuItemService.getInStockMenuItems();
+    }
 }
+
+
