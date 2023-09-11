@@ -1,0 +1,75 @@
+.list-group-item {
+    text-align: center;
+    border: none !important;
+}
+
+
+.heading{
+    height: 100%;
+}
+
+.restaurant{
+  background: url(../Images/restaurant.jpg);
+
+}
+.hero-image{
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* margin: 40px 0px 40px 0px;
+  box-shadow: 20px 0px 10px 0px #121320; */
+  
+
+  @media (min-width: 781px){
+    height: 600px; /* 140% width for medium displays */
+  }
+
+  @media (max-width: 780px) {
+    height: 1200px; /* 100% width for small displays */
+  }
+}
+
+
+.btnbooking{
+    background-color: #030957;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 17px;
+    padding: 10px 20px;
+    margin: 10px 0px 20px 0px;
+    float: none;
+  
+    &:active {
+        border: 1px solid #030957;
+        background-color: white;
+      color: #030957;
+    }
+  
+  
+  }
+
+  .btnreserve{
+    background-color: transparent;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 17px;
+    padding: 10px 20px;
+    margin: 20px 0px 20px 0px;
+    float: none;
+
+    &:hover{
+      border: 1px solid #ffffff;
+      text-decoration: underline;
+      
+    }
+  
+    &:active {
+      
+      background-color: rgba(255, 255, 255, 0.25);
+      border: 1px solid #ffffff;
+    }
+
+  }
