@@ -1,31 +1,55 @@
-import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { AppRegistry } from "react-native";
-import { name as appName } from "../app.json";
-import LoginScreen from "../components/pages/LoginScreen";
-import MenuScreen from "../components/pages/MenuScreen";
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import MenuScreen from '../components/pages/MenuScreen';
+import CartScreen from '../components/pages/CartScreen';
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
+function MainContainer() {
+  const [cartVisible, setCartVisible] = useState(false);
 
-
-const MainContainer = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName= "Login">
-        <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
-        <Stack.Screen name="Menu" component={MenuScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-    // <View>
-    //     <Text style={{ color: "black" }}>Login Screen</Text>
-    //     <Text> This is a big text</Text>
-    // </View>
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        {/* Render your MenuScreen component here */}
+        <MenuScreen />
+      </View>
+      {cartVisible && (
+        <View style={styles.cartOverlay}>
+          {/* Render your CartScreen component here, 30% over the MenuScreen */}
+          <CartScreen onClose={() => setCartVisible(false)} />
+        </View>
+      )}
+      <TouchableOpacity
+        style={styles.cartButton}
+        onPress={() => setCartVisible(!cartVisible)}
+      >
+        <Text>Show/Hide Cart</Text>
+      </TouchableOpacity>
+    </View>
   );
-};
+}
+
+const styles = StyleSheet.create({
+  cartButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: 'blue', // Customize the button style
+    padding: 10,
+    borderRadius: 5,
+  },
+  cartOverlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: '30%', // Adjust the width as needed
+    height: '100%',
+    backgroundColor: 'white', // Customize the background color
+    zIndex: 1, // Ensure it's above MenuScreen
+  },
+});
 
 export default MainContainer;
-AppRegistry.registerComponent(appName, () => Main);
