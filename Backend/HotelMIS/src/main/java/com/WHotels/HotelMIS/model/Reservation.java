@@ -24,8 +24,8 @@ public class Reservation {
     @Column(name = "start_time")
     private Time startTime;
     @Basic
-    @Column(name = "duration")
-    private Object duration;
+    @Column(name = "end_time")
+    private Time endTime;
 
     public int getReservationId() {
         return reservationId;
@@ -67,12 +67,12 @@ public class Reservation {
         this.startTime = startTime;
     }
 
-    public Object getDuration() {
-        return duration;
+    public Time getEndTime() {
+        return endTime;
     }
 
-    public void setDuration(Object duration) {
-        this.duration = duration;
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class Reservation {
         if (customerName != null ? !customerName.equals(that.customerName) : that.customerName != null) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
         if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
-        if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
+        if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
 
         return true;
     }
@@ -99,7 +99,7 @@ public class Reservation {
         result = 31 * result + (customerName != null ? customerName.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-        result = 31 * result + (duration != null ? duration.hashCode() : 0);
+        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
         return result;
     }
 }

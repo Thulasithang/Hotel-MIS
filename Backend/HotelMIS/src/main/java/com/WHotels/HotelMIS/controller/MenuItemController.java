@@ -32,6 +32,7 @@ public class MenuItemController {
     public List<Menuitem> getInStockMenuItems(){
         return menuItemService.getInStockMenuItems();
     }
+
 }
 
 
