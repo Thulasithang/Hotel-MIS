@@ -1,0 +1,108 @@
+.form-check-input{
+    background-color: #ffffff;
+    
+}
+
+
+.form-check-label{
+    color: #ffffff;
+    float: left;
+}
+
+.form-lable{
+    float: left;
+    margin-top: 10px;
+}
+
+
+
+
+/* .................................. */
+
+
+
+  
+  .btn {
+    background-color: #030957;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    margin: 10px 10px 10px 10px;
+    float: none; 
+
+
+    &:hover {
+      border: 1px solid white;
+      background-color: #030957;
+      color: #ffffff;
+    }
+
+    &:active{
+      border: 1px solid white;
+      background-color: #030957;
+      color: #ffffff;
+    }
+  }
+
+
+
+  .btn-primary {
+    background-color: #ffffff;
+    border: 1px solid #030957;
+    color: #030957;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    margin: 10px 10px 10px 10px;
+    float: none; 
+  }
+
+  .btn-outline-primary {
+    background-color: #030957;
+    border: 1px solid #030957;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    margin: 10px 10px 10px 10px;
+    float: none; 
+  }
+
+  .btn-secondary {
+    background-color: #797a8a;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    margin: 10px 10px 10px 10px;
+    float: none; 
+  }
+
+
+  .btnbooking{
+    border-radius: 10px;
+    background-color: #030957;
+    color: white;
+    border: 1px solid #ffffff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 17px;
+    padding: 10px 20px;
+    margin: 10px 0px 10px 0px;
+    float: none;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.201);
+      color: #030957;
+      border: 1px solid #ffffff;
+    }
+  
+    &:active {
+        background-color: white;
+        color: #030957;
+    }
+
+   
+  }

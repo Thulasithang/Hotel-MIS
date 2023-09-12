@@ -1,91 +1,78 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  Button,
-  TouchableOpacity,
-} from "react-native";
-export default function LoginScreen({navigation}) {
-  const [tableNo, setTableNo] = useState("");
-  const password = "1234";
-  const [submitted, setSubmitted] = useState(
-    {
-      tableNum:'',
-      PW:''
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+
+const LoginScreen = ({ navigation, onLogin }) => {
+  const [tableNo, setTableNo] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    // Check if the table number and password are valid
+    if (tableNo.trim() !== '' && password === '1234') {
+      // If valid, navigate to the MainContainer
+      onLogin();
+    } else {
+      // Display an error message or take appropriate action for invalid login
     }
-  );
+  };
 
-// const handleChange =()=>{
-  
-// }
-
-// const handleAuth = () =>{
-//     if (tableNo != "" && submittedPassword !=""){
-        
-//     }
-// }
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
-      {/* <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          value={submitted.tableNum}
-        /> 
-      </View> 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          value={submitted.PW}
-        /> 
-      </View>  */}
-      <TouchableOpacity style={styles.loginBtn} onPress ={() => navigation.navigate("Menu")}>
-        <Text style={styles.loginText}>LOGIN</Text> 
-      </TouchableOpacity> 
-    </View> 
+      <Text style={styles.title}>Login</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Table Number"
+        value={tableNo}
+        onChangeText={setTableNo}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <Text style={styles.loginButtonText}>Login</Text>
+      </TouchableOpacity>
+    </View>
   );
-}
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
-  image: {
-    marginBottom: 40,
-  },
-  inputView: {
-    backgroundColor: "#FFC0CB",
-    borderRadius: 30,
-    width: "70%",
-    height: 45,
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
     marginBottom: 20,
-    alignItems: "center",
   },
-  TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 20,
+  input: {
+    width: '80%',
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingLeft: 10,
   },
-  forgot_button: {
-    height: 30,
-    marginBottom: 30,
+  loginButton: {
+    backgroundColor: 'blue',
+    width: '80%',
+    height: 40,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
   },
-  loginBtn: {
-    width: "80%",
-    borderRadius: 25,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 40,
-    backgroundColor: "#FF1493",
+  loginButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
+
+export default LoginScreen;
