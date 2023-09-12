@@ -28,5 +28,10 @@ public class OrderService {
     public void getOrderByTableID(){ // TO BE IMPLEMENTED
         }
 
+        public Order createOrder(int itemId) {
+            // Set any additional fields or validations here
+            return orderRepository.saveOrder(itemId);
+        }
+
 
 }

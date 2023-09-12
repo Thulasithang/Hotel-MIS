@@ -1,7 +1,7 @@
 package com.WHotels.HotelMIS.repository;
 
 
-import com.WHotels.HotelMIS.model.Menuitem;
+import com.WHotels.HotelMIS.model.MenuItem;
 import com.WHotels.HotelMIS.model.Table;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MenuItemRepository extends JpaRepository<Menuitem, Long> {
+public interface MenuItemRepository extends JpaRepository<MenuItem, Integer> {
 
-    @Query(value = "SELECT * FROM menuitem ORDER BY menuitem_id ASC", nativeQuery = true)
-    List<Menuitem> findByOrderByIdAsc();
+    @Query(value = "SELECT * FROM menu_item m WHERE m.food_type = :type", nativeQuery = true)
+    List<MenuItem> findByType(String type);
 
-    @Query("SELECT m FROM Menuitem m WHERE m.quantity > 0")
-    List<Menuitem> findInStockMenuItems();
+    @Query("SELECT m FROM MenuItem m WHERE m.quantity > 0")
+    List<MenuItem> findInStockMenuItems();
 }
