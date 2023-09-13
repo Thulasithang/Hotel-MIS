@@ -36,11 +36,11 @@ public class MenuItemController {
     public ResponseEntity<List<MenuItem>> getMenuItemsByType(@PathVariable String type) {
         return menuItemService.getMenuItemsByType(type);
     }
+    @GetMapping(path="/instock")
+    public List<Menuitem> getInStockMenuItems(){
+        return menuItemService.getInStockMenuItems();
+    }
 
-    // @GetMapping(path="/instock")
-    // public List<MenuItem> getInStockMenuItems(){
-    //     return menuItemService.getInStockMenuItems();
-    // }
 }
 
 
