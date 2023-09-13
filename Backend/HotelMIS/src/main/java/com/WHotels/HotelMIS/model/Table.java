@@ -20,6 +20,10 @@ public class Table {
         this.id = id;
     }
 
+    public boolean isReserved() {
+        return reserved;
+    }
+
     public Table() {
     }
 

@@ -1,5 +1,6 @@
 package com.WHotels.HotelMIS.repository;
 
+
 import com.WHotels.HotelMIS.model.Menuitem;
 import com.WHotels.HotelMIS.model.Table;
 import org.springframework.data.jpa.repository.JpaRepository;

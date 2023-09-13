@@ -1,6 +1,7 @@
 package com.WHotels.HotelMIS.controller;
 
 
+
 import com.WHotels.HotelMIS.model.Menuitem;
 import com.WHotels.HotelMIS.model.Table;
 import com.WHotels.HotelMIS.service.MenuItemService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class MenuItemController {
     public List<Menuitem> getInStockMenuItems(){
         return menuItemService.getInStockMenuItems();
     }
+
 }
 
 
