@@ -1,5 +1,6 @@
 package com.WHotels.HotelMIS.controller;
 
+import com.WHotels.HotelMIS.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +15,24 @@ import java.util.List;
 @RequestMapping(path="api/v1/table")    // important
 class TableController {
     private final TableService tableService;
+    private final ReservationService reservationService;
 
     @Autowired
-    TableController(TableService tableService) {
+    TableController(TableService tableService, ReservationService reservationService) {
         this.tableService = tableService;
+        this.reservationService=reservationService;
     }
 
     @GetMapping
     public List<Table> getTables(){
-        return tableService.getTables();
+        List<Table> tables = tableService.getTables();
+        // Iterate through the tables and set the reserved property
+        for (Table table : tables) {
+            boolean isReserved = reservationService.isReserved((int) table.getId());
+            table.setReserved(isReserved);
+        }
+        return tables;
+
     }
 
     @PatchMapping("/update/{tableId}")
