@@ -1,6 +1,6 @@
 package com.WHotels.HotelMIS.repository;
 
-import com.WHotels.HotelMIS.model.Order;
+import com.WHotels.HotelMIS.model.Orders;
 
 import jakarta.transaction.TransactionScoped;
 import jakarta.transaction.Transactional;
@@ -13,16 +13,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order,Long> {
+public interface OrderRepository extends JpaRepository<Orders,Long> {
 
-    @Modifying
-    @Transactional
-    @Query(value = "INSERT INTO orders (item_id) VALUES (:itemId)", nativeQuery = true)
-    Order saveOrder(int itemId);
+    // @Modifying
+    // @Transactional
+    // @Query(value = "INSERT INTO orders (item_id) VALUES (:itemId)", nativeQuery = true)
+    // Order saveOrder(int itemId);
     @Query(value = "SELECT * FROM orders WHERE order_status = 'placed'", nativeQuery = true)
-    List<Order> getPlacedOrders();
+    List<Orders> getPlacedOrders();
     @Query(value = "SELECT * FROM orders WHERE order_status = 'prepared'", nativeQuery = true)
-    List<Order> getPreparedOrders();
-    void createOrder(int itemId);
+    List<Orders> getPreparedOrders();
+    // void createOrder(int itemId);
     
 }

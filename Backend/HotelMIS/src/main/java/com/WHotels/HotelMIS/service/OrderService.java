@@ -1,6 +1,6 @@
 package com.WHotels.HotelMIS.service;
 
-import com.WHotels.HotelMIS.model.Order;
+import com.WHotels.HotelMIS.model.Orders;
 import com.WHotels.HotelMIS.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,21 +17,21 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public List<Order> getPlacedOrders(){
+    public List<Orders> getPlacedOrders() {
         return orderRepository.getPlacedOrders();
     }
 
-    public List<Order> getPreparedOrders(){
+    public List<Orders> getPreparedOrders() {
         return orderRepository.getPreparedOrders();
     }
 
-    public void getOrderByTableID(){ // TO BE IMPLEMENTED
-        }
+    public void getOrderByTableID() { // TO BE IMPLEMENTED
+    }
 
-        public Order createOrder(int itemId) {
-            // Set any additional fields or validations here
-            return orderRepository.saveOrder(itemId);
-        }
-
+    public Object OrderscreateOrder(int itemId) {
+        // Set any additional fields or validations here
+        // return orderRepository.saveOrder(itemId);
+        return null;
+    }
 
 }

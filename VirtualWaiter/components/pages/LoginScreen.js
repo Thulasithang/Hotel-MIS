@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
+import { setTableNo } from '../../store/actions/tableActions';
+import { connect, useDispatch } from "react-redux";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+
+const mapStateToProps = (state) => ({
+  //map state to redux store the table number
+  tableNo: state.table.tableNo,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setTableNo: (tableNo) => dispatch(setTableNo(tableNo)), // Dispatch the action to set the tableNo
+});
 
 const LoginScreen = ({ navigation, onLogin }) => {
   const [tableNo, setTableNo] = useState('');
@@ -9,12 +20,13 @@ const LoginScreen = ({ navigation, onLogin }) => {
     // Check if the table number and password are valid
     if (tableNo.trim() !== '' && password === '1234') {
       // If valid, navigate to the MainContainer
-      onLogin();
+      setTableNo(tableNo);
+      navigation.navigate('MainContainer');
+      // dispatch(setTableNo(tableNo));
     } else {
       // Display an error message or take appropriate action for invalid login
     }
   };
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -75,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

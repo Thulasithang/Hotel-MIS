@@ -1,11 +1,10 @@
 package com.WHotels.HotelMIS.model;
 
 import jakarta.persistence.*;
-
 import java.util.Objects;
 
 @Entity
-public class Order {
+public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "order_id")
@@ -54,7 +53,7 @@ public class Order {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
+        Orders order = (Orders) o;
         return orderId == order.orderId && Objects.equals(tableId, order.tableId)  && Objects.equals(orderStatus, order.orderStatus);
     }
 

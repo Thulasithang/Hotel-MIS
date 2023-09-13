@@ -17,7 +17,8 @@ const CarouselCardItem = ({ item, index, dispatch }) => {
   const handleAddToCart = (item) => {
     dispatch({
       type: "ADD_TO_CART",
-      payload: { price: item.price, item: item, id: item.menuitemId, name: item.name, count: 1 },
+      // payload: { price: item.price, item: item, id: item.menuitemId, name: item.name, count: 1 },
+      payload: {id: item.menuitemId, item: item, count: 1}
     });
   };
 

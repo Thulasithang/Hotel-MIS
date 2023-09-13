@@ -1,5 +1,6 @@
 import React from "react";
 import { connect, useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -12,6 +13,7 @@ import { width } from "deprecated-react-native-prop-types/DeprecatedImagePropTyp
 import { placeOrder } from "../../store/actions/cartActions";
 
 const mapStateToProps = (state) => ({
+  tableNo: state.table.tableNo,
   itemsInCart: state.cart.itemsInCart,
 });
 
@@ -20,12 +22,15 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: "REMOVE_FROM_CART", payload: itemId }),
 });
 
-const CartScreen = ({ onClose, itemsInCart, removeFromCart }) => {
+const CartScreen = ({ onClose, itemsInCart, tableNo }) => {
   const dispatch = useDispatch();
-
+  const navigation = useNavigation();
   const handlePlaceOrder = () => {
-    dispatch(placeOrder(itemsInCart));
+    dispatch(placeOrder(itemsInCart, tableNo));
+    navigation.navigate("OrderStatus");
   };
+
+  console.log("tableNo from cartScreen: ", tableNo);
 
   const decreaseItemQuantity = (itemId) => {
     // Dispatch an action to decrease the quantity
@@ -54,15 +59,23 @@ const CartScreen = ({ onClose, itemsInCart, removeFromCart }) => {
               <View style={styles.cartItem}>
                 <View style={{ flexDirection: "column" }}>
                   <Text style={styles.cartItemName}>{item.name}</Text>
-                  <View style={{ flexDirection: "row"}}>
-                    <Text style={styles.cartItemPrice}>Price: Rs {item.price}</Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.cartItemPrice}>
+                      Price: Rs {item.price}
+                    </Text>
                     <View style={styles.quantityContainer}>
-                    <TouchableOpacity onPress={() => decreaseItemQuantity(item.id)}>
-                        <Text style={{fontSize: 20, fontWeight: "bold"}}>-</Text>
+                      <TouchableOpacity
+                        onPress={() => decreaseItemQuantity(item.id)}
+                      >
+                        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                          -
+                        </Text>
                       </TouchableOpacity>
                       <Text style={styles.cartItemCount}>{item.count}</Text>
-                      <TouchableOpacity onPress={() => increaseItemQuantity(item.id)}>
-                        <Text style={{fontSize: 20}}>+</Text>
+                      <TouchableOpacity
+                        onPress={() => increaseItemQuantity(item.id)}
+                      >
+                        <Text style={{ fontSize: 20 }}>+</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -79,7 +92,7 @@ const CartScreen = ({ onClose, itemsInCart, removeFromCart }) => {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   cartContainer: {
@@ -113,7 +126,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "lightgray",
     paddingVertical: 10,
-    alignContent: "flex-end"
+    alignContent: "flex-end",
     // justifyContent: "space-between",
   },
   cartItemName: {
