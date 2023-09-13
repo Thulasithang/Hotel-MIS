@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "api/v1/order")
@@ -37,20 +38,14 @@ public class OrderController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createOrder(@RequestBody Map<String, Object> requestData) {
-        try {
-            List<?> items = (List<?>) requestData.get("items"); // Assuming items can be any type
-            Integer tableId = (Integer) requestData.get("tableId"); // Assuming tableId is an integer
+            List<Map<String, Object>> items = (List<Map<String, Object>>) requestData.get("items"); 
+            Integer tableId = (Integer) requestData.get("tableId"); 
 
-            // Process the received data, e.g., create an order
-            // Example:
-            // Order createdOrder = orderService.createOrder(items, tableId);
-            // return ResponseEntity.ok("Order placed successfully with ID: " + createdOrder.getOrderId());
+            List<Integer> itemIds = items.stream()
+            .map(item -> (Integer) item.get("id"))
+            .collect(Collectors.toList());
 
-            // For testing purposes, return a response with received data
-            System.out.println("Received items: " + items + " for tableId: " + tableId);
-            return ResponseEntity.ok("Received items: " + items + " for tableId: " + tableId);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error processing the request: " + e.getMessage());
-        }
+            System.out.println("Received itemIds: " + itemIds + " for tableId: " + tableId);
+            return orderService.createOrder(itemIds, tableId);  
     }
 }

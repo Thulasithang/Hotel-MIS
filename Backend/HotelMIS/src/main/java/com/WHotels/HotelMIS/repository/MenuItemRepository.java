@@ -17,4 +17,8 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Integer> {
 
     @Query("SELECT m FROM MenuItem m WHERE m.quantity > 0")
     List<MenuItem> findInStockMenuItems();
+
+    @Query(value = "SELECT * FROM menu_item WHERE menuitem_id IN (:itemIds)", nativeQuery = true)
+    List<MenuItem> getMenuItemsById(List<Integer> itemIds);
+    
 }

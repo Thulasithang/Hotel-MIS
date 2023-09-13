@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/Ionicons";
 
-import MenuScreen from '../components/pages/MenuScreen';
-import CartScreen from '../components/pages/CartScreen';
-import OrderStatusScreen from '../components/pages/OrderStatus';
+import MenuScreen from "../components/pages/MenuScreen";
+import CartScreen from "../components/pages/CartScreen";
+import OrderStatusScreen from "../components/pages/OrderStatus";
 
 const Tab = createBottomTabNavigator();
 
-const screenWidth = Dimensions.get('window').width;
+const screenWidth = Dimensions.get("window").width;
 const cartWidthPercentage = 0.3; // Adjust as needed
 
 function MainContainer() {
@@ -24,68 +31,90 @@ function MainContainer() {
   };
 
   return (
+    <View style={{ flex: 1, paddingTop: 30 }}>
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
-          <MenuScreen />
-        </View>
-        {cartVisible && (
-          <View style={[styles.cartOverlay, { width: screenWidth * cartWidthPercentage }]}>
-            <CartScreen onClose={toggleCart} />
-          </View>
-        )}
-        {orderStatusVisible && (
-          <View style={[styles.orderStatusOverlay, { width: screenWidth * cartWidthPercentage }]}>
-            <OrderStatusScreen />
-          </View>
-        )}
-        <TouchableOpacity
-          style={styles.cartButton}
-          onPress={toggleCart}
+        <MenuScreen />
+      </View>
+      {cartVisible && (
+        <View
+          style={[
+            styles.cartOverlay,
+            { width: screenWidth * cartWidthPercentage },
+          ]}
         >
-          <Text>Show Cart</Text>
+          <CartScreen onClose={toggleCart} />
+        </View>
+      )}
+      {orderStatusVisible && (
+        <View
+          style={[
+            styles.orderStatusOverlay,
+            { width: screenWidth * cartWidthPercentage },
+          ]}
+        >
+          <OrderStatusScreen />
+        </View>
+      )}
+      <View style={styles.bottomNavigator}>
+        <TouchableOpacity style={styles.cartButton} onPress={toggleCart}>
+          <Icon name="cart-outline" size={30} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.orderStatusButton}
           onPress={toggleOrderStatus}
         >
-          <Text>Show Order Status</Text>
+          <Icon name="location-outline" size={30} />
         </TouchableOpacity>
       </View>
-    );
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
+  bottomNavigator: {
+    position: "absolute",
+    right: 0,
+    bottom: 0,
+    width: "5%",
+    height: "100%",
+    backgroundColor: "white",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: "midnightblue",
+    borderEndEndRadius: 8,
+  },
   cartButton: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    backgroundColor: 'blue', // Customize the button style
+    position: "absolute",
+    top: 20,
+    right: "10%",
+    backgroundColor: "blue", // Customize the button style
+    padding: 10,
+    borderRadius: 5,
+  },
+  orderStatusButton: {
+    position: "absolute",
+    top: 100,
+    right: "10%",
+    backgroundColor: "blue", // Customize the button style
     padding: 10,
     borderRadius: 5,
   },
   cartOverlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
-    right: 0,
-    height: '100%',
-    backgroundColor: 'white', // Customize the background color
-    zIndex: 1, // Ensure it's above MenuScreen
-    // shadowColor: 'black', // Customize shadow color
-    // shadowOpacity: 0.3, // Customize shadow opacity
-    // shadowOffset: { width: 2, height: 2 }, // Customize shadow offset
-    // elevation: 5, // For Android shadow
+    right: "5%",
+    height: "100%",
+    backgroundColor: "white", // Customize the background color
+    zIndex: 1,
   },
   orderStatusOverlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
-    right: 0,
-    height: '100%',
-    backgroundColor: 'white', // Customize the background color
-    zIndex: 1, // Ensure it's above MenuScreen
-    // shadowColor: 'black', // Customize shadow color
-    // shadowOpacity: 0.3, // Customize shadow opacity
-    // shadowOffset: { width: 2, height: 2 }, // Customize shadow offset
-    // elevation: 5, // For Android shadow
+    right: "5%",
+    height: "100%",
+    backgroundColor: "white", // Customize the background color
+    zIndex: 1,
   },
 });
 

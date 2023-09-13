@@ -1,7 +1,16 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const OrderStatusScreen = () => {
+const handleNavigation = () => {
+  // Navigate to the MainContainer
+  navigation.navigate("MainContainer");
+};
+
+const OrderStatusScreen = ({navigation}) => {
+  const handleNavigation = () => {
+    // Navigate to the MainContainer
+    navigation.navigate("MainContainer");
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Order Status</Text>
@@ -9,6 +18,9 @@ const OrderStatusScreen = () => {
       <ProgressBar text="Ordered" />
       <ProgressBar text="Accepted" />
       <ProgressBar text="Prepared" />
+      <TouchableOpacity style={styles.button} onPress={handleNavigation}>
+        <Text style={styles.buttonText}>Go to Main Container</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -55,6 +67,18 @@ const styles = StyleSheet.create({
     textAlign: "center", // Center text horizontally
     lineHeight: 30, // Center text vertically within the progress bar
     flex: 2, // Take up 2/3 of the space for text
+  },
+  button: {
+    backgroundColor: "blue",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 

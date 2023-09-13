@@ -6,22 +6,10 @@ export const placeOrder = (cartData, tableNo) => {
   return async (dispatch) => {
     try {
       const requestData = {
-        items: [
-          {
-            "id": 1,
-            "name": "Item 1",
-            "price": 10.0,
-            "quantity": 2
-          },
-          {
-            "id": 2,
-            "name": "Item 2",
-            "price": 15.0,
-            "quantity": 1
-          }
-        ],
-        tableId: 123,
+        items: cartData,
+        tableId: tableNo,
       };
+
 
       const response = await axios.post("http://192.168.1.6:8080/api/v1/order/create", requestData, {
         // headers: {
@@ -36,3 +24,22 @@ export const placeOrder = (cartData, tableNo) => {
     }
   };
 };
+
+
+// {
+//   items: [
+//     {
+//       "id": 1,
+//       "name": "Item 1",
+//       "price": 10.0,
+//       "quantity": 2
+//     },
+//     {
+//       "id": 2,
+//       "name": "Item 2",
+//       "price": 15.0,
+//       "quantity": 1
+//     }
+//   ],
+//   tableId: 123,
+// };
