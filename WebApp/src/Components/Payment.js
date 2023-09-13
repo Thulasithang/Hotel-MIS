@@ -46,19 +46,56 @@ function a11yProps(index) {
   };
 }
 
-const PaymentForm = () => {
+const PaymentForm = (props, { customerId }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const handlePaymentConfirm = () => {
+    // Create the data object to send in the POST request
+    const requestBody = {
+      bookingIdList: props.bookingData,
+      customerId: props.customerId.customerId,
+    };
+
+    // Define the URL and headers
+    const url = "http://localhost:8080/room/booking/confirm-booking";
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    // Perform the POST request using fetch
+    fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(requestBody),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Booking confirmed successfully");
+          /// need a alert showing that booking is successfull
+
+          return response.json();
+        } else {
+          console.error("Booking confirmation failed");
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <>
-      <div className="container py-5">
+      <div className="container py-5 from-block">
         <div className="row">
-          <div className="col-lg-7 mx-auto">
-            <div className="bg-white rounded-lg shadow-sm p-5">
+          <div className=" mx-auto  ">
+            <div className=" form-block rounded-lg shadow-sm p-5">
               <Tabs
                 value={value}
                 onChange={handleChange}
@@ -150,7 +187,12 @@ const PaymentForm = () => {
                       </div>
                     </div>
                   </div>
-                  <button type="button" className="book-btn">
+
+                  <button
+                    type="button"
+                    className="book-btn"
+                    onClick={handlePaymentConfirm}
+                  >
                     <Typography variant="button">Confirm</Typography>
                   </button>
                 </div>

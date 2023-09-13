@@ -51,7 +51,10 @@ export default function BookRoom() {
           alignItems: "center",
         }}
       >
-        <SearchResult />
+        <SearchResult
+          roomData={location.state ? location.state.Roomdata : {}}
+          selectedValues={location.state ? location.state.form : {}}
+        />
       </div>
     </>
   );

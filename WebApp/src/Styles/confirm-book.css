@@ -1,0 +1,20 @@
+.form-block{
+    background-color: #03095715;
+    margin: 10px 10px 10px 0px;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .submit-btn{
+    background-color: #030957;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+    margin: 10px;
+  }
+
+
+  .form-row{
+    margin-top: 15px;
+  }

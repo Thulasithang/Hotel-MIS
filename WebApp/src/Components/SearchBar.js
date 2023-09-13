@@ -1,6 +1,8 @@
 import * as React from "react";
 import dayjs from "dayjs";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import { convertDateToFormat } from "../Utils/dateUtil";
 
 import Popover from "@mui/material/Popover";
 import { Grid } from "@mui/material";
@@ -9,8 +11,6 @@ import { ThemeProvider } from "@mui/material/styles";
 import { themeTyp } from "../Styles/Theme";
 
 import "../Styles/searchbar.css";
-// ==========================ReactBoostrap============================
-// import { Container, Row, Col } from "react-bootstrap";
 // ==========================GUESTS===========================
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -46,20 +46,21 @@ export default function BasicPopover(props) {
   const navigate = useNavigate();
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("Date -", Form.date);
-    console.log("Adults -", Form.adults);
-    console.log("Children -", Form.children);
-    console.log("Promo -", Form.promo);
 
-    fetch(
-      `http://localhost:8000/booking/search?checkIn=${Form.date[0]}&checkOut=${Form.date[1]}&adults=${Form.adults}&children=${Form.children}&promo=${Form.promo}`
-    )
+    const fcin = convertDateToFormat(Form.date[0]);
+    const fcout = convertDateToFormat(Form.date[1]);
+
+    const url = `http://localhost:8080/room/booking/search-availability?checkIn=${fcin}&checkOut=${fcout}&adultCount=${Form.adults}&childrenCount=${Form.children}&promo=${Form.promo}`;
+
+    console.log(url);
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        setRoomList(data.roomdata);
+        setRoomList(data);
+        console.log(data);
 
         navigate("/book-room", {
-          state: { Roomdata: data.roomdata, form: Form },
+          state: { Roomdata: data, form: Form },
         });
       });
   };
