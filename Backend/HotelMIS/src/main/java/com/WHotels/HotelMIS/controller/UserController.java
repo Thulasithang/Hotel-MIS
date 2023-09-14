@@ -1,7 +1,7 @@
 package com.WHotels.HotelMIS.controller;
 
 import com.WHotels.HotelMIS.model.AuthRequest;
-import com.WHotels.HotelMIS.model.Order;
+import com.WHotels.HotelMIS.model.Orders;
 import com.WHotels.HotelMIS.model.Users;
 import com.WHotels.HotelMIS.service.JWTService;
 import com.WHotels.HotelMIS.service.OrderService;

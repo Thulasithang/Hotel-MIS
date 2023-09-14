@@ -37,7 +37,7 @@ public class MenuItemController {
         return menuItemService.getMenuItemsByType(type);
     }
     @GetMapping(path="/instock")
-    public List<Menuitem> getInStockMenuItems(){
+    public List<MenuItem> getInStockMenuItems(){
         return menuItemService.getInStockMenuItems();
     }
 
