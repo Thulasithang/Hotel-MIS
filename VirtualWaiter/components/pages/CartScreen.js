@@ -22,12 +22,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: "REMOVE_FROM_CART", payload: itemId }),
 });
 
-const CartScreen = ({ onClose, itemsInCart, tableNo }) => {
+const CartScreen = ({ onClose, itemsInCart, tableNo, onPlaceOrder }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const handlePlaceOrder = () => {
     dispatch(placeOrder(itemsInCart, tableNo));
-    navigation.navigate("OrderStatus");
+    // navigation.navigate("OrderStatus");
+    onPlaceOrder();
   };
 
   console.log("tableNo from cartScreen: ", tableNo);
@@ -44,11 +45,6 @@ const CartScreen = ({ onClose, itemsInCart, tableNo }) => {
 
   return (
     <View style={styles.cartContainer}>
-      <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-        <Text>Close Cart</Text>
-      </TouchableOpacity>
-      <Text style={{ fontSize: 24 }}>Shopping Cart</Text>
-      {/* Render cart items and total price here */}
       <View style={styles.container}>
         <Text style={styles.title}>Cart</Text>
         <FlatList
@@ -58,10 +54,10 @@ const CartScreen = ({ onClose, itemsInCart, tableNo }) => {
             return (
               <View style={styles.cartItem}>
                 <View style={{ flexDirection: "column" }}>
-                  <Text style={styles.cartItemName}>{item.name}</Text>
-                  <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.cartItemName}>{item.item.name}</Text>
+                  <View style={{ flexDirection: "row"}}>
                     <Text style={styles.cartItemPrice}>
-                      Price: Rs {item.price}
+                      Price: Rs {item.item.price}
                     </Text>
                     <View style={styles.quantityContainer}>
                       <TouchableOpacity
@@ -79,6 +75,11 @@ const CartScreen = ({ onClose, itemsInCart, tableNo }) => {
                       </TouchableOpacity>
                     </View>
                   </View>
+                  <View style={styles.totalPrice}>
+                    <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+                      Total: Rs {item.item.price * item.count}
+                    </Text>
+                    </View>
                 </View>
               </View>
             );
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
   cartContainer: {
     flex: 1,
     backgroundColor: "white",
-    position: "absolute",
+    // position: "absolute",
     top: 0,
     right: 0,
     width: "100%", // Adjust the width as needed
@@ -107,19 +108,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 40, // Create space for the close button
   },
-  closeButton: {
-    position: "absolute",
-    top: 10,
-    right: 10,
-  },
   container: {
-    flex: 1,
+    // flex:  1,
     paddingTop: 20,
   },
   title: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
+    alignSelf: "center",
   },
   cartItem: {
     flexDirection: "row",
@@ -130,25 +127,32 @@ const styles = StyleSheet.create({
     // justifyContent: "space-between",
   },
   cartItemName: {
-    fontSize: 16,
+    fontSize: 20,
+    justifyContent: "flex-end",
+    fontWeight: "bold",
   },
   cartItemPrice: {
-    fontSize: 14,
+    fontSize: 18,
     color: "gray",
     marginRight: 10,
     alignContent: "flex-start",
   },
   cartItemCount: {
-    fontSize: 14,
+    fontSize: 18,
     color: "gray",
     alignContent: "flex-end",
   },
   quantityContainer: {
+    left: 10,
     flexDirection: "row",
+    justifyContent: "space-around",
     alignItems: "center",
-    justifyContent: "space-between",
     width: 100,
-    marginLeft: 10,
+    height: 30,
+    backgroundColor: "lightgray",
+    borderRadius: 10,
+    paddingHorizontal: 5,
+
   },
   removeFromCartButton: {
     color: "red",

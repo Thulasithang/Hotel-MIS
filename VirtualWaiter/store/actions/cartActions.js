@@ -11,11 +11,11 @@ export const placeOrder = (cartData, tableNo) => {
       };
 
 
-      const response = await axios.post("http://192.168.1.6:8080/api/v1/order/create", requestData, {
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-      });
+      // const response = await axios.post("http://192.168.1.6:8080/api/v1/order/create", requestData, {
+      //   // headers: {
+      //   //   "Content-Type": "application/json",
+      //   // },
+      // });
       // Handle success, e.g., update the store or show a success message
       dispatch({ type: "ORDER_PLACED", payload: response.data });
     } catch (error) {

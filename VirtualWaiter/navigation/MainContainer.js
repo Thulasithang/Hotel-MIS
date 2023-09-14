@@ -22,6 +22,16 @@ function MainContainer() {
   const [cartVisible, setCartVisible] = useState(false);
   const [orderStatusVisible, setOrderStatusVisible] = useState(false); // State to control the visibility of Order Status
 
+  const handleCart = () => {
+
+    setCartVisible((prev) => !prev);
+    if (orderStatusVisible) {
+      setOrderStatusVisible((prev) => !prev);
+      setCartVisible((prev) => !prev);
+    }
+    
+  };
+
   const toggleCart = () => {
     setCartVisible((prev) => !prev);
   };
@@ -42,7 +52,9 @@ function MainContainer() {
             { width: screenWidth * cartWidthPercentage },
           ]}
         >
-          <CartScreen onClose={toggleCart} />
+          <CartScreen 
+          onClose={toggleCart}
+          onPlaceOrder = {toggleOrderStatus} />
         </View>
       )}
       {orderStatusVisible && (
@@ -52,11 +64,12 @@ function MainContainer() {
             { width: screenWidth * cartWidthPercentage },
           ]}
         >
-          <OrderStatusScreen />
+          <OrderStatusScreen 
+          onClose = {toggleOrderStatus}/>
         </View>
       )}
       <View style={styles.bottomNavigator}>
-        <TouchableOpacity style={styles.cartButton} onPress={toggleCart}>
+        <TouchableOpacity style={styles.cartButton} onPress={handleCart}>
           <Icon name="cart-outline" size={30} />
         </TouchableOpacity>
         <TouchableOpacity
