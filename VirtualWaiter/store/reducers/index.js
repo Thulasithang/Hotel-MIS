@@ -4,6 +4,7 @@ import cartReducer from './cartReducer';
 
 const rootReducer = combineReducers({
   cart: cartReducer,
+  table: tableReducer,
   // Add more reducers here
 });
 

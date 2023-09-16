@@ -1,52 +1,120 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/Ionicons";
 
-import MenuScreen from '../components/pages/MenuScreen';
-import CartScreen from '../components/pages/CartScreen';
+import MenuScreen from "../components/pages/MenuScreen";
+import CartScreen from "../components/pages/CartScreen";
+import OrderStatusScreen from "../components/pages/OrderStatus";
 
 const Tab = createBottomTabNavigator();
 
+const screenWidth = Dimensions.get("window").width;
+const cartWidthPercentage = 0.3; // Adjust as needed
+
 function MainContainer() {
   const [cartVisible, setCartVisible] = useState(false);
+  const [orderStatusVisible, setOrderStatusVisible] = useState(false); // State to control the visibility of Order Status
+
+  const toggleCart = () => {
+    setCartVisible((prev) => !prev);
+  };
+
+  const toggleOrderStatus = () => {
+    setOrderStatusVisible((prev) => !prev);
+  };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, paddingTop: 30 }}>
       <View style={{ flex: 1 }}>
         <MenuScreen />
       </View>
       {cartVisible && (
-        <View style={styles.cartOverlay}>
-          <CartScreen onClose={() => setCartVisible(false)} />
+        <View
+          style={[
+            styles.cartOverlay,
+            { width: screenWidth * cartWidthPercentage },
+          ]}
+        >
+          <CartScreen onClose={toggleCart} />
         </View>
       )}
-      <TouchableOpacity
-        style={styles.cartButton}
-        onPress={() => setCartVisible(!cartVisible)}
-      >
-        <Text>Show/Hide Cart</Text>
-      </TouchableOpacity>
+      {orderStatusVisible && (
+        <View
+          style={[
+            styles.orderStatusOverlay,
+            { width: screenWidth * cartWidthPercentage },
+          ]}
+        >
+          <OrderStatusScreen />
+        </View>
+      )}
+      <View style={styles.bottomNavigator}>
+        <TouchableOpacity style={styles.cartButton} onPress={toggleCart}>
+          <Icon name="cart-outline" size={30} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.orderStatusButton}
+          onPress={toggleOrderStatus}
+        >
+          <Icon name="location-outline" size={30} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  bottomNavigator: {
+    position: "absolute",
+    right: 0,
+    bottom: 0,
+    width: "5%",
+    height: "100%",
+    backgroundColor: "white",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: "midnightblue",
+    borderEndEndRadius: 8,
+  },
   cartButton: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    backgroundColor: 'blue', // Customize the button style
+    position: "absolute",
+    top: 20,
+    right: "10%",
+    backgroundColor: "blue", // Customize the button style
+    padding: 10,
+    borderRadius: 5,
+  },
+  orderStatusButton: {
+    position: "absolute",
+    top: 100,
+    right: "10%",
+    backgroundColor: "blue", // Customize the button style
     padding: 10,
     borderRadius: 5,
   },
   cartOverlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
-    right: 0,
-    width: '30%', // Adjust the width as needed
-    height: '100%',
-    backgroundColor: 'white', // Customize the background color
-    zIndex: 1, // Ensure it's above MenuScreen
+    right: "5%",
+    height: "100%",
+    backgroundColor: "white", // Customize the background color
+    zIndex: 1,
+  },
+  orderStatusOverlay: {
+    position: "absolute",
+    top: 0,
+    right: "5%",
+    height: "100%",
+    backgroundColor: "white", // Customize the background color
+    zIndex: 1,
   },
 });
 

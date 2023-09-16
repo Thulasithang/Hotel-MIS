@@ -6,7 +6,7 @@ const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
       const existingItemIndex = state.itemsInCart.findIndex(
-        (item) => item.id === action.payload.item.id
+        (item) => item.id === action.payload.item.menuitemId
       );
 
       if (existingItemIndex !== -1) {
@@ -24,6 +24,50 @@ const cartReducer = (state = initialState, action) => {
           itemsInCart: [...state.itemsInCart, action.payload],
         };
       }
+      case "DECREASE_ITEM_QUANTITY":
+      // Find the item in the cart by its ID
+      const decreasedItemIndex = state.itemsInCart.findIndex(
+        (item) => item.id === action.payload
+      );
+
+      if (decreasedItemIndex !== -1) {
+        const updatedItems = [...state.itemsInCart];
+        const decreasedItem = updatedItems[decreasedItemIndex];
+
+        // Decrease the item's quantity (assuming it's at least 1)
+        if (decreasedItem.count > 1) {
+          decreasedItem.count -= 1;
+        } else {
+          // If the count is 1, remove the item from the cart
+          updatedItems.splice(decreasedItemIndex, 1);
+        }
+
+        return {
+          ...state,
+          itemsInCart: updatedItems,
+        };
+      }
+      return state;
+
+      case "INCREASE_ITEM_QUANTITY":
+      // Find the item in the cart by its ID
+      const increasedItemIndex = state.itemsInCart.findIndex(
+        (item) => item.id === action.payload
+      );
+
+      if (increasedItemIndex !== -1) {
+        const updatedItems = [...state.itemsInCart];
+        const increasedItem = updatedItems[increasedItemIndex];
+
+        // Increase the item's quantity
+        increasedItem.count += 1;
+
+        return {
+          ...state,
+          itemsInCart: updatedItems,
+        };
+      }
+      return state;
 
     case "REMOVE_FROM_CART":
       return {
