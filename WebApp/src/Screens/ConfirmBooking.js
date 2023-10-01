@@ -18,6 +18,7 @@ export default function ConfirmBooking() {
   // Callback function to receive data from HotelBookingForm
   const handleFormData = (data) => {
     setCustomerId(data);
+    console.log(customerId);
   };
 
   return (
@@ -59,7 +60,14 @@ export default function ConfirmBooking() {
             </Row>
             <Row>
               <PaymentForm
-                bookingData={location.state ? location.state.bookingIds : {}}
+                bookingData={
+                  location.state
+                    ? {
+                        bookingIds: location.state.bookingIds,
+                        customerId: customerId, // Replace with the actual customerId value
+                      }
+                    : {}
+                }
               />
             </Row>
           </Col>

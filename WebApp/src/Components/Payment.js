@@ -46,8 +46,9 @@ function a11yProps(index) {
   };
 }
 
-const PaymentForm = (props, { customerId }) => {
+const PaymentForm = (props) => {
   const [value, setValue] = React.useState(0);
+  // console.log(props.bookingData.customerId);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -56,8 +57,8 @@ const PaymentForm = (props, { customerId }) => {
   const handlePaymentConfirm = () => {
     // Create the data object to send in the POST request
     const requestBody = {
-      bookingIdList: props.bookingData,
-      customerId: props.customerId.customerId,
+      bookingIdList: props.bookingData.bookingIds,
+      customerId: props.bookingData.customerId,
     };
 
     // Define the URL and headers

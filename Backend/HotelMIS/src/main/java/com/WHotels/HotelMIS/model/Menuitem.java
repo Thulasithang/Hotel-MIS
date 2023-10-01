@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class MenuItem {
+public class Menuitem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

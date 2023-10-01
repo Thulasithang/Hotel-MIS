@@ -12,7 +12,7 @@ import {
   faArrowCircleDown,
 } from "@fortawesome/free-solid-svg-icons";
 
-const HotelBookingForm = ({ onFormSubmit }) => {
+const HotelBookingForm = (props) => {
   const [showDetails, setShowDetails] = useState(true);
   const [detButton, setDetButton] = useState(false);
 
@@ -103,7 +103,7 @@ const HotelBookingForm = ({ onFormSubmit }) => {
         }
       })
       .then((data) => {
-        onFormSubmit(data);
+        props.onFormSubmit(data.customerId);
       })
       .catch((error) => {
         // Handle network or other errors
