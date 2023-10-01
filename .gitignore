@@ -1,0 +1,12 @@
+### VS Code ###
+.vscode/
+
+Backend/
+
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+node_modules
