@@ -5,6 +5,13 @@
 
 }
 
+.form-block{
+    background-color: #03095715;
+    margin: 10px 10px 10px 0px;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
 
 .tab-content{
     border: none;
@@ -17,6 +24,16 @@
     border: none;
     padding: 2px;
     float: right;
-    width: 50%;
+    width: 20%;
     height: 40px;
+    margin: 20px;
+    float: right;
+  }
+
+
+  .form-block{
+    background-color: #03095715;
+    margin: 10px 10px 10px 0px;
+    border-radius: 10px;
+    padding: 10px;
   }

@@ -25,6 +25,13 @@ export const themeTyp = createTheme({
       textTransform: "uppercase",
     },
 
+    PhotoTopic1: {
+      fontSize: 30,
+      fontFamily: "Raleway",
+      fontWeight: 600,
+      color: "#ffffff",
+    },
+
     OfferPrice: {
       fontSize: 40,
       fontFamily: "Raleway",
