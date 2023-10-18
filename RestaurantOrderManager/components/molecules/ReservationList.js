@@ -4,19 +4,8 @@ import axios from 'axios';
 import IpConfig from '../../IpConfig';
 
 
-const ReservationList = () => {
-  const [reservations, setReservations] = useState([]);
-  
-  useEffect(() => {
-    fetch(`http://${IpConfig.apiBaseUrl}:8080/api/v1/reservation/future`)
-      .then((response) => response.json())
-      .then((data) => {
-        setReservations(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching reservations:', error);
-      });
-  }, []);
+const ReservationList = ({reservations,onRemoveReservation}) => {
+
 
   const confirmRemoveReservation = (reservationId) => {
     Alert.alert(
@@ -37,23 +26,23 @@ const ReservationList = () => {
     );
   };
 
-  const onRemoveReservation = async (reservationId) => {
-    // console.log(reservationId.toString())
-    // console.log(`http://${IpConfig.apiBaseUrl}:8080/api/v1/reservation${reservationId}`)
-    try {
+  // const onRemoveReservation = async (reservationId) => {
+  //   // console.log(reservationId.toString())
+  //   // console.log(`http://${IpConfig.apiBaseUrl}:8080/api/v1/reservation${reservationId}`)
+  //   try {
       
-      const response = await axios.delete(`http://${IpConfig.apiBaseUrl}:8080/api/v1/reservation/${reservationId}`);
-      if (response.status === 204) {
-            // console.count('reservation removed')
-      } 
-    } catch (error) {
-      console.error('Error deleting reservation:', error);
-    }
+  //     const response = await axios.delete(`http://${IpConfig.apiBaseUrl}:8080/api/v1/reservation/${reservationId}`);
+  //     if (response.status === 204) {
+  //           // console.count('reservation removed')
+  //     } 
+  //   } catch (error) {
+  //     console.error('Error deleting reservation:', error);
+  //   }
     
-    setReservations((prevReservations) =>
-      prevReservations.filter((reservation) => reservation.reservationId !== reservationId)
-    );
-  };
+  //   setReservations((prevReservations) =>
+  //     prevReservations.filter((reservation) => reservation.reservationId !== reservationId)
+  //   );
+  // };
 
   return (
     <View style={styles.container}>

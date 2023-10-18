@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native';
 import IpConfig from '../../IpConfig';
 
-const UserList = () => {
-  const [users, setUsers] = useState([]);
+const UserList = ({users, onRemoveUser}) => {
+  // const [users, setUsers] = useState([]);
 
-  useEffect(() => {
+  // useEffect(() => {
     
-    fetch(`http://${IpConfig.apiBaseUrl}:8080/api/v1/user`)
-      .then((response) => response.json())
-      .then((data) => {
-        setUsers(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching users:', error);
-      });
-  }, []);
+  //   fetch(`http://${IpConfig.apiBaseUrl}:8080/api/v1/user`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setUsers(data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching users:', error);
+  //     });
+  // }, []);
 
   const confirmRemoveUser = (userId) => {
     Alert.alert(
@@ -36,10 +36,10 @@ const UserList = () => {
     );
   };
 
-  const onRemoveUser = (userId) => {
-    // Filter out the user to be removed from the state
-    setUsers((prevUsers) => prevUsers.filter((user) => user.userId !== userId));
-  };
+  // const onRemoveUser = (userId) => {
+  //   // Filter out the user to be removed from the state
+  //   setUsers((prevUsers) => prevUsers.filter((user) => user.userId !== userId));
+  // };
 
   return (
     <View style={styles.container}>

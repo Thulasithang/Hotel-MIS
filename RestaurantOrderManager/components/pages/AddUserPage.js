@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import UserList from '../molecules/UserList';
 import IpConfig from '../../IpConfig';
 import axios from 'axios';
+import { useEffect } from 'react';
 
 const AddUserPage = () => {
   const navigation = useNavigation();
@@ -15,8 +16,26 @@ const AddUserPage = () => {
   const [password, setPassword] = useState('');
   const [userRole, setUserRole] = useState(''); // Initialize userRole state with an empty string
   const [selectedUserRole, setSelectedUserRole] = useState('Admin'); // Initialize selectedUserRole with 'Admin'
+  const [users, setUsers] = useState([]);
+
+  const fetchUserList = () => {
+    fetch(`http://${IpConfig.apiBaseUrl}:8080/api/v1/user`)
+      .then((response) => response.json())
+      .then((data) => {
+        setUsers(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching users:', error);
+      });
+  };
+
+  useEffect(() => {
+    fetchUserList();
+  }, []);
+
 
   const handleRegister = () => {
+    // function that adds a new user
     console.log("abc");
 
     let roleText;
@@ -30,13 +49,6 @@ const AddUserPage = () => {
       return; // Exit the function
     }
 
-    console.log('Registration data:', {
-      username,
-      fullName,
-      password,
-      role: roleText,
-    });
-
     const userData = {
       username,
       fullName,
@@ -47,6 +59,7 @@ const AddUserPage = () => {
     axios.post(`http://${IpConfig.apiBaseUrl}:8080/api/v1/user/new`, userData)
       .then(response => {
         console.log('User added:', response.data);
+        fetchUserList();
         // Display an alert to the user and reset the input fields
         Alert.alert('User Saved', 'User has been successfully added', [
           {
@@ -63,6 +76,22 @@ const AddUserPage = () => {
       .catch(error => {
         console.error('Error adding user:', error);
       });
+
+    
+     
+  };
+
+  const onRemoveUser = (userId) => {
+    axios
+    .delete(`http://${IpConfig.apiBaseUrl}:8080/api/v1/user/remove/${userId}`)
+    .then(() => {
+      // If the deletion was successful, update the user list in the state
+      setUsers((prevUsers) => prevUsers.filter((user) => user.userId !== userId));
+    })
+    .catch((error) => {
+      console.error('Error deleting user:', error);
+      // Handle the error as needed (e.g., show an error message to the user)
+    });
 
   };
 
@@ -115,7 +144,7 @@ const AddUserPage = () => {
       </View>
 
       <View style={styles.rightContainer}>
-        <UserList />
+        <UserList users={users} onRemoveUser={onRemoveUser} />
       </View>
     </ScrollView>
   );

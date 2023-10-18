@@ -12,7 +12,8 @@ const EditMenuItemCard = ({
   initialFoodType,
   initialImageUrl,
   initialDescription,
-  onDelete,
+  onRemove,
+  onEdit,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [itemName, setItemName] = useState(initialName);
@@ -29,7 +30,20 @@ const EditMenuItemCard = ({
 
   const handleSaveClick = () => {
     setIsEditing(false);
-    // Logic to update the DB
+
+    const updatedItem = {
+      id: initialId,
+      name: itemName,
+      price: parseFloat(itemPrice), // Convert to a number
+      discount: parseInt(itemDiscount), // Convert to a number
+      quantity: parseInt(itemStock), // Convert to a number
+      foodType: itemFoodType,
+      imageUrl: itemImageUrl,
+      description: itemDescription,
+    };
+
+    onEdit(updatedItem);
+    
   };
 
   const confirmDelete = () => {
@@ -43,20 +57,7 @@ const EditMenuItemCard = ({
         },
         {
           text: 'Delete',
-          onPress: () => {
-            // Send a DELETE request to delete the menu item
-            axios
-              .delete(`http://${IpConfig.apiBaseUrl}:8080/api/v1/menuitem/delete/${initialId}`)
-              .then((response) => {
-                // Handle success (e.g., show a success message)
-                console.log('Menu item deleted successfully:', response.data);
-                //onDelete(initialId);
-              })
-              .catch((error) => {
-                // Handle errors (e.g., show an error message)
-                console.error('Error deleting menu item:', error);
-              });
-          },
+          onPress: () => onRemove(initialId),
           style: 'destructive',
         },
       ],

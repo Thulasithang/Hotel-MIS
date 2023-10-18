@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 
-const AddMenuItemForm = () => {
+const AddMenuItemForm = ({onAdd}) => {
   const [isEditing, setIsEditing] = useState(true);
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState("");
@@ -10,9 +10,38 @@ const AddMenuItemForm = () => {
   const [itemFoodType, setItemFoodType] = useState("");
   const [itemImageUrl, setItemImageUrl] = useState("");
   const [itemDescription, setItemDescription] = useState("");
+  const [formError, setFormError] = useState("");
 
   const handleAddClick = () => {
+
+      // Reset previous error message
+      setFormError("");
+
+      // Validate form fields
+      if (
+        itemName.trim() === "" ||
+        itemPrice.trim() === "" ||
+        itemDiscount.trim() === "" ||
+        itemStock.trim() === "" ||
+        itemFoodType.trim() === ""
+      ) {
+        setFormError("Cannot leave required fields empty");
+        return;
+      }
+  
     setIsEditing(false);
+
+    const newItem = {
+      name: itemName,
+      price: parseFloat(itemPrice), // Convert to a number
+      discount: parseInt(itemDiscount), // Convert to a number
+      quantity: parseInt(itemStock), // Convert to a number
+      foodType: itemFoodType,
+      imageUrl: itemImageUrl,
+      description: itemDescription,
+    };
+
+    onAdd(newItem)
 
     //  add the menu item to the dayabase
   };
@@ -22,6 +51,7 @@ const AddMenuItemForm = () => {
       <Text style={styles.MenuItemText}> |                       Add New Menu Item                       | </Text>
       {isEditing ? (
         <View>
+          {formError !== "" && <Text style={styles.errorText}>{formError}</Text>}
           <TextInput
             style={styles.Text}
             placeholder="Item Name"
@@ -129,6 +159,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center',
     marginTop: 10,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    textAlign: 'center',
   },
 });
 

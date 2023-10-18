@@ -4,7 +4,9 @@ import EditMenuItemCard from "../atoms/EditMenuItemCard";
 import { KeyboardAwareFlatList, KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import AddMenuItemForm from '../atoms/AddMenuItemForm';
 
-const EditMenuItemGrid=({menuData})=>{
+const EditMenuItemGrid=({menuData,onRemove,onEdit})=>{
+
+  //const [menuData, setMenuData] = useState([]);
 
     const renderItem =({item})=>{
 
@@ -19,6 +21,8 @@ const EditMenuItemGrid=({menuData})=>{
             initialFoodType={item.foodType}
             initialDescription={item.description}
             initialImageUrl={item.imageUrl}
+            onRemove={onRemove}
+            onEdit={onEdit}
           />);
       }
 
