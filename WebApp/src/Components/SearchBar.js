@@ -1,6 +1,7 @@
 import * as React from "react";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import ipaddress from "../config";
 
 import { convertDateToFormat } from "../Utils/dateUtil";
 
@@ -50,10 +51,10 @@ export default function BasicPopover(props) {
     const fcin = convertDateToFormat(Form.date[0]);
     const fcout = convertDateToFormat(Form.date[1]);
 
-    const url = `http://localhost:8080/room/booking/search-availability?checkIn=${fcin}&checkOut=${fcout}&adultCount=${Form.adults}&childrenCount=${Form.children}&promo=${Form.promo}`;
-
-    console.log(url);
-    fetch(url)
+    const apiUrl = `${ipaddress}/room/booking/search-availability?checkIn=${fcin}&checkOut=${fcout}&adultCount=${Form.adults}&childrenCount=${Form.children}&promo=${Form.promo}`;
+    console.log("Search API: ", apiUrl);
+    console.log(apiUrl);
+    fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => {
         setRoomList(data);

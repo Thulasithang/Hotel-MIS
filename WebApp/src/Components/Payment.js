@@ -1,8 +1,10 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Form from "react-bootstrap/Form";
+import ipaddress from "../config";
 
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
@@ -47,6 +49,7 @@ function a11yProps(index) {
 }
 
 const PaymentForm = (props) => {
+  const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   // console.log(props.bookingData.customerId);
 
@@ -62,7 +65,7 @@ const PaymentForm = (props) => {
     };
 
     // Define the URL and headers
-    const url = "http://localhost:8080/room/booking/confirm-booking";
+    const url = ipaddress + "/room/booking/confirm-booking";
     const headers = {
       "Content-Type": "application/json",
     };
@@ -77,6 +80,12 @@ const PaymentForm = (props) => {
         if (response.ok) {
           console.log("Booking confirmed successfully");
           /// need a alert showing that booking is successfull
+          navigate("/booking-success", {
+            state: {
+              bookingIds: props.bookingData.bookingIds,
+              bookingData: props.bookingData,
+            },
+          });
 
           return response.json();
         } else {
@@ -188,14 +197,6 @@ const PaymentForm = (props) => {
                       </div>
                     </div>
                   </div>
-
-                  <button
-                    type="button"
-                    className="book-btn"
-                    onClick={handlePaymentConfirm}
-                  >
-                    <Typography variant="button">Confirm</Typography>
-                  </button>
                 </div>
               </CustomTabPanel>
 
@@ -240,6 +241,14 @@ const PaymentForm = (props) => {
                 </div>
               </CustomTabPanel>
             </div>
+            <button
+              type="button"
+              className="book-btn"
+              style={{ marginTop: "-70px" }}
+              onClick={handlePaymentConfirm}
+            >
+              <Typography variant="button">Confirm</Typography>
+            </button>
           </div>
         </div>
       </div>

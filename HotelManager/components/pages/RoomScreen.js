@@ -14,13 +14,10 @@ import ForumView from "../atoms/ForumView";
 import CategoryButton from "../atoms/CategoryButton";
 import ipAddress from "../../config";
 
-
 const RoomScreen = () => {
-  
   const navigation = useNavigation();
 
   const [selectedButton, setSelectedButton] = useState("");
-  console.log(selectedButton);
 
   const handleButtonRoom = () => {
     setSelectedButton("Rooms");
@@ -34,9 +31,9 @@ const RoomScreen = () => {
 
   const renderView = () => {
     if (selectedButton === "Rooms") {
-      return <RoomView setSelectedButton={setSelectedButton} />;
+      return <RoomView />;
     } else if (selectedButton === "RoomTypes" || selectedButton === "") {
-      return <RoomTypeView  />;
+      return <RoomTypeView />;
     }
   };
 
@@ -68,10 +65,7 @@ const RoomScreen = () => {
   );
 };
 
-
-
-const RoomView = ({ setSelectedButton }) => {
-  
+const RoomView = () => {
   const navigation = useNavigation();
   const columns = [
     { title: "ID", flex: 1 },
@@ -84,19 +78,19 @@ const RoomView = ({ setSelectedButton }) => {
   useEffect(() => {
     const apiUrl = `${ipAddress}/app/room?roomId`;
     fetch(apiUrl)
-    .then((response) => response.json())
-    .then((responseData) => {
-      const formattedData = responseData.map((item) => ({
-        ID: item.roomId.toString(),
-        Type: item.roomType.type,
-        Status: item.roomStatus,
-      }));
-      setData(formattedData);
-      console.log("Room Data", formattedData);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then((response) => response.json())
+      .then((responseData) => {
+        const formattedData = responseData.map((item) => ({
+          ID: item.roomId.toString(),
+          Type: item.roomType.type,
+          Status: item.roomStatus,
+        }));
+        setData(formattedData);
+        console.log("Room Data", formattedData);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   const handleAddRoom = () => {
@@ -112,12 +106,20 @@ const RoomView = ({ setSelectedButton }) => {
 
   const handleFilterID = (text) => {
     if (!text) {
-      setSelectedButton("Rooms");
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'RoomScreen' }],
-      });
-      
+      const apiUrl = `${ipAddress}/app/room?roomId`;
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((responseData) => {
+          const formattedData = responseData.map((item) => ({
+            ID: item.roomId.toString(),
+            Type: item.roomType.type,
+            Status: item.roomStatus,
+          }));
+          setData(formattedData);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } else {
       const apiUrl = `${ipAddress}/app/room?roomId=${text}`;
       fetch(apiUrl)
@@ -211,7 +213,6 @@ const RoomTypeView = () => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   filterButtons: {

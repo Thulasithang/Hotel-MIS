@@ -1,13 +1,16 @@
 import React from "react";
 import { useState, useEffect, useMemo } from "react";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { themeTyp } from "../Styles/Theme";
 import "../Styles/confirm-book.css";
+import ipaddress from "../config";
+import { validateNICWithBirthdate } from "../Utils/nicValidator";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCheckCircle,
   faArrowCircleUp,
   faArrowCircleDown,
 } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +26,9 @@ const HotelBookingForm = (props) => {
   const [phoneNo, setPhoneNo] = useState("");
   const [dob, setDob] = useState("");
 
+  const [validNIC, setValidNIC] = useState(false);
+
+  // };
   const newCustomerData = useMemo(() => {
     return {
       nic: nic,
@@ -66,6 +72,67 @@ const HotelBookingForm = (props) => {
     }
   }, [newCustomerData]);
 
+  const isValidEmail = (email) => {
+    // Regular expression for basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    return emailRegex.test(email);
+  };
+
+  const isValidPhoneNumber = (phoneNo) => {
+    // Regular expression for mobile phone number validation
+    const phoneRegex = /^(?:\+94[1-9]\d{8}|0\d{9}|[1-9]\d{8})$/;
+    return phoneRegex.test(phoneNo);
+  };
+
+  const [showErrPhone, setShowErrPhone] = useState(false);
+  const handlePhoneNoChange = (e) => {
+    const newPhoneNo = e.target.value;
+    setPhoneNo(newPhoneNo);
+    setShowErrPhone(!isValidPhoneNumber(newPhoneNo));
+  };
+
+  const [showError, setShowError] = useState(false);
+  const handleEmailChange = (e) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    setShowError(!isValidEmail(newEmail));
+    setCheckMail(!isValidEmail(newEmail));
+  };
+
+  // =======================================================
+  // check Mail Delivery
+  const [checkMaiil, setCheckMail] = useState(true);
+  const [mailDelivery, setMailDelivery] = useState(false);
+  const handleEmail = () => {
+    setCheckMail(true);
+
+    const apiKey = "a18cf6494f174f449b10858fe74c8df1";
+    const url = `https://emailvalidation.abstractapi.com/v1/?api_key=${apiKey}&email=${email}`;
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data.deliverability);
+        if (data.deliverability == "DELIVERABLE") {
+          setMailDelivery(true);
+        } else {
+          setCheckMail(false);
+          setShowError(true);
+        }
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  };
+
+  // ===============================================
+
+  console.log(fName);
   const handleSubmit = () => {
     // Create the data object to send in the POST request
     const requestBody = {
@@ -77,14 +144,16 @@ const HotelBookingForm = (props) => {
       email: email,
     };
 
+    console.log(requestBody);
+
     // Define the URL and headers
-    const url = "http://localhost:8080/customer/submit-customer";
+    const customerUrl = ipaddress + "/customer/submit-customer";
     const headers = {
       "Content-Type": "application/json",
     };
 
     // Perform the POST request using fetch
-    fetch(url, {
+    fetch(customerUrl, {
       method: "POST",
       headers: headers,
       body: JSON.stringify(requestBody),
@@ -112,28 +181,39 @@ const HotelBookingForm = (props) => {
   };
   const handleNicInputChange = (event) => {
     const inputValue = event.target.value;
-
-    if (inputValue.length === 9) {
+    if (dob !== null) {
+      const isMatch = validateNICWithBirthdate(inputValue, dob);
+      setValidNIC(!isMatch);
+    }
+    if (inputValue.length >= 10) {
       // Make a GET fetch call to the server
-      fetch(`http://localhost:8080/customer/view-customer?nicNo=${inputValue}`)
+
+      const findUrl = ipaddress + "/customer/view-customer?nicNo=" + inputValue;
+      console.log(findUrl);
+      fetch(findUrl)
         .then((response) => response.json())
         .then((data) => {
           // Update the customerData state with the response
-          setExistCustomerData({
-            nic: data.nicNumber,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            phoneNo: data.phoneNo,
-            dateOfBirth: data.dateOfBirth,
-          });
-          setFName(data.firstName);
-          setLName(data.lastName);
-          setEmail(data.email);
-          setPhoneNo(data.phoneNo);
-          setDob(data.dateOfBirth);
+          if (data.email === null) {
+            setExistValid(false);
+          } else {
+            setExistCustomerData({
+              nic: data.nicNumber,
+              firstName: data.firstName,
+              lastName: data.lastName,
+              email: data.email,
+              phoneNo: data.phoneNo,
+              dateOfBirth: data.dateOfBirth,
+            });
+            setFName(data.firstName);
+            setLName(data.lastName);
+            setEmail(data.email);
+            setPhoneNo(data.phoneNo);
+            setDob(data.dateOfBirth);
 
-          setExistValid(true);
+            setExistValid(true);
+          }
+
           // console.log(data);
         })
         .catch((error) => {
@@ -161,9 +241,10 @@ const HotelBookingForm = (props) => {
           </Col>
           <Col xs={2} sm={2} md={2} lg={2}>
             <Button
-              className="show-more-btn"
+              // className="show-more-btn"
               onClick={() => setShowDetails(!showDetails)}
               disabled={detButton}
+              style={{ color: "#000000" }}
             >
               <FontAwesomeIcon
                 icon={showDetails ? faArrowCircleUp : faArrowCircleDown}
@@ -211,10 +292,19 @@ const HotelBookingForm = (props) => {
               <Row className="form-row">
                 <Col xs={12} sm={12} md={12} lg={6}>
                   <Form.Group controlId="email">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>
+                      Email{" "}
+                      <Button
+                        className="show-more-btn"
+                        onClick={handleEmail}
+                        disabled={checkMaiil}
+                      >
+                        <FontAwesomeIcon icon={faCheckCircle} />
+                      </Button>
+                    </Form.Label>
                     <Form.Control
                       type="email"
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={handleEmailChange}
                       value={
                         existValid && existCustomerData
                           ? existCustomerData.email
@@ -223,6 +313,25 @@ const HotelBookingForm = (props) => {
                       placeholder="Enter your email"
                       required
                     />
+
+                    {showError && (
+                      <div style={{ display: "inline-block" }}>
+                        <Alert
+                          variant="danger"
+                          style={{
+                            fontSize: 10,
+                            height: "8px",
+                            marginTop: "5px",
+                            display: "flex", // Use flexbox
+                            alignItems: "center", // Center vertically
+                            justifyContent: "center",
+                            marginBottom: "-10px",
+                          }}
+                        >
+                          Please enter a valid email address
+                        </Alert>
+                      </div>
+                    )}
                   </Form.Group>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6}>
@@ -235,6 +344,24 @@ const HotelBookingForm = (props) => {
                       onChange={handleNicInputChange}
                       value={nic}
                     />
+                    {validNIC && (
+                      <div style={{ display: "inline-block" }}>
+                        <Alert
+                          variant="danger"
+                          style={{
+                            fontSize: 10,
+                            height: "8px",
+                            marginTop: "5px",
+                            display: "flex", // Use flexbox
+                            alignItems: "center", // Center vertically
+                            justifyContent: "center",
+                            marginBottom: "-10px",
+                          }}
+                        >
+                          Please enter a valid NIC number
+                        </Alert>
+                      </div>
+                    )}
                   </Form.Group>
                 </Col>
               </Row>
@@ -249,10 +376,28 @@ const HotelBookingForm = (props) => {
                           ? existCustomerData.phoneNo
                           : phoneNo
                       }
-                      onChange={(e) => setPhoneNo(e.target.value)}
+                      onChange={handlePhoneNoChange}
                       placeholder="Enter your phone number"
                       required
                     />
+                    {showErrPhone && (
+                      <div style={{ display: "inline-block" }}>
+                        <Alert
+                          variant="danger"
+                          style={{
+                            fontSize: 10,
+                            height: "8px",
+                            marginTop: "5px",
+                            display: "flex", // Use flexbox
+                            alignItems: "center", // Center vertically
+                            justifyContent: "center",
+                            marginBottom: "-4px",
+                          }}
+                        >
+                          Please enter a valid Mobile Number
+                        </Alert>
+                      </div>
+                    )}
                   </Form.Group>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6}>

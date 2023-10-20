@@ -20,9 +20,9 @@ import img1 from "../Images/w-hotels-logo-transparent-31.png";
 
 const pages = ["Home", "Rooms", "Offers", "Restaurant"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-const list = ["Login", "SignUp"];
+// const list = ["Login", "SignUp"];
 
-const auth = true;
+const auth = false;
 
 function ResponsiveAppBar() {
   const [navbar, setNavbar] = useState(false);
@@ -159,7 +159,7 @@ function ResponsiveAppBar() {
               ))}
             </Box>
 
-            {auth ? (
+            {/* {auth ? (
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -208,7 +208,7 @@ function ResponsiveAppBar() {
                   ))}
                 </ButtonGroup>
               </Box>
-            )}
+            )} */}
           </Toolbar>
         </Container>
       </AppBar>

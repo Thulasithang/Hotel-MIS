@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
+import ipaddress from "../config";
 
 import ImageCarousel from "./Carousal";
 import "../Styles/checkout-table.css";
@@ -84,7 +85,8 @@ const SearchResult = (props) => {
       price: price,
     };
 
-    fetch("http://localhost:8080/room/booking", {
+    const apiUrl = ipaddress + "/room/booking";
+    fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -133,7 +135,8 @@ const SearchResult = (props) => {
     console.log(requestBody);
     console.log(bookingIds);
 
-    fetch("http://localhost:8080/room/booking/delete-selections", {
+    const deleteUrl = ipaddress + "/room/booking/delete-selections";
+    fetch(deleteUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -231,13 +234,12 @@ const SearchResult = (props) => {
                                 color: "#030957",
                                 textDecoration: "line-through",
                               }}
-                            >
-                              LKR 34,437.13
-                            </Typography>
+                            ></Typography>
                             <Typography
                               variant="PhotoTopic"
                               sx={{ color: "#030957" }}
                             >
+                              LKR{" "}
                               {calculateBB(
                                 roomTypeVal,
                                 props.selectedValues.adults,
@@ -254,6 +256,7 @@ const SearchResult = (props) => {
                           <div className="room-type-btn">
                             <Button
                               className="book-btn"
+                              style={{ width: "100%" }}
                               onClick={() =>
                                 handleSelectRoom(
                                   calculateBB(
@@ -292,13 +295,12 @@ const SearchResult = (props) => {
                                 color: "#030957",
                                 textDecoration: "line-through",
                               }}
-                            >
-                              LKR 34,437.13
-                            </Typography>
+                            ></Typography>
                             <Typography
                               variant="PhotoTopic"
                               sx={{ color: "#030957" }}
                             >
+                              LKR{" "}
                               {calculateHB(
                                 roomTypeVal,
                                 props.selectedValues.adults,
@@ -326,6 +328,7 @@ const SearchResult = (props) => {
                                 )
                               }
                               className="book-btn"
+                              style={{ width: "100%" }}
                             >
                               <Typography variant="body3">Select</Typography>
                             </Button>
@@ -353,13 +356,12 @@ const SearchResult = (props) => {
                                 color: "#030957",
                                 textDecoration: "line-through",
                               }}
-                            >
-                              LKR 34,437.13
-                            </Typography>
+                            ></Typography>
                             <Typography
                               variant="PhotoTopic"
                               sx={{ color: "#030957" }}
                             >
+                              LKR{" "}
                               {calculateFB(
                                 roomTypeVal,
                                 props.selectedValues.adults,
@@ -387,6 +389,7 @@ const SearchResult = (props) => {
                                 )
                               }
                               className="book-btn"
+                              style={{ width: "100%" }}
                             >
                               <Typography variant="body3">Select</Typography>
                             </Button>
