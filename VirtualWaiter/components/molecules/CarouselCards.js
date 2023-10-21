@@ -19,9 +19,9 @@ const CarouselCards = ({ newData, addToCart }) => {
   data={newData}
   renderItem={({ item }) => <CarouselCardItem item={item} addToCart={addToCart} />}
   sliderWidth={SLIDER_WIDTH}
-  itemWidth={300}
+  itemWidth={ITEM_WIDTH*1.1}
   useScrollView={true}
-  loop={false}
+  loop={true}
   inactiveSlideOpacity={1}
   inactiveSlideScale={1}
   paddingTop={40}

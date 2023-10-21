@@ -1,21 +1,28 @@
 import axios from "axios";
 
-export const placeOrder = (cartData, tableNo) => {
-  console.log("cartData", cartData);
-  console.log(typeof(tableNo));
+export const placeOrder = (cartData, tableNo, customerName, customerNumber) => {
   return async (dispatch) => {
     try {
+      // Parse tableNo to an integer
+      const parsedTableNo = parseInt(tableNo, 10); // 10 is the base for parsing
+
+      if (isNaN(parsedTableNo)) {
+        throw new Error("Invalid table number"); // Handle the error if parsing fails
+      }
+
       const requestData = {
         items: cartData,
-        tableId: tableNo,
+        tableId: parsedTableNo, // Use the parsed integer value
+        customerName: customerName,
+        customerNumber: customerNumber,
       };
 
 
-      // const response = await axios.post("http://192.168.1.6:8080/api/v1/order/create", requestData, {
-      //   // headers: {
-      //   //   "Content-Type": "application/json",
-      //   // },
-      // });
+      const response = await axios.post("http://10.10.5.194:8080/api/v1/order/create", requestData, {
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+      });
       // Handle success, e.g., update the store or show a success message
       dispatch({ type: "ORDER_PLACED", payload: response.data });
     } catch (error) {

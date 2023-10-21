@@ -17,9 +17,20 @@ const CarouselCardItem = ({ item, index, dispatch }) => {
   const handleAddToCart = (item) => {
     dispatch({
       type: "ADD_TO_CART",
-      // payload: { price: item.price, item: item, id: item.menuitemId, name: item.name, count: 1 },
-      payload: {id: item.menuitemId, item: item, count: 1}
+      payload: { id: item.menuitemId, item: item, count: 1 },
     });
+  };
+
+  // Check if discount is 0, if so, hide the red discount circle
+  const renderDiscountCircle = () => {
+    if (item.discount === 0) {
+      return null; // Return null to hide the circle
+    }
+    return (
+      <View style={styles.discountStar}>
+        <Text style={styles.discountText}>{item.discount}% OFF</Text>
+      </View>
+    );
   };
 
   return (
@@ -27,11 +38,16 @@ const CarouselCardItem = ({ item, index, dispatch }) => {
       <Image
         source={{ uri: item.imageUrl }}
         style={styles.image}
-        resizeMode="cover"
+        resizeMode="contain"
       />
-      <Text style={styles.header}>{item.name}</Text>
-      <Text style={styles.body}>{item.description}</Text>
-      <View style={{ flexDirection: "row", marginTop: 20, paddingLeft: 10 }}>
+      {renderDiscountCircle()}
+      <View style={{ padding: 5 }}>
+        <Text style={styles.header}>{item.name}</Text>
+      </View>
+      <View style = {{height: "20%" }}>
+        <Text style={styles.body}>{item.description}</Text>
+      </View>
+      <View style={{ flexDirection: "row", marginTop: 20, paddingLeft: 10, maxHeight: "30%" }}>
         <Ionicons name="star" size={20} color="gold" />
         <Text style={{ marginLeft: 10 }}>{item.rating}</Text>
         <Text style={{ position: "absolute", end: 60 }}>Rs {item.price}</Text>
@@ -39,7 +55,7 @@ const CarouselCardItem = ({ item, index, dispatch }) => {
           onPress={() => handleAddToCart(item)} // Pass a function reference
           style={{ position: "absolute", end: 10, alignSelf: "center" }}
         >
-          <Ionicons name="add-circle-outline" size={40} color="black" />
+          <Ionicons name="add-circle" size={40} color="blue" />
         </TouchableOpacity>
       </View>
     </View>
@@ -49,13 +65,14 @@ const CarouselCardItem = ({ item, index, dispatch }) => {
 const styles = StyleSheet.create({
   container: {
     borderRadius: 8,
-    width: ITEM_WIDTH,
     height: 380,
+    width: ITEM_WIDTH,
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 30,
     backgroundColor: "white",
     elevation: 10,
+    paddingBottom: 10,
   },
   image: {
     borderRadius: 8,
@@ -70,9 +87,26 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   body: {
-    padding: 10,
+    padding: 5,
     color: "#222",
-    fontSize: 12,
+  },
+  // Style for the discount star
+  discountStar: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "red",
+    borderRadius: 50, // Makes it a circle
+    width: 50,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 5,
+  },
+  discountText: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });
 
