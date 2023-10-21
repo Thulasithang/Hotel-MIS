@@ -56,12 +56,19 @@ function MainContainer() {
         </View>
       )}
       <View style={styles.bottomNavigator}>
-        <TouchableOpacity style={styles.cartButton} onPress={toggleCart}>
+        <TouchableOpacity style={styles.bottomNavButton} onPress={toggleCart}>
           <Icon name="cart-outline" size={30} />
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.orderStatusButton}
+          style={styles.bottomNavButton}
           onPress={toggleOrderStatus}
+        >
+          <Icon name="location-outline" size={30} />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.bottomNavButton}
+          // onPress={toggleOrderStatus}
         >
           <Icon name="location-outline" size={30} />
         </TouchableOpacity>
@@ -75,38 +82,44 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     bottom: 0,
-    width: "5%",
+    width: "8%",
     height: "100%",
-    backgroundColor: "white",
-    flexDirection: "row",
-    justifyContent: "space-around",
+    paddingTop: 30,
+    paddingBottom: 400,
+    flexDirection: "column",
+    backgroundColor: "#060a71",
+    borderTopRightRadius: 30,
+    borderBottomRightRadius: 30,
+  },
+  bottomNavButton: {
+    flexDirection: "column",
+    flex: 1,
+    height: 60, // Set the height to 60px
+    width: 60, // Set the width to 60px
+    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "midnightblue",
-    borderEndEndRadius: 8,
-  },
-  cartButton: {
-    position: "absolute",
-    top: 20,
-    right: "10%",
-    backgroundColor: "blue", // Customize the button style
-    padding: 10,
-    borderRadius: 5,
-  },
-  orderStatusButton: {
-    position: "absolute",
-    top: 100,
-    right: "10%",
-    backgroundColor: "blue", // Customize the button style
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: "#ECECEC",
+    margin: 15,
+    marginLeft: 25,
+    borderRadius: 15,
   },
   cartOverlay: {
     position: "absolute",
-    top: 0,
-    right: "5%",
+    right: 0,
+    bottom: 0,
+    right: "8%",
     height: "100%",
     backgroundColor: "white", // Customize the background color
     zIndex: 1,
+
+    // //
+    position: "absolute",
+    width: "8%",
+    height: "100%",
+    paddingTop: 30,
+    paddingBottom: 400,
+    borderTopLeftRadius: 30,
+    borderBottomlefttRadius: 30,
   },
   orderStatusOverlay: {
     position: "absolute",

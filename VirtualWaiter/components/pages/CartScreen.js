@@ -44,13 +44,13 @@ const CartScreen = ({ onClose, itemsInCart, tableNo }) => {
 
   return (
     <View style={styles.cartContainer}>
-      <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-        <Text>Close Cart</Text>
-      </TouchableOpacity>
-      <Text style={{ fontSize: 24 }}>Shopping Cart</Text>
-      {/* Render cart items and total price here */}
+      <View style={styles.sliderTopic}>
+        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+          <Text style={styles.closeText}>Close Cart</Text>
+        </TouchableOpacity>
+        <Text style={styles.topicText}>Your Cart</Text>
+      </View>
       <View style={styles.container}>
-        <Text style={styles.title}>Cart</Text>
         <FlatList
           data={itemsInCart}
           keyExtractor={(item) => item.id}
@@ -104,13 +104,27 @@ const styles = StyleSheet.create({
     width: "100%", // Adjust the width as needed
     height: "100%",
     zIndex: 1, // Ensures it is on top of other views
-    paddingHorizontal: 20,
-    paddingTop: 40, // Create space for the close button
+  },
+
+  sliderTopic: {
+    height: 90,
+    backgroundColor: "#060a71",
+    borderTopLeftRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
   closeButton: {
     position: "absolute",
     top: 10,
     right: 10,
+  },
+
+  closeText: {
+    color: "white",
+    fontSize: 12,
+    textDecorationLine: "underline",
+    marginBottom: 10,
+    marginRight: 10,
   },
   container: {
     flex: 1,
@@ -129,6 +143,14 @@ const styles = StyleSheet.create({
     alignContent: "flex-end",
     // justifyContent: "space-between",
   },
+
+  topicText: {
+    color: "#ffffff",
+    fontSize: 36,
+    fontStyle: "normal",
+    fontWeight: "800",
+  },
+
   cartItemName: {
     fontSize: 16,
   },

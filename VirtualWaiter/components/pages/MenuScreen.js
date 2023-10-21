@@ -81,9 +81,6 @@ const MenuScreen = ({ itemsInCart, addToCart }) => {
               <CarouselCards newData={burgerList} />
             </View>
 
-
-
-
             {/* Data rendered from local storage */}
             <View style={styles.carousel}>
               <Text style={styles.headerText}>burgers(Don't use this)</Text>
@@ -109,12 +106,9 @@ const styles = StyleSheet.create({
   logoImg: {
     justifyContent: "flex-start",
     top: 8,
-    left: 16,
-    height: 100,
+    left: 8,
+    height: 150,
     width: 150,
-    padding: 10,
-    borderWidth: 2,
-    borderColor: "black",
   },
   headerText: {
     fontSize: 30,
