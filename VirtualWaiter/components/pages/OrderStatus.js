@@ -1,26 +1,56 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import WebSocket from 'react-native-websocket';
 
-const handleNavigation = () => {
-  // Navigate to the MainContainer
-  navigation.navigate("MainContainer");
-};
 
-const OrderStatusScreen = ({navigation}) => {
-  const handleNavigation = () => {
-    // Navigate to the MainContainer
-    navigation.navigate("MainContainer");
-  };
+
+const OrderStatusScreen = ({onClose}) => {
+  const [message, setMessage] = useState('');
+  const socketRef = useRef(null);
+  const navigation = useNavigation();
+
+
+  useEffect(() => {
+    // Replace 'ws://your-backend-url' with the actual WebSocket server URL.
+    socketRef.current = new WebSocket('ws://192.168.1.6:8080/websocket');
+    
+    socketRef.current.onopen = () => {
+      console.log('WebSocket connection opened.');
+    };
+
+    socketRef.current.onmessage = (e) => {
+      // Handle incoming WebSocket messages here.
+      setMessage(e.data);
+    };
+
+    socketRef.current.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    socketRef.current.onclose = (event) => {
+      console.log('WebSocket closed:', event.reason);
+    };
+  }, []);
+
+  const handleButton = () => {
+      navigation.navigate('Feedback');
+    }
+  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Order Status</Text>
+      <Text>message: {message}</Text>
       {/* Create three progress bars with text */}
       <ProgressBar text="Ordered" />
-      <ProgressBar text="Accepted" />
-      <ProgressBar text="Prepared" />
-      <TouchableOpacity style={styles.button} onPress={handleNavigation}>
-        <Text style={styles.buttonText}>Go to Main Container</Text>
-      </TouchableOpacity>
+      {/* <ProgressBar text="Accepted" />
+      <ProgressBar text="Prepared" /> */}
+      <View style={styles.buttonContainer}>
+      <TouchableOpacity style={styles.button} onPress={handleButton}>
+          <Text style={styles.buttonText}>Finish Session</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -68,17 +98,24 @@ const styles = StyleSheet.create({
     lineHeight: 30, // Center text vertically within the progress bar
     flex: 2, // Take up 2/3 of the space for text
   },
+  buttonContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 20,
+    width: "90%",
+    alignSelf: "center",
+  },
   button: {
-    backgroundColor: "blue",
+    backgroundColor: "midnightblue",
+    borderRadius: 10,
+    width: "100%",
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginTop: 20,
+    alignItems: "center",
   },
   buttonText: {
     color: "white",
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 16,
   },
 });
 

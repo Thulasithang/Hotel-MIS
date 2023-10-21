@@ -6,15 +6,17 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  FlatList,
 } from "react-native";
 import { connect } from "react-redux";
 import CarouselCards from "../molecules/CarouselCards";
 import data from "../../data/data";
-import { fetchItems } from "../../data/testData";
+import { fetchItems, fetchDiscountItems } from "../../data/testData";
 
 //New cart system is added
 const mapStateToProps = (state) => ({
   itemsInCart: state.cart.itemsInCart,
+  customerName: state.customer.customerName,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -27,18 +29,24 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-burgerData = data.filter((item) => {
-  return item.category === "Burgers";
-});
-
-drinkData = data.filter((item) => {
-  return item.category === "Drinks";
-});
-
-const MenuScreen = ({ itemsInCart, addToCart }) => {
+const MenuScreen = ({ itemsInCart, addToCart, customerName }) => {
   const [items, setItems] = useState([]);
+  const [discountItems, setDiscountItems] = useState([]);
   const [burgerList, setBurgerList] = useState([]);
   const [pizzaList, setPizzaList] = useState([]);
+  const [drinkList, setDrinkList] = useState([]);
+
+  useEffect(() => {
+    // Fetch data using the service
+    fetchDiscountItems()
+      .then((data) => {
+        setDiscountItems(data); // Update state with fetched data
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        // Handle the error as needed (e.g., show an error message)
+      });
+  }, []);
 
   useEffect(() => {
     // Fetch data using the service
@@ -60,7 +68,12 @@ const MenuScreen = ({ itemsInCart, addToCart }) => {
     // Filter pizza items
     const pizzas = items.filter((item) => item.foodType === "pizza");
     setPizzaList(pizzas);
+
+    // Filter drink items
+    const drinks = items.filter((item) => item.foodType === "Drink");
+    setDrinkList(drinks);
   }, [items]); // Run this effect whenever menuItems change
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -70,8 +83,14 @@ const MenuScreen = ({ itemsInCart, addToCart }) => {
               style={styles.logoImg}
               source={require("../../assets/images/splash-screen.png")}
             />
-
+            <View style={styles.welcomeContainer}>
+              <Text style={styles.welcomeText}>Welcome {customerName},</Text>
+            </View>
             {/* trial for the carousel from the backend */}
+            <View style={styles.carousel}>
+              <Text style={styles.headerText}>Special Offers</Text>
+              <CarouselCards newData={discountItems} />
+            </View>
             <View style={styles.carousel}>
               <Text style={styles.headerText}>Pizza</Text>
               <CarouselCards newData={pizzaList} />
@@ -83,12 +102,8 @@ const MenuScreen = ({ itemsInCart, addToCart }) => {
 
             {/* Data rendered from local storage */}
             <View style={styles.carousel}>
-              <Text style={styles.headerText}>burgers(Don't use this)</Text>
-              <CarouselCards newData={burgerData} />
-            </View>
-            <View style={styles.carousel}>
-              <Text style={styles.headerText}>Drinks(Don't use this)</Text>
-              <CarouselCards newData={drinkData} />
+              <Text style={styles.headerText}>Drinks</Text>
+              <CarouselCards newData={drinkList} />
             </View>
           </View>
         </View>
@@ -109,6 +124,9 @@ const styles = StyleSheet.create({
     left: 8,
     height: 150,
     width: 150,
+    padding: 10,
+    borderWidth: 2,
+    borderColor: "black",
   },
   headerText: {
     fontSize: 30,
@@ -116,6 +134,17 @@ const styles = StyleSheet.create({
     color: "black",
     top: 8,
     left: 16,
+  },
+  welcomeContainer: {
+    flex: 1,
+    // justifyContent: "center",
+    alignItems: "center",
+  },
+  welcomeText: {
+    fontSize: 40,
+    fontWeight: "bold",
+    color: "black",
+    justifyContent: "center",
   },
   scrollView: {
     marginHorizontal: 20,
@@ -128,4 +157,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MenuScreen;
+export default connect(mapStateToProps)(MenuScreen);

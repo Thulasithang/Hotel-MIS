@@ -3,7 +3,9 @@ import { View, Text, TextInput, TouchableOpacity} from 'react-native';
 import { StyleSheet, } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
-
+import { authenticateUser } from '../../AuthenticateUser';
+import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const LoginScreen = () => {
@@ -13,20 +15,32 @@ const LoginScreen = () => {
   const {role} = route.params
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // const auth = FIREBASE_AUTH
+
 
   const navigation = useNavigation();
 
-  const handleLogin = ({role, username}) => {
+  const handleLogin = async ({role, username}) => {
 
-    if(role==='Admin'){
-      navigation.navigate('AdminHome');
-    }else if (role=='Hotel Staff'){
-      navigation.navigate('EditMenuScreen');
-    }
-
+    try {
+      const token = await authenticateUser(username, password);
+      await AsyncStorage.setItem('authToken', token);
   
-  };
+      // Navigate based on user's role
+      if(role==='Admin'){
+        navigation.navigate('AdminHome');
+      }else if (role=='Hotel Staff'){
+        navigation.navigate('EditMenuScreen');
+      }
+   
+    } catch (error) {
+      //console.error('Authentication failed:', error);
+        console.error('Authentication failed:', error);
+        Alert.alert('Authentication Failed', 'Incorrect username or password.');
+    }
+    };
+
+
+
 
   return (
     <View style={styles.container}>
