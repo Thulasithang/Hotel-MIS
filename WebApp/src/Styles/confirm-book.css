@@ -13,6 +13,12 @@
     border: none;
     margin: 10px;
   }
+  
+  .danger-alert{
+    font-size: 5;
+    height: 10px;
+    
+  }
 
 
   .form-row{

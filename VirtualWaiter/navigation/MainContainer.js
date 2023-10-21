@@ -74,7 +74,7 @@ const MainContainer = ({ tableNo }) => {
 
               // Make an HTTP PATCH request to your backend API
               const response = await fetch(
-                `http://10.10.5.194:8080/api/v1/table/update/${tableId}?waiterRequested=true&occupied=true`,
+                `http://192.168.8.102:8080/api/v1/table/update/${tableId}?waiterRequested=true&occupied=true`,
                 {
                   method: "PATCH", // Use PATCH method
                   headers: {
@@ -107,7 +107,7 @@ const MainContainer = ({ tableNo }) => {
       {cartVisible && (
         <View
           style={[
-            styles.cartOverlay,
+            styles.barOverlay,
             { width: screenWidth * cartWidthPercentage },
           ]}
         >
@@ -117,7 +117,7 @@ const MainContainer = ({ tableNo }) => {
       {orderStatusVisible && (
         <View
           style={[
-            styles.orderStatusOverlay,
+            styles.barOverlay,
             { width: screenWidth * cartWidthPercentage },
           ]}
         >
@@ -125,17 +125,18 @@ const MainContainer = ({ tableNo }) => {
         </View>
       )}
       <View style={styles.bottomNavigator}>
-        <TouchableOpacity style={styles.cartButton} onPress={handleCart}>
+        <TouchableOpacity style={styles.bottomNavButton} onPress={handleCart}>
           <Icon name="cart-outline" size={iconWidth} />
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.orderStatusButton}
+          style={styles.bottomNavButton}
           onPress={toggleOrderStatus}
         >
           <Icon name="location-outline" size={iconWidth} />
         </TouchableOpacity>
+
         <TouchableOpacity
-          style={styles.requestWaiterButton}
+          style={styles.bottomNavButton}
           onPress={handleWaiterRequest}
         >
           <Icon name="person-sharp" size={iconWidth} />
@@ -150,27 +151,30 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     bottom: 0,
-    padding: 15,
-    width: screenWidth * 0.05,
+    width: "8%",
     height: "100%",
-    backgroundColor: "white",
-    flexDirection: "row",
-    justifyContent: "space-around",
+    paddingTop: 30,
+    paddingBottom: 400,
+    flexDirection: "column",
+    backgroundColor: "#060a71",
+    borderTopRightRadius: 50,
+    borderBottomRightRadius: 50,
+  },
+  bottomNavButton: {
+    flexDirection: "column",
+    flex: 1,
+    height: 60, // Set the height to 60px
+    width: 60, // Set the width to 60px
+    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "midnightblue",
-    borderEndEndRadius: 8,
+    backgroundColor: "#ECECEC",
+    margin: 15,
+    marginLeft: 25,
+    borderRadius: 15,
   },
-  cartButton: {
+  requestWaiterButton: {
     position: "absolute",
-    top: 20,
-    right: "10%",
-    backgroundColor: "blue", // Customize the button style
-    padding: 10,
-    borderRadius: 5,
-  },
-  orderStatusButton: {
-    position: "absolute",
-    top: 100,
+    top: 180,
     right: "10%",
     backgroundColor: "blue", // Customize the button style
     padding: 10,
@@ -184,13 +188,26 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
-  cartOverlay: {
+  barOverlay: {
     position: "absolute",
-    top: 0,
-    right: "5%",
-    height: "100%",
-    backgroundColor: "white", // Customize the background color
+    right: "8%",
+    height: "100%", // Customize the background color
     zIndex: 1,
+    position: "absolute",
+    marginTop: 30,
+    backgroundColor: "#FFF",
+    width: "8%",
+    height: "100%",
+    paddingBottom: 400,
+    borderTopLeftRadius: 50,
+    borderBottomlefttRadius: 50,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
   },
   orderStatusOverlay: {
     position: "absolute",

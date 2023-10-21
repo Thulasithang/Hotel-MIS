@@ -4,12 +4,14 @@ import Room from "../Components/Room";
 import Offer from "../Components/Offer";
 import Experiences from "../Components/Experiences";
 import Restaurant from "../Components/Restaurant";
+import ipaddress from "../config";
 
 export default function Home() {
   const [roomTypes, setRoomTypes] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/roomType/get")
+    const apiUrl = ipaddress + "/roomType/get";
+    fetch(apiUrl)
       .then((res) => res.json())
       .then((result) => {
         setRoomTypes(result);

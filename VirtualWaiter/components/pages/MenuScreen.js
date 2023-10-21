@@ -6,7 +6,7 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
-  FlatList
+  FlatList,
 } from "react-native";
 import { connect } from "react-redux";
 import CarouselCards from "../molecules/CarouselCards";
@@ -83,7 +83,7 @@ const MenuScreen = ({ itemsInCart, addToCart, customerName }) => {
               style={styles.logoImg}
               source={require("../../assets/images/splash-screen.png")}
             />
-            <View style = {styles.welcomeContainer}>
+            <View style={styles.welcomeContainer}>
               <Text style={styles.welcomeText}>Welcome {customerName},</Text>
             </View>
             {/* trial for the carousel from the backend */}
@@ -99,6 +99,7 @@ const MenuScreen = ({ itemsInCart, addToCart, customerName }) => {
               <Text style={styles.headerText}>Burgers</Text>
               <CarouselCards newData={burgerList} />
             </View>
+
             <View style={styles.carousel}>
               <Text style={styles.headerText}>Drinks</Text>
               <CarouselCards newData={drinkList} />
@@ -115,14 +116,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     backgroundColor: "#fff",
+    paddingLeft: 10,
   },
   logoImg: {
     justifyContent: "flex-start",
-    top: 8,
-    left: 16,
-    height: 100,
+    height: 150,
     width: 150,
-    padding: 10,
   },
   headerText: {
     fontSize: 30,
@@ -133,8 +132,8 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     flex: 1,
-    // justifyContent: "center",
     alignItems: "center",
+    marginTop: -80,
   },
   welcomeText: {
     fontSize: 40,
@@ -153,4 +152,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect (mapStateToProps)(MenuScreen);
+export default connect(mapStateToProps)(MenuScreen);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { Row, Col } from "react-bootstrap";
@@ -14,6 +14,25 @@ import img1 from "../Images/offers.jpg";
 export default function ConfirmBooking() {
   const location = useLocation();
   const [customerId, setCustomerId] = useState(null); // State to store the form data
+
+  const isLeavingPage = false;
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (isLeavingPage) {
+        // Display a confirmation message
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isLeavingPage]);
 
   // Callback function to receive data from HotelBookingForm
   const handleFormData = (data) => {

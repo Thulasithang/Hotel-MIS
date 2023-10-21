@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { fetchTables } from '../../data/testData';
-import { FlatGrid } from 'react-native-super-grid';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import { fetchTables } from "../../data/testData";
+import { FlatGrid } from "react-native-super-grid";
 
 const LoginScreen = ({ navigation, onLogin, dispatch }) => {
-  const [tableNo, setTableNo] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [tableNo, setTableNo] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [tables, setTables] = useState([]);
 
   // useEffect(() => {
@@ -27,16 +33,16 @@ const LoginScreen = ({ navigation, onLogin, dispatch }) => {
     //   payload: tableNo,
     // });
     // Check if the table number and password are valid
-    if (tableNo.trim() !== '' && password === '1234') {
+    if (tableNo.trim() !== "" && password === "1234") {
       // If valid, navigate to the MainContainer
-      navigation.navigate('Welcome');
+      navigation.navigate("Welcome");
       dispatch({
-        type: 'SET_TABLE_NO',
+        type: "SET_TABLE_NO",
         payload: tableNo,
       });
     } else {
       // Display an error message for invalid login
-      setError('Invalid table number or password. Please try again.');
+      setError("Invalid table number or password. Please try again.");
     }
   };
 
@@ -62,7 +68,7 @@ const LoginScreen = ({ navigation, onLogin, dispatch }) => {
         value={password}
         onChangeText={setPassword}
       />
-      {error !== '' && <Text style={styles.errorText}>{error}</Text>}
+      {error !== "" && <Text style={styles.errorText}>{error}</Text>}
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
@@ -73,10 +79,10 @@ const LoginScreen = ({ navigation, onLogin, dispatch }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 4,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
   },
   tables: {
     position: "relative",
@@ -89,44 +95,39 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   input: {
-    width: '80%',
+    width: "80%",
     height: 40,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     marginBottom: 10,
     paddingLeft: 10,
   },
   loginButton: {
-    backgroundColor: 'blue',
-    width: '80%',
+    backgroundColor: "blue",
+    width: "80%",
     height: 40,
     borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 20,
   },
   loginButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   errorText: {
-    color: 'red',
+    color: "red",
     marginBottom: 10,
   },
-
 });
 
 export default connect()(LoginScreen);
-
-
-
-
 
 //     <ScrollView>
 //       <View style={styles.container}>
@@ -135,12 +136,12 @@ export default connect()(LoginScreen);
 //   data={tables}
 //   renderItem={({ item }) => (<Text>{item}</Text>)}
 // />
-        // {/* {tables.map((table) => (
-        //   <View style={styles.tables}>
-        //   <TouchableOpacity style={styles.title} key={table.id} onPress={handleLogin(table.id)}>
-        //     <Text>{table.id}</Text>
-        //   </TouchableOpacity>
-        //   </View>
-        // ))} */}
-    //   </View>
-    // </ScrollView>
+// {/* {tables.map((table) => (
+//   <View style={styles.tables}>
+//   <TouchableOpacity style={styles.title} key={table.id} onPress={handleLogin(table.id)}>
+//     <Text>{table.id}</Text>
+//   </TouchableOpacity>
+//   </View>
+// ))} */}
+//   </View>
+// </ScrollView>

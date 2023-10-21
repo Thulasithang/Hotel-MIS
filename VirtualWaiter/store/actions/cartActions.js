@@ -17,12 +17,15 @@ export const placeOrder = (cartData, tableNo, customerName, customerNumber) => {
         customerNumber: customerNumber,
       };
 
-
-      const response = await axios.post("http://10.10.5.194:8080/api/v1/order/create", requestData, {
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-      });
+      const response = await axios.post(
+        "http://192.168.8.102:8080/api/v1/order/create",
+        requestData,
+        {
+          // headers: {
+          //   "Content-Type": "application/json",
+          // },
+        }
+      );
       // Handle success, e.g., update the store or show a success message
       dispatch({ type: "ORDER_PLACED", payload: response.data });
     } catch (error) {
@@ -31,7 +34,6 @@ export const placeOrder = (cartData, tableNo, customerName, customerNumber) => {
     }
   };
 };
-
 
 // {
 //   items: [

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
+  Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { width } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
@@ -24,7 +25,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: "REMOVE_FROM_CART", payload: itemId }),
 });
 
-const CartScreen = ({ onClose, itemsInCart, tableNo, onPlaceOrder, customerName, contactNumber }) => {
+const CartScreen = ({
+  onClose,
+  itemsInCart,
+  tableNo,
+  onPlaceOrder,
+  customerName,
+  contactNumber,
+}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [totalPrice, setTotalPrice] = useState(0);
@@ -58,76 +66,75 @@ const CartScreen = ({ onClose, itemsInCart, tableNo, onPlaceOrder, customerName,
     if (item.item.discount === 0) {
       return null;
     }
-    return(
-    <View style={{ flexDirection: "row" }}>
-      <Text style={{ fontSize: 18, fontWeight: "normal" }}>
-      Discount: {((item.item.price * item.item.discount) / 100).toFixed(2)}
-      </Text>
-    </View>
-    )
+    return (
+      <View style={{ flexDirection: "row" }}>
+        <Text style={{ fontSize: 18, fontWeight: "normal" }}>
+          Discount: {((item.item.price * item.item.discount) / 100).toFixed(2)}
+        </Text>
+      </View>
+    );
   };
 
   return (
     <View style={styles.cartContainer}>
+      <View style={styles.sliderTopic}>
+        <Text style={styles.topicText}>Your Cart</Text>
+      </View>
       <View style={styles.container}>
-        <Text style={styles.title}>Cart</Text>
         <FlatList
           data={itemsInCart}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
             return (
               <View style={styles.cartItem}>
-                <View style={{ flexDirection: "column" }}>
-                  <Text style={styles.cartItemName}>{item.item.name}</Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                    }}
-                  >
-                    <View>
-                      <Text style={styles.cartItemPrice}>
-                        Price: Rs {item.item.price}
+                <View style={{ flexDirection: "row" }}>
+                  <View style={{ flex: 2, flexDirection: "column" }}>
+                    <Text style={styles.cartItemName}>{item.item.name}</Text>
+                    <Text style={styles.cartItemPrice}>
+                      Price: Rs {item.item.price}
+                    </Text>
+                    {discountContainer(item)}
+                    <View style={styles.totalPrice}>
+                      <Text style={{ fontSize: 18, fontWeight: "normal" }}>
+                        Total: Rs{" "}
+                        {item.item.price * item.count -
+                          (
+                            (item.item.price * item.item.discount) /
+                            100
+                          ).toFixed(2)}
                       </Text>
                     </View>
-                    <View>
-                      <View style={styles.quantityContainer}>
-                        <TouchableOpacity
-                          onPress={() => decreaseItemQuantity(item.id)}
-                        >
-                          <Text
-                            style={{
-                              fontSize: 20,
-                              fontWeight: "bold",
-                              alignSelf: "center",
-                            }}
-                          >
-                            <Icon name="remove" size={20} color="white" />
-                          </Text>
-                        </TouchableOpacity>
-                        <Text style={styles.cartItemCount}>{item.count}</Text>
-                        <TouchableOpacity
-                          onPress={() => increaseItemQuantity(item.id)}
-                        >
-                          <Text style={{ fontWeight: "bold" }}>
-                            <Icon name="add" size={20} color="white" />
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
+                    <View style={styles.quantityContainer}>
+                      <TouchableOpacity
+                        style={styles.circleButton}
+                        onPress={() => decreaseItemQuantity(item.id)}
+                      >
+                        <Icon name="remove" size={20} color="white" />
+                      </TouchableOpacity>
+                      <Text style={styles.cartItemCount}>{item.count}</Text>
+                      <TouchableOpacity
+                        style={styles.circleButton}
+                        onPress={() => increaseItemQuantity(item.id)}
+                      >
+                        <Icon name="add" size={20} color="white" />
+                      </TouchableOpacity>
                     </View>
                   </View>
-                  {discountContainer(item)}
-                  <View style={styles.totalPrice}>
-                    <Text style={{ fontSize: 18, fontWeight: "normal" }}>
-                      Total: Rs {item.item.price * item.count - ((item.item.price * item.item.discount) / 100).toFixed(2)}
-                    </Text>
+                  <View style={({ flex: 1 }, styles.removeFromCartButton)}>
+                    <Image
+                      style={{ width: 80, height: 80 }}
+                      source={{ uri: item.item.imageUrl }}
+                    />
                     <TouchableOpacity
+                      style={styles.removeFromCartButton}
                       onPress={() =>
-                        dispatch({ type: "REMOVE_FROM_CART", payload: item.id })
+                        dispatch({
+                          type: "REMOVE_FROM_CART",
+                          payload: item.id,
+                        })
                       }
                     >
-                      <Text style={styles.removeFromCartButton}>
-                        Remove from cart
-                      </Text>
+                      <Icon name="trash" size={25} color="red" />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -136,12 +143,9 @@ const CartScreen = ({ onClose, itemsInCart, tableNo, onPlaceOrder, customerName,
           }}
         />
       </View>
-      {/* Total Price */}
-      <View style={styles.buttonContainer}>
-        <View style={styles.totalPriceContainer}>
-          <Text style={styles.totalPriceText}>Total Price:</Text>
-          <Text style={styles.totalPriceAmount}>Rs {totalPrice}</Text>
-        </View>
+      <View style={styles.totalPriceContainer}>
+        <Text style={styles.totalPriceText}>Total Price</Text>
+        <Text style={styles.totalPriceAmount}>Rs {totalPrice}</Text>
         <TouchableOpacity style={styles.button} onPress={handlePlaceOrder}>
           <Text style={styles.buttonText}>Place Order</Text>
         </TouchableOpacity>
@@ -152,20 +156,47 @@ const CartScreen = ({ onClose, itemsInCart, tableNo, onPlaceOrder, customerName,
 
 const styles = StyleSheet.create({
   cartContainer: {
-    flex: 1,
+    flexDirection: "column",
     backgroundColor: "white",
-    // position: "absolute",
-    top: 0,
-    right: 0,
     width: "100%", // Adjust the width as needed
-    height: "100%",
+    minHeight: "100%",
+    maxHeight: "135%",
     zIndex: 1, // Ensures it is on top of other views
-    paddingHorizontal: 20,
-    paddingTop: 40, // Create space for the close button
+    justifyContent: "space-between",
+  },
+
+  sliderTopic: {
+    height: 90,
+    backgroundColor: "#060a71",
+    borderTopLeftRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+  },
+
+  closeText: {
+    color: "white",
+    fontSize: 12,
+    textDecorationLine: "underline",
+    marginBottom: 10,
+    marginRight: 10,
   },
   container: {
-    // flex:  1,
+    flexDirection: "column",
     paddingTop: 20,
+    paddingHorizontal: 20,
+  },
+
+  circleButton: {
+    backgroundColor: "#060a71",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
   },
   title: {
     fontSize: 24,
@@ -174,27 +205,34 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   cartItem: {
-    flexDirection: "row",
+    flexDirection: "column",
     borderBottomWidth: 1,
     borderBottomColor: "lightgray",
     paddingVertical: 10,
     alignContent: "flex-end",
     // justifyContent: "space-between",
   },
+
+  topicText: {
+    color: "#ffffff",
+    fontSize: 36,
+    fontStyle: "normal",
+    fontWeight: "800",
+  },
+
   cartItemName: {
+    flex: 2,
     fontSize: 20,
-    justifyContent: "flex-end",
     fontWeight: "bold",
   },
   cartItemPrice: {
     fontSize: 18,
     color: "gray",
     marginRight: 10,
-    alignContent: "flex-start",
   },
   cartItemCount: {
     fontSize: 18,
-    color: "white",
+    color: "#060a71",
     alignContent: "flex-end",
   },
   quantityContainer: {
@@ -202,28 +240,35 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
+    alignSelf: "flex-end",
     width: 100,
     height: 30,
-    backgroundColor: "blue",
     borderRadius: 10,
     paddingHorizontal: 5,
   },
   removeFromCartButton: {
-    color: "red",
-    fontSize: 14,
-    textDecorationLine: "underline",
+    paddingTop: 15,
+    paddingHorizontal: 10,
+    alignSelf: "flex-end",
   },
   totalPriceContainer: {
-    flexDirection: "row",
+    padding: 20,
+    flexDirection: "column",
     justifyContent: "center",
     marginBottom: 10,
+    display: "flex-end",
+    borderTopColor: "lightgray",
+    borderTopWidth: 2,
   },
   totalPriceText: {
+    color: "#747474",
+
     fontSize: 18,
     fontWeight: "bold",
   },
   totalPriceAmount: {
-    fontSize: 18,
+    marginTop: 10,
+    fontSize: 25,
     fontWeight: "bold",
     marginLeft: 10,
   },
@@ -236,15 +281,21 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   button: {
-    backgroundColor: "midnightblue",
-    borderRadius: 10,
-    width: "100%",
+    marginVertical: 10,
+    backgroundColor: "#060a71",
+    borderRadius: 20,
+    width: "90%",
+    height: 60,
     paddingVertical: 10,
     alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    padding: 5,
   },
   buttonText: {
     color: "white",
-    fontSize: 16,
+    fontSize: 25,
+    fontWeight: "bold",
   },
 });
 
