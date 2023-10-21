@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity} from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity} from 'react-native';
 import { StyleSheet, } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { authenticateUser } from '../AuthenticateUser';
 import { useNavigation } from '@react-navigation/native';
-import { authenticateUser } from '../../AuthenticateUser';
-import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import IpConfig from '../../IpConfig';
+import { Alert } from 'react-native';
+
+
 
 
 const LoginScreen = () => {
@@ -15,35 +18,44 @@ const LoginScreen = () => {
   const {role} = route.params
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  // const auth = FIREBASE_AUTH
 
   const navigation = useNavigation();
 
-  const handleLogin = async ({role, username}) => {
-
+  const handleLogin = async ({ role, username }) => {
     try {
-      const token = await authenticateUser(username, password);
-      await AsyncStorage.setItem('authToken', token);
-  
-      // Navigate based on user's role
-      if(role==='Admin'){
-        navigation.navigate('AdminHome');
-      }else if (role=='Hotel Staff'){
+      if (role === 'Admin' && username.startsWith('A')) {
+        // Only Admins with usernames starting with "A" can access EditMenuScreen
+        const token = await authenticateUser(username, password);
+        await AsyncStorage.setItem('authToken', token);
         navigation.navigate('EditMenuScreen');
+      } else {
+        // Handle authentication for other roles and cases
+        const token = await authenticateUser(username, password);
+        await AsyncStorage.setItem('authToken', token);
+        if (role === 'Waiter') {
+          navigation.navigate('TableSelection', { waiterID: username });
+        } else if (role === 'Kitchen Staff') {
+          navigation.navigate('OrderAcceptScreen');
+        } else {
+          // Handle other roles here
+          // For roles that don't match Admin, Waiter, or Kitchen Staff
+          console.error('Authentication failed: Invalid role');
+          Alert.alert('Authentication Failed', 'Invalid role.');
+        }
       }
-   
     } catch (error) {
-      //console.error('Authentication failed:', error);
-        console.error('Authentication failed:', error);
-        Alert.alert('Authentication Failed', 'Incorrect username or password.');
+      console.error('Authentication failed:', error);
+      Alert.alert('Authentication Failed', 'Incorrect username or password.');
     }
-    };
+  };
 
 
 
 
   return (
     <View style={styles.container}>
+      <View style={styles.subContainer}>
       <Text style={styles.label}>Username:</Text>
       <TextInput
         style={styles.input}
@@ -63,6 +75,7 @@ const LoginScreen = () => {
         <TouchableOpacity style={styles.button} onPress={() => handleLogin({role, username})}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
+        </View>
     </View>
   );
 };
@@ -72,32 +85,41 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
+    backgroundColor: 'white',
+    marginHorizontal: 20,
+  },
+  subContainer: {
+    marginHorizontal: 100,
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
     backgroundColor: 'white'
   },
   label: {
-    fontSize: 16,
-    marginBottom: 8,
-    color: 'midnightblue'
+    fontSize: 25,
+    marginBottom: 15,
+    color: 'midnightblue',
+    marginLeft: 15
   },
   input: {
     color: 'midnightblue',
     borderWidth: 1,
     borderColor: 'midnightblue',
-    borderRadius: 14,
-    padding: 8,
+    borderRadius: 30,
+    padding: 18,
     marginBottom: 16,
-    fontSize: 16,
+    fontSize: 25,
   },
   button: {
     backgroundColor: 'midnightblue', // Button background color
-    paddingVertical: 10,
+    paddingVertical: 18,
     paddingHorizontal: 20,
-    marginTop:30,
-    borderRadius: 14,
+    marginTop:45,
+    borderRadius:30,
   },
   buttonText: {
     color: 'white', // Button text color
-    fontSize: 18,
+    fontSize: 23,
     fontWeight: 'bold',
     textAlign: 'center',
   },
