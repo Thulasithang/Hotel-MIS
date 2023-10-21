@@ -7,6 +7,8 @@ import LoginScreen from "./components/pages/LoginScreen";
 import MainContainer from "./navigation/MainContainer";
 import CartScreen from "./components/pages/CartScreen";
 import OrderStatus from "./components/pages/OrderStatus";
+import WelcomeScreen from "./components/pages/WelcomeScreen";
+import FeedbackScreen from "./components/pages/FeedbackScreen";
 import store from "./store/store";
 import { Provider } from "react-redux";
 
@@ -27,6 +29,11 @@ function App() {
             options={{ tabBarVisible: false, headerShown: false }}
           />
           <Stack.Screen
+            name="Welcome"
+            component={WelcomeScreen}
+            options={{ tabBarVisible: false, headerShown: false }}
+          />
+          <Stack.Screen
             name="MainContainer"
             component={MainContainer}
             options={{ tabBarVisible: false, headerShown: false }}
@@ -38,7 +45,13 @@ function App() {
           />
           <Stack.Screen
             name="OrderStatus"
-            component={OrderStatus}
+            options={{ tabBarVisible: false, headerShown: false }}
+          >
+            {(props) => <OrderStatusScreen {...props} />}
+          </Stack.Screen>
+          <Stack.Screen
+            name="Feedback"
+            component={FeedbackScreen}
             options={{ tabBarVisible: false, headerShown: false }}
           />
         </Stack.Navigator>
