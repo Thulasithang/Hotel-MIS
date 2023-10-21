@@ -100,7 +100,6 @@ const MenuScreen = ({ itemsInCart, addToCart, customerName }) => {
               <CarouselCards newData={burgerList} />
             </View>
 
-            {/* Data rendered from local storage */}
             <View style={styles.carousel}>
               <Text style={styles.headerText}>Drinks</Text>
               <CarouselCards newData={drinkList} />
@@ -117,16 +116,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     backgroundColor: "#fff",
+    paddingLeft: 10,
   },
   logoImg: {
     justifyContent: "flex-start",
-    top: 8,
-    left: 8,
     height: 150,
     width: 150,
-    padding: 10,
-    borderWidth: 2,
-    borderColor: "black",
   },
   headerText: {
     fontSize: 30,
@@ -137,8 +132,8 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     flex: 1,
-    // justifyContent: "center",
     alignItems: "center",
+    marginTop: -80,
   },
   welcomeText: {
     fontSize: 40,
