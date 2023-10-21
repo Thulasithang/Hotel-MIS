@@ -134,21 +134,9 @@ const MainContainer = ({ tableNo }) => {
         >
           <Icon name="location-outline" size={iconWidth} />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.requestWaiterButton}
-          onPress={handleWaiterRequest}
-        >
-          <Icon name="person-sharp" size={iconWidth} />
-        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.bottomNavButton}
-          // onPress={toggleOrderStatus}
-        >
-          <Icon name="location-outline" size={iconWidth} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.requestWaiterButton}
           onPress={handleWaiterRequest}
         >
           <Icon name="person-sharp" size={iconWidth} />
