@@ -13,7 +13,7 @@ const PlaceOrderScreen = () => {
 
   const fetchMenuItems = async () => {
     try {
-      const response = await fetch(`http://${IpConfig.apiBaseUrl}:8080/api/v1/menuitem/instock`);
+      const response = await fetch(`${IpConfig.apiBaseUrl}/api/v1/menuitem/instock`);
       if (!response.ok) {
         throw new Error('Failed to fetch menu items');
       }

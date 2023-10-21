@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { authenticateUser } from '../../AuthenticateUser';
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import ipAddress from '../../config';
 
 const LoginScreen = () => {
 
@@ -24,12 +24,14 @@ const LoginScreen = () => {
     try {
       const token = await authenticateUser(username, password);
       await AsyncStorage.setItem('authToken', token);
+
+      const userId = await fetchUserIdByUsername(username);
   
       // Navigate based on user's role
       if(role==='Admin'){
         navigation.navigate('AdminHome');
-      }else if (role=='Hotel Staff'){
-        navigation.navigate('EditMenuScreen');
+      }else if (role=='staff'){
+        navigation.navigate('StaffHome',{userId});
       }
    
     } catch (error) {
@@ -105,6 +107,19 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
+
+async function fetchUserIdByUsername(username) {
+  try {
+    //console.log(`${ipAddress}/api/v1/user/userid?username=${username}`)
+    const response = await fetch(`${ipAddress}/api/v1/user/userid?username=${username}`);
+    const data = await response.json();
+    //console.log(data.user_id)
+    return data;
+  } catch (error) {
+    console.error('Error fetching user ID:', error);
+    return -1; // Return -1 or an appropriate error code in case of an error
+  }
+}
 
 
 

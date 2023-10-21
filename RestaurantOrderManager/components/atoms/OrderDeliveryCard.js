@@ -10,7 +10,7 @@ const OrderDeliveryCard = ({ orderId, tableId, virtualWaiter }) => {
   const handleDelivery = (orderId) => {
 
     
-    const endpoint = `http://${IpConfig.apiBaseUrl}:8080/api/v1/order/${orderId}/markDelivered`;
+    const endpoint = `${IpConfig.apiBaseUrl}/api/v1/order/${orderId}/markDelivered`;
     console.log(endpoint)
 
     axios

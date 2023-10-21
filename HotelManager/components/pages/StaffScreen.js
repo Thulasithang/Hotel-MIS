@@ -7,22 +7,23 @@ import Table from "../atoms/Table";
 import Button from "../atoms/Button";
 import ForumView from "../atoms/ForumView";
 import CategoryButton from "../atoms/CategoryButton";
+import { useState } from "react";
 
 const StaffScreen = () => {
+  const [filteredData, setFilteredData] = useState(null);
   const navigation = useNavigation();
 
   const columns = [
     { title: "ID", flex: 2 },
     { title: "Name", flex: 3 },
-    { title: "Status", flex: 3 },
   ];
 
   const data = [
-    { ID: "S201", Name: "John", Status: "OnWork" },
-    { ID: "S202", Name: "Josh", Status: "Absent" },
-    { ID: "S203", Name: "Alice", Status: "OnWork" },
-    { ID: "S204", Name: "Emily", Status: "OnWork" },
-    { ID: "S205", Name: "Mike", Status: "OnWork" },
+    { ID: 1, Name: "John",},
+    { ID: 2, Name: "Josh",},
+    { ID: 3, Name: "Alice", },
+    { ID: 4, Name: "Emily",  },
+    { ID: 5, Name: "Mike", },
   ];
   const handleAddEmployee = () => {
     // Navigate to the screen for adding an employee
@@ -34,14 +35,21 @@ const StaffScreen = () => {
     const staffID = rowData.ID;
     navigation.navigate("StaffTask", staffID);
   };
-  const filterOnWork = () => {
-    // Handle the category button press action here
-    Alert.alert("Category Button Pressed");
+
+  const handleFilterInputChange = (text) => {
+    // Filter the data based on the entered staff ID
+    const filtered = data.filter((item) => item.ID.toString().includes(text));
+    setFilteredData(filtered);
   };
-  const filterAbsent = () => {
-    // Handle the category button press action here
-    Alert.alert("Category Button Pressed");
-  };
+
+  // const filterOnWork = () => {
+  //   // Handle the category button press action here
+  //   Alert.alert("Category Button Pressed");
+  // };
+  // const filterAbsent = () => {
+  //   // Handle the category button press action here
+  //   Alert.alert("Category Button Pressed");
+  // };
 
   return (
     <ScrollView>
@@ -52,17 +60,15 @@ const StaffScreen = () => {
       <View style={styles.container}>
         <Text style={styles.label}>Filter By</Text>
         <ForumView
-          title="Staf ID"
+          title="Staff ID"
           rightText="Enter "
-          onInputChange={(text) => console.log(text)}
+          onInputChange={handleFilterInputChange}
         />
         <View style={styles.filterButtons}>
-          <CategoryButton title="OnWork" onPress={filterOnWork} />
-          <CategoryButton title="Absent" onPress={filterAbsent} />
         </View>
       </View>
       <View style={styles.container}>
-        <Table columns={columns} data={data} onConfirm={handleConfirm} />
+        <Table columns={columns} data={filteredData || data} onConfirm={handleConfirm} />
       </View>
     </ScrollView>
   );
@@ -93,3 +99,6 @@ const styles = StyleSheet.create({
 });
 
 export default StaffScreen;
+
+{/* <CategoryButton title="OnWork" onPress={filterOnWork} />
+<CategoryButton title="Absent" onPress={filterAbsent} /> */}

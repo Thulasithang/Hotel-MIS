@@ -16,7 +16,7 @@ const TableCard = ({ number, status, waiterRequested}) => {
 
   const handleWaiterIconPress = () => {
 
-        const apiUrl = `http://${IpConfig.apiBaseUrl}:8080/api/v1/table/update/${number}?waiterRequested=false`;
+        const apiUrl = `${IpConfig.apiBaseUrl}/api/v1/table/update/${number}?waiterRequested=false`;
         console.log(apiUrl)
 
         axios.patch(apiUrl)
@@ -38,7 +38,6 @@ const TableCard = ({ number, status, waiterRequested}) => {
 
   const handleTablePress=()=>{
 
-    //console.log("Hello, world!");
     navigation.navigate("PlaceOrder", {tableId: number})
     
   }

@@ -17,7 +17,7 @@ const OrderCard = ({order}) => {
       setButtonText('Complete Cooking');
 
       axios
-        .patch(`http://${IpConfig.apiBaseUrl}:8080/api/v1/order/${orderId}/markPreparing`, {})
+        .patch(`${IpConfig.apiBaseUrl}/api/v1/order/${orderId}/markPreparing`, {})
         .then(response => {
           console.log('Order marked as preparing', orderId);
         })
@@ -30,7 +30,7 @@ const OrderCard = ({order}) => {
 
     if (buttonText === 'Complete Cooking'){
 
-      const endpoint = `http://${IpConfig.apiBaseUrl}:8080/api/v1/order/${orderId}/markPrepared`;
+      const endpoint = `${IpConfig.apiBaseUrl}/api/v1/order/${orderId}/markPrepared`;
       console.log(endpoint)
   
       axios

@@ -9,7 +9,7 @@ import AdminTableGrid from '../molecules/AdminTableGrid';
 import ReservationList from '../molecules/ReservationList';
 import IpConfig from '../../IpConfig';
 
-const baseUrl = `http://${IpConfig.apiBaseUrl}:8080/api/v1`;
+const baseUrl = `${IpConfig.apiBaseUrl}/api/v1`;
 
 const AdminTableScreen = () => {
   const [testData, setTestData] = useState([]);
@@ -18,7 +18,7 @@ const AdminTableScreen = () => {
   const [reservations, setReservations] = useState([]);
   
   useEffect(() => {
-    fetch(`http://${IpConfig.apiBaseUrl}:8080/api/v1/reservation/future`)
+    fetch(`${IpConfig.apiBaseUrl}/api/v1/reservation/future`)
       .then((response) => response.json())
       .then((data) => {
         setReservations(data);
@@ -49,7 +49,7 @@ const AdminTableScreen = () => {
 
   const onRemoveReservation = (reservationId) => {
 
-    axios.delete(`http://${IpConfig.apiBaseUrl}:8080/api/v1/reservation/${reservationId}`)
+    axios.delete(`${IpConfig.apiBaseUrl}/api/v1/reservation/${reservationId}`)
     .then(() => {
       console.log('Delete successful');
       // Set menuItemsChanged to trigger the useEffect
