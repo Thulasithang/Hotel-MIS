@@ -2,7 +2,7 @@ import axios from 'axios';
 import IpConfig from '../IpConfig';
 
 export const fetchOrders = async () => {
-    const baseUrl = `http://${IpConfig.apiBaseUrl}:8080/api/v1`
+    const baseUrl = `${IpConfig.apiBaseUrl}/api/v1`
   try {
     const response = await axios.get(baseUrl+'/order/placed');
     return response.data; 
@@ -13,7 +13,7 @@ export const fetchOrders = async () => {
 };
 
 const fetchMenuItemsByOrderId = async (orderId) => {
-    const baseUrl = `http://${IpConfig.apiBaseUrl}:8080/api/v1`
+    const baseUrl = `${IpConfig.apiBaseUrl}/api/v1`
     try {
       const response = await axios.get(baseUrl+`/order/${orderId}`);
       return response.data; 
@@ -24,7 +24,7 @@ const fetchMenuItemsByOrderId = async (orderId) => {
   };
 
 const fetchQuantityByOrderAndMenuItem = async (orderId, menuItemId) => {
-    const baseUrl = `http://${IpConfig.apiBaseUrl}:8080/api/v1`
+    const baseUrl = `${IpConfig.apiBaseUrl}/api/v1`
 try {
     const response = await axios.get(baseUrl+ `/order/quantity/${orderId}/${menuItemId}`);
     return response.data; 

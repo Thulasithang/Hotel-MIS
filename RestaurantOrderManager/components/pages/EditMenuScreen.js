@@ -70,7 +70,7 @@ const EditMenuScreen = () => {
     }, [menuItemsChanged]); // Add menuItemsChanged as a dependency
   
     const fetchMenuItems = () => {
-      const backendEndpoint = `http://${IpConfig.apiBaseUrl}:8080/api/v1/menuitem/getAllItems`;
+      const backendEndpoint = `${IpConfig.apiBaseUrl}/api/v1/menuitem/getAllItems`;
   
       fetch(backendEndpoint)
         .then((response) => {
@@ -98,7 +98,7 @@ const EditMenuScreen = () => {
     };
   
     const handleRemoveItem = (itemId) => {
-      axios.delete(`http://${IpConfig.apiBaseUrl}:8080/api/v1/menuitem/delete/${itemId}`)
+      axios.delete(`${IpConfig.apiBaseUrl}/api/v1/menuitem/delete/${itemId}`)
         .then(() => {
           console.log('Delete successful');
           // Set menuItemsChanged to trigger the useEffect
@@ -110,7 +110,7 @@ const EditMenuScreen = () => {
     };
 
     const handleEditItem = (updatedItem) => {
-        axios.patch(`http://${IpConfig.apiBaseUrl}:8080/api/v1/menuitem/update/${updatedItem.id}`, updatedItem)
+        axios.patch(`${IpConfig.apiBaseUrl}/api/v1/menuitem/update/${updatedItem.id}`, updatedItem)
         .then(() => {
           console.log('Edit successful');
           setMenuItemsChanged(!menuItemsChanged); //to re render
@@ -122,7 +122,7 @@ const EditMenuScreen = () => {
 
     const handleAddItem = (newItem) => {
 
-      axios.post(`http://${IpConfig.apiBaseUrl}:8080/api/v1/menuitem/add`, newItem)
+      axios.post(`${IpConfig.apiBaseUrl}/api/v1/menuitem/add`, newItem)
       .then(() => {
         console.log('Add successful');
         setMenuItemsChanged(!menuItemsChanged); // To trigger a re-render

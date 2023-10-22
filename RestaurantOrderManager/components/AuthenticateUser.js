@@ -1,13 +1,14 @@
 import axios from 'axios'; 
 import IpConfig from '../IpConfig';
 
-export const authenticateUser = async (username, password) => {
+export const authenticateUser = async (username, password,userRole) => {
   try {
     const response = await axios.post(
-      `http://${IpConfig.apiBaseUrl}:8080/api/v1/user/authenticate`,
+      `${IpConfig.apiBaseUrl}/api/v1/user/authenticate`,
       {
         username,
         password,
+        userRole,
       }
     );
     const token = response.data; 

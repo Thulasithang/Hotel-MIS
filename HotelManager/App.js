@@ -10,9 +10,10 @@ import StaffScreen from "./components/pages/StaffScreen";
 import StaffTask from "./components/pages/StaffTask";
 import RoomScreen from "./components/pages/RoomScreen";
 import AddBooking from "./components/pages/AddBooking";
-// import AddRoom from "./components/pages/AddRoom";
 
 import logo from "./assets/logo.png";
+import StaffHomeScreen from "./components/pages/StaffHomeScreen";
+import AddUserPage from "./components/pages/AddEmployee";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,18 @@ export default function App() {
         <Stack.Screen
           name="AdminHome"
           component={AdminHomeScreen}
+          options={{ title: "Welcome" }}
+        />
+
+        <Stack.Screen
+          name="StaffHome"
+          component={StaffHomeScreen}
+          options={{ title: "Welcome" }}
+        />
+
+        <Stack.Screen
+          name="AddEmployeeScreen"
+          component={AddUserPage}
           options={{ title: "Welcome" }}
         />
 
