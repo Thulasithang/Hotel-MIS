@@ -24,26 +24,23 @@ const LoginScreen = () => {
 
   const handleLogin = async ({ role, username }) => {
     try {
-      if (role === 'Admin' && username.startsWith('A')) {
-        // Only Admins with usernames starting with "A" can access EditMenuScreen
-        const token = await authenticateUser(username, password);
+      if (role === 'Admin') {
+        const token = await authenticateUser(username, password, "ROLE_ADMIN");
         await AsyncStorage.setItem('authToken', token);
         navigation.navigate('EditMenuScreen');
-      } else {
-        // Handle authentication for other roles and cases
-        const token = await authenticateUser(username, password);
+      } else if (role === 'Waiter') {
+        const token = await authenticateUser(username, password, "ROLE_WAITER");
         await AsyncStorage.setItem('authToken', token);
-        if (role === 'Waiter') {
-          navigation.navigate('TableSelection', { waiterID: username });
-        } else if (role === 'Kitchen Staff') {
-          navigation.navigate('OrderAcceptScreen');
-        } else {
-          // Handle other roles here
-          // For roles that don't match Admin, Waiter, or Kitchen Staff
-          console.error('Authentication failed: Invalid role');
-          Alert.alert('Authentication Failed', 'Invalid role.');
-        }
+        navigation.navigate('TableSelection', { waiterID: username });
+      } else if (role === 'Kitchen Staff') {
+        const token = await authenticateUser(username, password, "ROLE_HOTELSTAFF");
+        await AsyncStorage.setItem('authToken', token);
+        navigation.navigate('OrderAcceptScreen');
+      }else{
+        console.error('Authentication failed: Invalid role');
+        Alert.alert('Authentication Failed', 'Invalid role.');
       }
+
     } catch (error) {
       console.error('Authentication failed:', error);
       Alert.alert('Authentication Failed', 'Incorrect username or password.');
@@ -127,6 +124,20 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
+
+        // // Handle authentication for other roles and cases
+        // const token = await authenticateUser(username, password);
+        // await AsyncStorage.setItem('authToken', token);
+        // if (role === 'Waiter') {
+        //   navigation.navigate('TableSelection', { waiterID: username });
+        // } else if (role === 'Kitchen Staff') {
+        //   navigation.navigate('OrderAcceptScreen');
+        // } else {
+        //   // Handle other roles here
+        //   // For roles that don't match Admin, Waiter, or Kitchen Staff
+        //   console.error('Authentication failed: Invalid role');
+        //   Alert.alert('Authentication Failed', 'Invalid role.');
+        // }
 
 
 

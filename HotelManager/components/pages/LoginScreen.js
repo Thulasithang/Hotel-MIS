@@ -22,15 +22,16 @@ const LoginScreen = () => {
   const handleLogin = async ({role, username}) => {
 
     try {
-      const token = await authenticateUser(username, password);
-      await AsyncStorage.setItem('authToken', token);
-
       const userId = await fetchUserIdByUsername(username);
   
       // Navigate based on user's role
       if(role==='Admin'){
+        const token = await authenticateUser(username, password, "ROLE_ADMIN");
+        await AsyncStorage.setItem('authToken', token);
         navigation.navigate('AdminHome');
       }else if (role=='staff'){
+        const token = await authenticateUser(username, password, "ROLE_HOTELSTAFF");
+        await AsyncStorage.setItem('authToken', token);
         navigation.navigate('StaffHome',{userId});
       }
    
