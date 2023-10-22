@@ -20,7 +20,7 @@ const BookingScreen = () => {
   const [data, setData] = React.useState([]);
 
   useEffect(() => {
-    const apiUrl = `${ipAddress}/app/booking?bookingId&customerName`;
+    const apiUrl = `${ipAddress}/api/v1/app/booking?bookingId&customerName`;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((responseData) => {
@@ -32,14 +32,13 @@ const BookingScreen = () => {
           Cin: item.checkIn,
           Cout: item.checkOut,
           RoomId: item.roomId,
-
         }));
         setData(formattedData);
       })
       .catch((error) => {
         console.error(error);
       });
-    }, []);
+  }, []);
 
   const columns = [
     { title: "ID", flex: 1 },
@@ -47,7 +46,6 @@ const BookingScreen = () => {
     { title: "Cin", flex: 3 },
     { title: "Cout", flex: 3 },
   ];
-
 
   const handleConfirm = (rowData) => {
     navigation.navigate("BookingInfo", { booking: rowData });
@@ -57,13 +55,12 @@ const BookingScreen = () => {
   const handleAddBooking = () => {
     navigation.navigate("AddBooking");
     console.log("Add Booking");
-
   };
   const handleFilterID = (value) => {
     if (!value) {
       navigation.reset({
         index: 0,
-        routes: [{ name: 'BookingScreen' }],
+        routes: [{ name: "BookingScreen" }],
       });
     } else {
       const apiUrl = `${ipAddress}/app/booking?bookingId=${value}`;
@@ -78,7 +75,7 @@ const BookingScreen = () => {
             Cout: item.checkOut,
             RoomId: item.roomId,
           }));
-    
+
           console.log("Formatted Data:", formattedData);
           setData(formattedData);
           console.log("Response:", responseData);
@@ -88,14 +85,13 @@ const BookingScreen = () => {
           console.error(error);
         });
     }
-
   };
 
   const handleFilterName = (value) => {
     if (!value) {
       navigation.reset({
         index: 0,
-        routes: [{ name: 'BookingScreen' }],
+        routes: [{ name: "BookingScreen" }],
       });
     } else {
       const apiUrl = `${ipAddress}/app/booking?customerName=${value}`;
@@ -110,7 +106,7 @@ const BookingScreen = () => {
             Cout: item.checkOut,
             RoomId: item.roomId,
           }));
-    
+
           console.log("Formatted Data:", formattedData);
           setData(formattedData);
           console.log("Response:", responseData);

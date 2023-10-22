@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import ipaddress from "../config";
 
+import { storage } from "../firebase";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
+
 import ImageCarousel from "./Carousal";
 import "../Styles/checkout-table.css";
 
@@ -25,7 +28,35 @@ import {
 import img1 from "../Images/349059422.jpeg";
 import img2 from "../Images/349059406.jpeg";
 
+const RoomTypeImages = ({ roomType }) => {
+  const [images, setImages] = useState([]);
+  const imageListRef = ref(storage, `images/Hotel/RoomType/${roomType}/`);
+
+  listAll(imageListRef).then((res) => {
+    res.items.forEach((itemRef) => {
+      getDownloadURL(itemRef).then((url) => {
+        setImages((images) => [...images, url]);
+        console.log(url);
+      });
+    });
+  });
+  const uniqueImages = [...new Set(images)];
+  return uniqueImages;
+};
+
 const SearchResult = (props) => {
+  const roomTypeImages = {};
+
+  // Iterate over the room data to fetch and store images
+  props.roomData.forEach((roomTypeData) => {
+    const roomType = roomTypeData.roomType;
+
+    roomTypeImages[roomType] = <RoomTypeImages roomType={roomType} />;
+  });
+
+  // Now, roomTypeImages contains components for each room type with unique images
+  // console.log(roomTypeImages);
+
   const navigate = useNavigate();
   const [showMore, setShowMore] = useState(false);
   const [showTax, setShowTax] = useState(false);
@@ -132,8 +163,8 @@ const SearchResult = (props) => {
       bookingIdList: deleteIds,
     };
 
-    console.log(requestBody);
-    console.log(bookingIds);
+    // console.log(requestBody);
+    // console.log(bookingIds);
 
     const deleteUrl = ipaddress + "/room/booking/delete-selections";
     fetch(deleteUrl, {
@@ -178,6 +209,9 @@ const SearchResult = (props) => {
                               variant="PhotoTopic"
                               sx={{ color: "#030957" }}
                             >
+                              {console.log(
+                                roomTypeImages[roomTypeVal.roomType]
+                              )}
                               {roomTypeVal.roomType}
                             </Typography>
                             <Typography variant="body3">

@@ -12,9 +12,9 @@ const ImageCarousel = ({ images }) => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {images.map((image, index) => (
+      {images.map((url, index) => (
         <Carousel.Item key={index}>
-          <img className="c-image" src={image} alt={`Slide ${index + 1}`} />
+          <img className="c-image" src={url} alt={`Slide ${index + 1}`} />
         </Carousel.Item>
       ))}
     </Carousel>

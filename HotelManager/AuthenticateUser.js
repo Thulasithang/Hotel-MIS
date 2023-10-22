@@ -1,19 +1,16 @@
-import axios from 'axios'; 
-import ipAddress from './config';
+import axios from "axios";
+import ipAddress from "./config";
 
 export const authenticateUser = async (username, password) => {
   try {
-    const response = await axios.post(
-      `${ipAddress}/api/v1/user/authenticate`,
-      {
-        username,
-        password,
-      }
-    );
-    const token = response.data; 
+    const response = await axios.post(`${ipAddress}/api/v1/user/authenticate`, {
+      username,
+      password,
+    });
+    const token = response.data;
     return token;
   } catch (error) {
-    console.error('Authentication failed:', error);
-    throw error; 
+    console.error("Authentication failed:", error);
+    throw error;
   }
 };

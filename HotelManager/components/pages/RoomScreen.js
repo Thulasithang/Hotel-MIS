@@ -76,7 +76,7 @@ const RoomView = () => {
   const [data, setData] = React.useState([]);
 
   useEffect(() => {
-    const apiUrl = `${ipAddress}/app/room?roomId`;
+    const apiUrl = `${ipAddress}/api/v1/app/room?roomId`;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((responseData) => {
@@ -94,6 +94,7 @@ const RoomView = () => {
   }, []);
 
   const handleAddRoom = () => {
+    navigation.navigate("AddRoom");
     // Navigate to the screen for adding an employee
     // navigation.navigate("AddEmployeeScreen");
   };
@@ -106,7 +107,7 @@ const RoomView = () => {
 
   const handleFilterID = (text) => {
     if (!text) {
-      const apiUrl = `${ipAddress}/app/room?roomId`;
+      const apiUrl = `${ipAddress}/api/v1/app/room?roomId`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((responseData) => {
@@ -121,7 +122,7 @@ const RoomView = () => {
           console.error(error);
         });
     } else {
-      const apiUrl = `${ipAddress}/app/room?roomId=${text}`;
+      const apiUrl = `${ipAddress}/api/v1/app/room?roomId=${text}`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((responseData) => {

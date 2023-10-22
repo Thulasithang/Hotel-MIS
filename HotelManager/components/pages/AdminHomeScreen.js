@@ -10,18 +10,32 @@ const AdminHomeScreen = () => {
   const navigation = useNavigation();
   const [responseData, setResponseData] = useState(null);
 
+  const [revenueData, setRevenueData] = useState(null);
+
   useEffect(() => {
     // Make the GET request when the component mounts
-    const apiUrl = `${ipAddress}/app/home`;
+    const apiUrl = `${ipAddress}/api/v1/app/home`;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
         // Set the response data to the local constant
         setResponseData(data);
-        console.log(data);
       })
       .catch((error) => {
         // Handle any errors here
+        console.error(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const apiUrl = `${ipAddress}/api/v1/rev`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setRevenueData(data);
+      })
+      .catch((error) => {
         console.error(error);
       });
   }, []);
@@ -51,7 +65,7 @@ const AdminHomeScreen = () => {
           text3={responseData ? responseData.totalAvailableRoom : "N/A"}
         />
         <Text style={styles.text}>Hotel Revenue</Text>
-        <BarChart />
+        <BarChart revenue={revenueData} />
       </View>
     </>
   );

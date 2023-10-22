@@ -11,7 +11,6 @@ const BookingInfo = () => {
   const { booking } = route.params;
   console.log("Booking", booking);
 
-
   const checkIn = booking.Cin;
   const checkOut = booking.Cout;
   const roomId = booking.RoomId;
@@ -27,36 +26,39 @@ const BookingInfo = () => {
         {
           text: "Cancel",
           onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
+          style: "cancel",
         },
-        { text: "Sure", onPress: () => {
-          const deleteIds = [bookingId];
-          console.log("Delete Ids", deleteIds);
-          const requestBody = {
-            bookingIdList: deleteIds,
-          };
-      
-          apiUrl = `${ipAddress}/room/booking/delete-selections`;
-          fetch((apiUrl), {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestBody),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("Success:", data);
+        {
+          text: "Sure",
+          onPress: () => {
+            const deleteIds = [bookingId];
+            console.log("Delete Ids", deleteIds);
+            const requestBody = {
+              bookingIdList: deleteIds,
+            };
+
+            apiUrl = `${ipAddress}/api/v1/room/booking/delete-selections`;
+            fetch(apiUrl, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(requestBody),
             })
-            .catch((error) => {
-              // Handle any errors here
-              console.error("Error:", error);
-            });
+              .then((response) => response.json())
+              .then((data) => {
+                console.log("Success:", data);
+              })
+              .catch((error) => {
+                // Handle any errors here
+                console.error("Error:", error);
+              });
             navigation.reset({
-        index: 0,
-        routes: [{ name: 'BookingScreen' }],
-      });
-         ;} }
+              index: 0,
+              routes: [{ name: "BookingScreen" }],
+            });
+          },
+        },
       ],
       { cancelable: false }
     );
@@ -64,7 +66,6 @@ const BookingInfo = () => {
 
   return (
     <View style={styles.container}>
-      
       <Text style={styles.header}>Booking Details</Text>
       <View style={styles.infoContainer}>
         <View style={styles.lefttextContainer}>
@@ -79,7 +80,10 @@ const BookingInfo = () => {
           <Text style={styles.lableText}>Name</Text>
         </View>
         <View style={styles.righttextContainer}>
-          <Text style={styles.detailtext}> {firstName} {lastName} </Text>
+          <Text style={styles.detailtext}>
+            {" "}
+            {firstName} {lastName}{" "}
+          </Text>
         </View>
       </View>
       <View style={styles.infoContainer}>
@@ -87,7 +91,15 @@ const BookingInfo = () => {
           <Text style={styles.lableText}>Check-In</Text>
         </View>
         <View style={styles.righttextContainer}>
-          <Text style={styles.detailtext}> {new Date(checkIn).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} </Text>
+          <Text style={styles.detailtext}>
+            {" "}
+            {new Date(checkIn).toLocaleDateString("en-US", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}{" "}
+          </Text>
         </View>
       </View>
       <View style={styles.infoContainer}>
@@ -95,7 +107,14 @@ const BookingInfo = () => {
           <Text style={styles.lableText}>Check-Out</Text>
         </View>
         <View style={styles.righttextContainer}>
-          <Text style={styles.detailtext}>{new Date(checkOut).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</Text>
+          <Text style={styles.detailtext}>
+            {new Date(checkOut).toLocaleDateString("en-US", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </Text>
         </View>
       </View>
       <View style={styles.infoContainer}>
@@ -106,27 +125,20 @@ const BookingInfo = () => {
           <Text style={styles.detailtext}> {roomId} </Text>
         </View>
       </View>
-      
-      
 
-      <TouchableOpacity
-            style={styles.removeButton}
-            onPress={handleDelete}
-          >
-            <Text style={styles.buttonText}>Delete</Text>
+      <TouchableOpacity style={styles.removeButton} onPress={handleDelete}>
+        <Text style={styles.buttonText}>Delete</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  
   container: {
     flex: 1,
     padding: 16,
     width: "100%",
     alignSelf: "center",
-
   },
   infoContainer: {
     flexDirection: "row",
@@ -140,13 +152,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: 10,
     alignSelf: "center",
-
   },
   lableText: {
     fontSize: 16,
     margin: 5,
     fontWeight: "bold",
-
   },
   detailtext: {
     fontSize: 16,
@@ -154,19 +164,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  
   lefttextContainer: {
     flex: 3,
-    justifyContent: 'space-between',
-    backgroundColor: '#BDCDFF',
+    justifyContent: "space-between",
+    backgroundColor: "#BDCDFF",
     padding: 10,
     borderRadius: 20,
     margin: 5,
   },
   righttextContainer: {
     flex: 6,
-    justifyContent: 'space-between',
-    backgroundColor: '#BDCDFF',
+    justifyContent: "space-between",
+    backgroundColor: "#BDCDFF",
     padding: 10,
     borderRadius: 20,
     margin: 5,
@@ -186,6 +195,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
 
 export default BookingInfo;
