@@ -1,5 +1,5 @@
 const IpConfig = {
-  apiBaseUrl: "192.168.1.9"
+  apiBaseUrl: "http://192.168.1.9:8080"
 };
 
 export default IpConfig;

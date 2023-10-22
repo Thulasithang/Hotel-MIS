@@ -1,13 +1,14 @@
 import axios from 'axios'; 
 import ipAddress from './config';
 
-export const authenticateUser = async (username, password) => {
+export const authenticateUser = async (username, password, userRole) => {
   try {
     const response = await axios.post(
       `${ipAddress}/api/v1/user/authenticate`,
       {
         username,
         password,
+        userRole
       }
     );
     const token = response.data; 

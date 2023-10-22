@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import IpConfig from '../../IpConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const baseUrl = `http://${IpConfig.apiBaseUrl}:8080/api/v1`
+const baseUrl = `${IpConfig.apiBaseUrl}/api/v1`
 
 // const apiUrl = 'http://10.10.22.66:8080/api/v1/table';
 

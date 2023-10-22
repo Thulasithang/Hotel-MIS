@@ -19,7 +19,7 @@ const AddUserPage = () => {
   const [users, setUsers] = useState([]);
 
   const fetchUserList = () => {
-    fetch(`http://${IpConfig.apiBaseUrl}:8080/api/v1/user`)
+    fetch(`${IpConfig.apiBaseUrl}/api/v1/user`)
       .then((response) => response.json())
       .then((data) => {
         setUsers(data);
@@ -56,7 +56,7 @@ const AddUserPage = () => {
       userRole: roleText,
     };
 
-    axios.post(`http://${IpConfig.apiBaseUrl}:8080/api/v1/user/new`, userData)
+    axios.post(`${IpConfig.apiBaseUrl}/api/v1/user/new`, userData)
       .then(response => {
         console.log('User added:', response.data);
         fetchUserList();
@@ -83,7 +83,7 @@ const AddUserPage = () => {
 
   const onRemoveUser = (userId) => {
     axios
-    .delete(`http://${IpConfig.apiBaseUrl}:8080/api/v1/user/remove/${userId}`)
+    .delete(`${IpConfig.apiBaseUrl}/api/v1/user/remove/${userId}`)
     .then(() => {
       // If the deletion was successful, update the user list in the state
       setUsers((prevUsers) => prevUsers.filter((user) => user.userId !== userId));
