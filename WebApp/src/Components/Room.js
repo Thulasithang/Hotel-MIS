@@ -1,25 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../Styles/room.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ImageCarousel from "./Carousal";
 
-import img1 from "../Images/349059422.jpeg";
-import img2 from "../Images/349059406.jpeg";
-
-// import img3 from "../Images/348610555.jpeg";
-// import img4 from "../Images/348610551.jpeg";
-
-// import img5 from "../Images/349060691.jpeg";
-// import img6 from "../Images/348610582.jpeg";
+import { storage } from "../firebase";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
 
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { themeTyp } from "../Styles/Theme";
 
 const PhotoCard = ({ type, adult, child, size, description }) => {
-  const supImages = [img1, img2];
-  // const kingImages = [img3, img4];
-  // const famImages = [img5, img6];
+  const [images, setImages] = React.useState([]);
+
+  const imageListRef = ref(storage, `images/Hotel/RoomType/${type}/`);
+
+  useEffect(() => {
+    listAll(imageListRef).then((res) => {
+      res.items.forEach((itemRef) => {
+        getDownloadURL(itemRef).then((url) => {
+          setImages((images) => [...images, url]);
+        });
+      });
+    });
+  }, []);
+
+  const uniqueImages = [...new Set(images)];
+  console.log(uniqueImages);
 
   return (
     <>
@@ -27,7 +34,7 @@ const PhotoCard = ({ type, adult, child, size, description }) => {
         <div className="photocontainer">
           <div className="photo-card">
             <div className="photo-background" enctype="multipart/form-data">
-              <ImageCarousel images={supImages} />
+              <ImageCarousel images={uniqueImages} />
             </div>
             <div className="photo-details">
               <ThemeProvider theme={themeTyp}>

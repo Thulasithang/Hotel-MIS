@@ -10,6 +10,7 @@ import StaffScreen from "./components/pages/StaffScreen";
 import StaffTask from "./components/pages/StaffTask";
 import RoomScreen from "./components/pages/RoomScreen";
 import AddBooking from "./components/pages/AddBooking";
+
 import logo from "./assets/logo.png";
 import StaffHomeScreen from "./components/pages/StaffHomeScreen";
 import AddUserPage from "./components/pages/AddEmployee";
@@ -75,6 +76,21 @@ export default function App() {
             headerTintColor: "white",
           }}
         />
+
+        {/* <Stack.Screen
+          name="AddRoom"
+          component={AddRoom}
+          options={{
+            title: "",
+            headerBackground: () => (
+              <View style={styles.container}>
+                <Image source={logo} style={styles.logo} />
+              </View>
+            ),
+            headerTintColor: "white",
+          }}
+        /> */}
+
         <Stack.Screen
           name="StaffScreen"
           component={StaffScreen}

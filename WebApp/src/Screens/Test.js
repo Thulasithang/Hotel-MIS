@@ -1,67 +1,143 @@
 import React, { useState } from "react";
-import ipaddress from "../config";
-import { Form, Row, Col, Alert } from "react-bootstrap";
-import { validateNICWithBirthdate } from "../Utils/nicValidator";
+import { storage } from "../firebase";
+import { ref, uploadBytes } from "firebase/storage";
 
-const AddRoomType = () => {
-  const [nic, setNic] = useState("");
-  const [dob, setDob] = useState("");
-  const [matchResult, setMatchResult] = useState(false);
+function RoomTypeForm() {
+  const [roomType, setRoomType] = useState({
+    type: "",
+    maxAdultOccupancy: 0,
+    maxChildOccupancy: 0,
+    roomSize: 0,
+    description: "",
+    roomPrice: 0,
+  });
 
-  const handleNicInputChange = (e) => {
-    setNic(e.target.value);
-    console.log(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setRoomType({ ...roomType, [name]: value });
   };
 
-  const handleDoBChange = (e) => {
-    setDob(e.target.value);
-    console.log(e.target.value);
+  const handleImage = () => {
+    const imageRef = ref(
+      storage,
+      `images/Hotel/RoomType/${roomType.type}/${roomType.type}${image.name}`
+    );
+    uploadBytes(imageRef, image).then(() => {
+      alert("Image Uploaded");
+    });
   };
 
-  let nicr = "200077300581";
-  let dobr = "2000-09-21";
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        "http://192.168.8.102:8080/api/v1/app/roomType/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(roomType),
+        }
+      );
 
-  const nicc = "200008102868";
-  const dobc = "2000-03-21";
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
 
-  const check = () => {
-    const match = validateNICWithBirthdate(nicc, dobc);
-    setMatchResult(match);
-    console.log(matchResult);
+      const data = await response.json();
+      console.log("Request successful:", data);
+      // Handle the response data here
+    } catch (error) {
+      console.error("Request failed:", error);
+      // Handle any errors here
+    }
   };
+
+  const [image, setImage] = useState(null);
 
   return (
-    <div style={{ marginTop: "100px" }}>
-      <Row className="form-row">
-        <Form.Group controlId="NIC">
-          <Form.Label>NIC No</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter your NIC number"
-            required
-            onChange={handleNicInputChange}
-            value={nic}
-          />
-          {matchResult && (
-            <Alert variant="danger">Please enter a valid NIC</Alert>
-          )}
-        </Form.Group>
-      </Row>
-      <Row className="form-row">
-        <Form.Group controlId="arrivalTime">
-          <Form.Label>Date of Birth</Form.Label>
-          <Form.Control
-            type="date"
-            onChange={handleDoBChange}
-            value={dob}
-            placeholder="Enter your date of birth"
-            required
-          />
-        </Form.Group>
-      </Row>
-      <button onClick={check}>check</button>
-    </div>
-  );
-};
+    <>
+      <div style={{ height: "500px", background: "#000000" }}>dad</div>
+      <div>
+        <h2>Create Room Type</h2>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Type:
+            <input
+              type="text"
+              name="type"
+              value={roomType.type}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Max Adult Occupancy:
+            <input
+              type="number"
+              name="maxAdultOccupancy"
+              value={roomType.maxAdultOccupancy}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Max Child Occupancy:
+            <input
+              type="number"
+              name="maxChildOccupancy"
+              value={roomType.maxChildOccupancy}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Room Size:
+            <input
+              type="number"
+              name="roomSize"
+              value={roomType.roomSize}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Description:
+            <input
+              type="text"
+              name="description"
+              value={roomType.description}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Room Price:
+            <input
+              type="number"
+              name="roomPrice"
+              value={roomType.roomPrice}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <button type="submit">Submit Request</button>
+        </form>
+      </div>
 
-export default AddRoomType;
+      <div style={{ height: "50px" }}>
+        <input
+          type="file"
+          onChange={(e) => {
+            setImage(e.target.files[0]);
+          }}
+        />
+
+        <button onClick={handleImage}>Upload</button>
+      </div>
+    </>
+  );
+}
+
+export default RoomTypeForm;
