@@ -1,5 +1,5 @@
 import axios from "axios";
-const localhost = `http://192.168.8.102:8080`;
+const localhost = `https://hotel-mis-test-bbb375a19c7a.herokuapp.com`;
 const fetchItems = async () => {
   try {
     const response = await axios.get(
@@ -24,11 +24,11 @@ const fetchDiscountItems = async () => {
 
 const fetchTables = async () => {
   try {
-    const response = await axios.get(`${localhost}/api/v1/table/getAllTables`);
+    const response = await axios.get(`${localhost}/api/v1/table/getAllTables`); //`${localhost}/api/v1/table/allTables`
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export { fetchItems, fetchDiscountItems, fetchTables };
+export { fetchItems, fetchDiscountItems, fetchTables, localhost };

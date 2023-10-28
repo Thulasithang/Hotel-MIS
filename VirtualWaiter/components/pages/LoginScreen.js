@@ -12,66 +12,59 @@ import { FlatGrid } from "react-native-super-grid";
 
 const LoginScreen = ({ navigation, onLogin, dispatch }) => {
   const [tableNo, setTableNo] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [tables, setTables] = useState([]);
-
-  // useEffect(() => {
-  //   // Fetch data using the service
-  //   fetchTables()
-  //     .then((data) => {
-  //       setTables(data); // Update state with fetched data
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []);
-  // console.log(tables)
-  const handleLogin = () => {
-    // dispatch({
-    //   type: 'SET_TABLE_NO',
-    //   payload: tableNo,
-    // });
-    // Check if the table number and password are valid
-    if (tableNo.trim() !== "" && password === "1234") {
-      // If valid, navigate to the MainContainer
-      navigation.navigate("Welcome");
-      dispatch({
-        type: "SET_TABLE_NO",
-        payload: tableNo,
+  console.log("tableNo from login screen part 1: ", tableNo);
+  useEffect(() => {
+    // Fetch data using the service
+    fetchTables()
+      .then((data) => {
+        setTables(data); // Update state with fetched data
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setTimeout(() => {
+          // Try again after 5 seconds
+          fetchTables()
+            .then((data) => {
+              setTables(data);
+            })
+            .catch((error) => {
+              console.error("Error fetching data:", error);
+            });
+        }
+        , 5000);
       });
-    } else {
-      // Display an error message for invalid login
-      setError("Invalid table number or password. Please try again.");
-    }
+  }, []);
+  const handleLogin = () => {
+    console.log("tableNo from login screen part 2: ", tableNo)
+    navigation.navigate("Welcome");
   };
-
   return (
+
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Table Number"
-        value={tableNo}
-        onChangeText={(text) => {
-          // Restrict input to numeric values only
-          if (/^\d*$/.test(text)) {
-            setTableNo(text);
-          }
-        }}
-        keyboardType="numeric" // Restrict input to numeric keyboard
+      <Text style={styles.title}>Choose the Table Number</Text>
+      <FlatGrid
+        itemDimension={300}
+        data={tables}
+        renderItem={({ item }) => (
+          <View style = {styles.tables}>
+          <TouchableOpacity
+            key={item.id}
+            onPress={() => {
+              setTableNo(item.id);
+              dispatch({
+                type: 'SET_TABLE_NO',
+                payload: tableNo,
+              });
+              handleLogin();
+            }}
+          >
+            <Text style={styles.tableContainer}>{item.id}</Text>
+          </TouchableOpacity>
+          
+          </View>
+        )}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      {error !== "" && <Text style={styles.errorText}>{error}</Text>}
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Login</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -86,14 +79,20 @@ const styles = StyleSheet.create({
   },
   tables: {
     position: "relative",
-    backgroundColor: "brown",
-    borderRadius: 50, // Makes it a circle
-    width: 50,
-    height: 50,
+    backgroundColor: "#060a71",
+    borderRadius: 150, // Makes it a circle
+    width: 180,
+    height: 180,
     justifyContent: "center",
     alignItems: "center",
   },
+  tableContainer: {
+    fontSize: 24,
+    color: '#fff',
+    fontWeight: '600',
+  },
   title: {
+    marginTop: 100,
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
@@ -128,20 +127,3 @@ const styles = StyleSheet.create({
 });
 
 export default connect()(LoginScreen);
-
-//     <ScrollView>
-//       <View style={styles.container}>
-//       <FlatGrid
-//   itemDimension={130}
-//   data={tables}
-//   renderItem={({ item }) => (<Text>{item}</Text>)}
-// />
-// {/* {tables.map((table) => (
-//   <View style={styles.tables}>
-//   <TouchableOpacity style={styles.title} key={table.id} onPress={handleLogin(table.id)}>
-//     <Text>{table.id}</Text>
-//   </TouchableOpacity>
-//   </View>
-// ))} */}
-//   </View>
-// </ScrollView>

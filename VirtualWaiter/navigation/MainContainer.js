@@ -14,6 +14,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MenuScreen from "../components/pages/MenuScreen";
 import CartScreen from "../components/pages/CartScreen";
 import OrderStatusScreen from "../components/pages/OrderStatus";
+import { localhost } from "../data/testData";
 
 const Tab = createBottomTabNavigator();
 
@@ -60,6 +61,7 @@ const MainContainer = ({ tableNo }) => {
           onPress: async () => {
             try {
               // Ensure tableNo is a valid Long
+              console.log(tableNo);
               const tableId = parseInt(tableNo); // Parse tableNo to an integer
 
               if (isNaN(tableId)) {
@@ -74,7 +76,7 @@ const MainContainer = ({ tableNo }) => {
 
               // Make an HTTP PATCH request to your backend API
               const response = await fetch(
-                `http://192.168.8.102:8080/api/v1/table/update/${tableId}?waiterRequested=true&occupied=true`,
+                `${localhost}/api/v1/table/update/${tableId}?waiterRequested=true&occupied=true`,
                 {
                   method: "PATCH", // Use PATCH method
                   headers: {

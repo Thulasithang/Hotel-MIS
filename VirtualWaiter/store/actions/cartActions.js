@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const placeOrder = (cartData, tableNo, customerName, customerNumber) => {
+export const placeOrder = (cartData, tableNo, customerName, customerNumber, localhost) => {
+  console.log("cartData ",cartData, "Table no: ", tableNo, "customerName: ",  customerName, "customer No: ", customerNumber);
   return async (dispatch) => {
     try {
       // Parse tableNo to an integer
@@ -18,7 +19,7 @@ export const placeOrder = (cartData, tableNo, customerName, customerNumber) => {
       };
 
       const response = await axios.post(
-        "http://192.168.8.102:8080/api/v1/order/create",
+        `${localhost}/api/v1/order/create`,
         requestData,
         {
           // headers: {

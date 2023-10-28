@@ -14,12 +14,26 @@ export const SLIDER_WIDTH = Dimensions.get("window").width;
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.199);
 
 const CarouselCardItem = ({ item, index, dispatch }) => {
+
+  // Check if discount is 0, if so, hide the red discount circle
+  const renderDiscountCircle = () => {
+    if (item.discount === 0) {
+      return null; // Return null to hide the circle
+    }
+    return (
+      <View style={styles.discountStar}>
+        <Text style={styles.discountText}>{item.discount}% OFF</Text>
+      </View>
+    );
+  };
+
   const handleAddToCart = (item) => {
     dispatch({
       type: "ADD_TO_CART",
       // payload: { price: item.price, item: item, id: item.menuitemId, name: item.name, count: 1 },
       payload: { id: item.menuitemId, item: item, count: 1 },
     });
+    console.log("item: ", item.menuitemId)
   };
 
   return (
@@ -29,12 +43,13 @@ const CarouselCardItem = ({ item, index, dispatch }) => {
         style={styles.image}
         resizeMode="cover"
       />
+      {renderDiscountCircle()}
       <Text style={styles.header}>{item.name}</Text>
       <Text style={styles.body}>{item.description}</Text>
       <View style={styles.ratings}>
         <Ionicons name="star" size={25} color="gold" />
         <Text style={{ marginLeft: 10, fontSize: 22 }}>{item.rating}</Text>
-        <Text style={styles.price}>Rs {item.price}</Text>
+        <Text style={styles.price}>$ {item.price}</Text>
         <TouchableOpacity
           onPress={() => handleAddToCart(item)} // Pass a function reference
           style={{ position: "absolute", end: 10, alignSelf: "center" }}
@@ -84,6 +99,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
     paddingLeft: 10,
+  },
+  discountStar: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "red",
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   header: {

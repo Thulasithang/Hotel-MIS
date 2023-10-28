@@ -51,11 +51,17 @@ const WelcomePage = ({ dispatch, customerName, contactNumber }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.image}>
+        <Image
+          source={require('../../assets/images/WelcomeScreenImage.jpg')}
+          // style={styles.image}
+        />
+      </View>
       <View style={styles.card}>
-      <Animated.Image
+      {/* <Animated.Image
           source={require('../../assets/images/splash-screen.png')}
           style={[styles.logo, { opacity: fadeAnim }]}
-        />
+        /> */}
         <Animated.Text
           style={[styles.title, { opacity: fadeAnim }]}
         >
@@ -88,31 +94,44 @@ const WelcomePage = ({ dispatch, customerName, contactNumber }) => {
 
 const styles = StyleSheet.create({
   container: {
+
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent:"center",
+    alignItems:"flex-end",
     backgroundColor: '#f2f2f2',
   },
+  image: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    left: 0,
+    objectFit:"cover",
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+
+    backdropFilter: 'blur(10px)',
+
+  },
   card: {
-    backgroundColor: '#ffffff',
+    marginVertical: "5%",
     borderRadius: 10,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-    width: '80%',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backdropFilter: 'blur(10px)',
+    justifyContent: 'center',
+    paddingHorizontal: "5%",
+    height: '80%', 
+    width: '40%',
     alignItems: 'center',
   },
   logo: {
+    backgroundColor: '#fff',
     width: 100,
     height: 100,
     marginBottom: 20,
   },
   title: {
     fontSize: 24,
-    color: '#333',
+    color: '#060a71',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   inputContainer: {
@@ -121,18 +140,19 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     color: '#333',
+    fontWeight: 'bold',
     marginBottom: 5,
   },
   input: {
     width: '100%',
     padding: 10,
     margin: 5,
-    borderColor: '#007bff',
+    borderColor: '#060a71',
     borderWidth: 2,
     borderRadius: 5,
   },
   button: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#060a71',
     borderRadius: 5,
     padding: 10,
     marginTop: 20,
