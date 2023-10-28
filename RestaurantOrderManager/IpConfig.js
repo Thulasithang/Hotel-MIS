@@ -1,6 +1,7 @@
 const IpConfig = {
 
-  apiBaseUrl: "http://192.168.1.9:8080"
+  //apiBaseUrl: "http://10.10.25.99:8080"
+  apiBaseUrl: "https://hotel-mis-test-bbb375a19c7a.herokuapp.com"
 
 };
 

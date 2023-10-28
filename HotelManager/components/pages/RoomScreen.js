@@ -154,7 +154,6 @@ const RoomView = () => {
     <View>
       <View>
         <View style={styles.right_form}>
-          <Button onPress={handleAddRoom} title="Add Room" />
         </View>
         <View style={styles.container}>
           <Text style={styles.label}>Filter By</Text>
@@ -163,11 +162,7 @@ const RoomView = () => {
             rightText="Enter "
             onInputChange={handleFilterID}
           />
-          <View style={styles.filterButtons}>
-            <CategoryButton title="Vacant" onPress={filterVacant} />
-            <CategoryButton title="Occupied" onPress={filterOccupied} />
-            <CategoryButton title="Bookeds" onPress={filterBooked} />
-          </View>
+
         </View>
         <View style={styles.container}>
           <Table columns={columns} data={data} onConfirm={handleConfirm} />
@@ -205,7 +200,6 @@ const RoomTypeView = () => {
     <View>
       <View>
         <View style={styles.right_form}>
-          <Button onPress={handleAddRoomType} title="Add Room Type" />
         </View>
         <View style={styles.container}>
           <Table columns={columns} data={data} onConfirm={handleConfirm} />

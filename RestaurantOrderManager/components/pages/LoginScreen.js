@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 16,
     backgroundColor: 'white',
-    marginHorizontal: 20,
   },
   subContainer: {
     marginHorizontal: 100,

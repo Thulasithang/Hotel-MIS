@@ -63,7 +63,7 @@ const BookingScreen = () => {
         routes: [{ name: "BookingScreen" }],
       });
     } else {
-      const apiUrl = `${ipAddress}/app/booking?bookingId=${value}`;
+      const apiUrl = `${ipAddress}/api/v1/app/booking?bookingId=${value}`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((responseData) => {
@@ -94,7 +94,7 @@ const BookingScreen = () => {
         routes: [{ name: "BookingScreen" }],
       });
     } else {
-      const apiUrl = `${ipAddress}/app/booking?customerName=${value}`;
+      const apiUrl = `${ipAddress}/api/v1/app/booking?customerName=${value}`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((responseData) => {
