@@ -10,8 +10,8 @@ import {
   Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { width } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
 import { placeOrder } from "../../store/actions/cartActions";
+import { localhost } from "../../data/testData";
 
 const mapStateToProps = (state) => ({
   tableNo: state.table.tableNo,
@@ -26,7 +26,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CartScreen = ({
-  onClose,
   itemsInCart,
   tableNo,
   onPlaceOrder,
@@ -47,7 +46,7 @@ const CartScreen = ({
   }, [itemsInCart]);
 
   const handlePlaceOrder = () => {
-    dispatch(placeOrder(itemsInCart, tableNo, customerName, contactNumber));
+    dispatch(placeOrder(itemsInCart, tableNo, customerName, contactNumber, localhost));
     // navigation.navigate("OrderStatus");
     onPlaceOrder();
   };
@@ -74,7 +73,7 @@ const CartScreen = ({
       </View>
     );
   };
-
+  console.log("tableNo from cart screen: ", tableNo);
   return (
     <View style={styles.cartContainer}>
       <View style={styles.sliderTopic}>

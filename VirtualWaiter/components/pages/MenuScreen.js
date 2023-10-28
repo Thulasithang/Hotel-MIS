@@ -35,6 +35,7 @@ const MenuScreen = ({ itemsInCart, addToCart, customerName }) => {
   const [burgerList, setBurgerList] = useState([]);
   const [pizzaList, setPizzaList] = useState([]);
   const [drinkList, setDrinkList] = useState([]);
+  const [retryDelay] = useState(3000); // 1 second
 
   useEffect(() => {
     // Fetch data using the service
@@ -44,7 +45,18 @@ const MenuScreen = ({ itemsInCart, addToCart, customerName }) => {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        // Handle the error as needed (e.g., show an error message)
+        setTimeout(() => {
+          // Retry after 1 second
+          fetchDiscountItems()
+            .then((data) => {
+              setDiscountItems(data); // Update state with fetched data
+            })
+            .catch((error) => {
+              console.error("Error fetching data:", error);
+              // Handle the error as needed (e.g., show an error message)
+            });
+        }
+        , retryDelay);
       });
   }, []);
 
@@ -56,7 +68,18 @@ const MenuScreen = ({ itemsInCart, addToCart, customerName }) => {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        // Handle the error as needed (e.g., show an error message)
+        setTimeout(() => {
+          // Retry after 1 second
+          fetchItems()
+            .then((data) => {
+              setItems(data); // Update state with fetched data
+            })
+            .catch((error) => {
+              console.error("Error fetching data:", error);
+              // Handle the error as needed (e.g., show an error message)
+            });
+        }
+        , retryDelay);
       });
   }, []);
 
